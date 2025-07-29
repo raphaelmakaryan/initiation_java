@@ -57,4 +57,22 @@ public class Menu {
         toolsMain.maintenance("commande");
         return false;
     }
+
+    public void choiceGameProgress() {
+        int choiceUser;
+        int choice;
+
+        System.out.println("Que voulez-vous faire maintenant ?");
+        System.out.println("1. Lancer le dé");
+        System.out.println("2. Quitter le jeu");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+
+        if (choice == 1) {
+
+        } else {
+            endGame("exit");
+        }
+    }
 }
