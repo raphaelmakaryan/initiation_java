@@ -26,17 +26,13 @@ public class Exercice6 {
         clavier.close();
 
         int voyages = 0;
-        while (cartons > 1) {
-            int difference = cartons - maxCamion;
-            if (difference >= 0) {
-                cartons = difference;
-                voyages++;
-                System.out.println("La difference est positif, donc le voyage de " + maxCamion + " cartons pour le " + voyages + " eme voyage, il y'a maintenant " + cartons + " cartons");
-            } else {
-                cartons = difference - (cartons - maxCamion);
-                voyages++;
-                System.out.println("La difference est négative, donc le voyage de " + difference + " cartons pour le " + voyages + " eme voyage, il y'a maintenant " + cartons + " cartons");
-            }
+        while (cartons > 0) {
+            // Récupere le nombre de cartons qui est la valeur minimum entre cartons et le camion
+            int difference = Math.min(cartons, maxCamion);
+            // Calcul les cartons restants selon les cartons donner et la difference récuperé avant
+            cartons = cartons - difference;
+            voyages++;
+            System.out.println("Le voyage de " + difference + " cartons pour le " + voyages + " eme voyage, il y'a maintenant " + cartons + " cartons");
         }
     }
 }
