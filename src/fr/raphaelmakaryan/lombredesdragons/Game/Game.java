@@ -1,5 +1,8 @@
 package fr.raphaelmakaryan.lombredesdragons.Game;
 
+import fr.raphaelmakaryan.lombredesdragons.Configurations.Board;
+
+import java.util.Arrays;
 import java.util.Scanner;
 
 import static fr.raphaelmakaryan.lombredesdragons.Tools.Tools.isACharacter;
@@ -23,7 +26,10 @@ public class Game {
     }
 
     public void startGame() {
+        Board board = new Board();
         System.out.println("Le jeu commence !");
+        System.out.println("Le plateau de jeu a " + board.getCases() + " cases.");
+        System.out.println(Arrays.toString(board.getBoard()));
     }
 
     public void main() {
