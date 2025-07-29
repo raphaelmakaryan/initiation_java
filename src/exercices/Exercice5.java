@@ -1,3 +1,5 @@
+package exercices;
+
 public class Exercice5 {
     public static void main(String[] args) {
         int cartons = 34;
