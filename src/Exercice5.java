@@ -1,4 +1,4 @@
-public class Entreprise {
+public class Exercice5 {
     public static void main(String[] args) {
         int cartons = 34;
         int maxCamion = 9;
