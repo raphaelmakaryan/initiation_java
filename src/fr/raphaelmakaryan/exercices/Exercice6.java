@@ -1,4 +1,4 @@
-package exercices;
+package fr.raphaelmakaryan.exercices;
 
 import java.util.Scanner;
 
@@ -16,6 +16,7 @@ public class Exercice6 {
     public static void main(String[] args) {
         int cartons;
         int maxCamion;
+        int voyages = 0;
         Scanner clavier = new Scanner(System.in);
 
         System.out.print("Saisissez le nombre de carton : ");
@@ -25,9 +26,8 @@ public class Exercice6 {
         System.out.print("Saisissez le nombre maximum que le camion peut transporter en carton : ");
         String maxCamionUser = clavier.nextLine();
         maxCamion = itIsInt(maxCamionUser);
-        clavier.close();
 
-        int voyages = 0;
+        clavier.close();
         while (cartons > 0) {
             // Récupere le nombre de cartons qui est la valeur minimum entre cartons et le camion
             int difference = Math.min(cartons, maxCamion);
