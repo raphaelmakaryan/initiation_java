@@ -1,6 +1,8 @@
 package fr.raphaelmakaryan.lombredesdragons.Tools;
 
 
+import java.util.Arrays;
+
 public class Tools {
     public static int itIsInt(String s, boolean fatal) {
         try {
@@ -49,4 +51,13 @@ public class Tools {
             System.out.println("Cet commande n'est pas implémentée.");
         }
     }
+
+    public static void displayAArrayint(int[] array) {
+        System.out.println(Arrays.toString(array));
+    }
+
+    public void clearLine() {
+        System.out.println("\n" + "-".repeat(40) + "\n");
+    }
+
 }

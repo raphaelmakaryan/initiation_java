@@ -1,5 +1,6 @@
 package fr.raphaelmakaryan.lombredesdragons.Game;
 
+import fr.raphaelmakaryan.lombredesdragons.Configurations.Board;
 import fr.raphaelmakaryan.lombredesdragons.Tools.Tools;
 
 import static fr.raphaelmakaryan.lombredesdragons.Verifications.EndGame.endGame;
@@ -30,11 +31,13 @@ public class Menu {
         nameUser = clavier.next();
         name = itIsString(nameUser, true);
         user.setName(name);
+        toolsMain.clearLine();
     }
 
     public void creationPlayerMenu(User user) {
         user.createCharacter();
         System.out.println("Votre personnage a été créé avec succès !");
+        toolsMain.clearLine();
     }
 
     public boolean afterCreationPlayerMenu() {
@@ -58,20 +61,26 @@ public class Menu {
         return false;
     }
 
-    public void choiceGameProgress() {
+    public void choiceGameProgress(Board boardClass) {
         int choiceUser;
         int choice;
 
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. Lancer le dé");
-        System.out.println("2. Quitter le jeu");
+        System.out.println("2. Voir ma position actuelle");
+        System.out.println("3. Quitter le jeu");
         System.out.println("Veuillez entrer le numéro de votre choix !");
         choiceUser = clavier.nextInt();
         choice = itIsInt(String.valueOf(choiceUser), false);
+        toolsMain.clearLine();
 
         if (choice == 1) {
-
-        } else {
+            Game.gameProgress();
+        } else if (choice == 2) {
+            boardClass.displayBoard();
+            toolsMain.clearLine();
+            choiceGameProgress(boardClass);
+        } else if (choice == 3) {
             endGame("exit");
         }
     }

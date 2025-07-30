@@ -5,7 +5,11 @@ public class EndGame {
         if (type.equals("exit")) {
             System.out.println("Merci d'avoir joué ! À bientôt !");
             System.exit(0);
-        } else {
+        } else if (type.equals("fin")) {
+            System.out.println("Vous avez gagné ! Merci d'avoir joué ! À bientôt !");
+            System.exit(0);
+        }
+        else {
             System.out.println("Commande non reconnue. Veuillez réessayer.");
         }
     }

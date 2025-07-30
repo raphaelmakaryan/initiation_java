@@ -7,14 +7,6 @@ public abstract class Character {
     protected int attackLevel;
     protected String offensiveEquipment;
 
-    /*
-    public Character(String type, String name, int healthLevel, int attackLevel, String offensiveEquipment) {
-        this.type = type;
-        this.name = name;
-        this.healthLevel = healthLevel;
-        this.attackLevel = attackLevel;
-        this.offensiveEquipment = offensiveEquipment;
-    }*/
     public Character(String name, int healthLevel, int attackLevel, String offensiveEquipment) {
         this.name = name;
         this.healthLevel = healthLevel;
