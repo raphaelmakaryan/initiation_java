@@ -1,13 +1,14 @@
 package fr.raphaelmakaryan.lombredesdragons.Game;
 
+import java.util.Random;
+
 public class Dice {
     public int diceRoll() {
-        boolean debug = false;
-        int max = 6;
-        int min = 1;
+        boolean debug = true;
+        Random rand = new Random();
         if (debug) {
-            return 10;
+            return 1;
         }
-        return (int) (Math.random() * (max - min + 1)) + min;
+        return rand.nextInt(1, 6);
     }
 }

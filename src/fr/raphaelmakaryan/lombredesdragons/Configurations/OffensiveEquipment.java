@@ -19,14 +19,6 @@ public abstract class OffensiveEquipment {
         this.name = name;
     }
 
-    public int getLevelAttack() {
-        return levelAttack;
-    }
-
-    public void setLevelAttack(int levelAttack) {
-        this.levelAttack = levelAttack;
-    }
-
     @Override
     public String toString() {
         return "OffensiveEquipment{" +

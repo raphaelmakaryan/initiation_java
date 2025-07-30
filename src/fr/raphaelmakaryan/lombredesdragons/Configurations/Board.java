@@ -1,9 +1,9 @@
 package fr.raphaelmakaryan.lombredesdragons.Configurations;
 
 import fr.raphaelmakaryan.lombredesdragons.Configurations.Exceptions.OutOfBoardException;
-import fr.raphaelmakaryan.lombredesdragons.Game.Game;
 import fr.raphaelmakaryan.lombredesdragons.Game.Menu;
-import fr.raphaelmakaryan.lombredesdragons.Verifications.Case;
+import fr.raphaelmakaryan.lombredesdragons.Verifications.Cell;
+import java.util.Random;
 
 public class Board {
     private int currentCasePlayers = 0;
@@ -12,9 +12,20 @@ public class Board {
     private int[] board;
 
     public Board() {
-        board = new int[caseEnd];
+        boolean debug = false;
+        Random rand = new Random();
+        board = new int[10];
+
+        int minIndex = caseStart + 1;
+        int maxIndex = board.length - 2;
+        int nbValues = rand.nextInt(1, (maxIndex - minIndex + 1));
+        for (int i = 0; i < nbValues; i++) {
+            int index = rand.nextInt(minIndex, maxIndex + 1);
+            int value = rand.nextInt(2, 4);
+            board[index] = value;
+        }
         board[caseStart] = 1;
-        board[caseEnd - 1] = 4;
+        board[board.length - 1] = 4;
     }
 
     public int getCurrentCasePlayers() {
@@ -40,14 +51,14 @@ public class Board {
         boardInt[currentCasePlayers] = 0;
         setNewBoard(boardInt);
         try {
-            Case.verifyCase(newPosition, boardInt, boardClass, menu, steps);
+            Cell.verifyCase(newPosition, boardInt, boardClass, menu);
         } catch (OutOfBoardException ignored) {
         }
     }
 
-
     /**
      * Checks if the player is trying to move out of the board and handles the situation.
+     *
      * @param positionNow
      * @param boardClass
      * @param boardInt
@@ -77,6 +88,10 @@ public class Board {
                 boardStr[i] = "VIDE";
             } else if (board[i] == 1) {
                 boardStr[i] = "X";
+            } else if (board[i] == 2) {
+                boardStr[i] = "ENEMY";
+            } else if (board[i] == 3) {
+                boardStr[i] = "BOX";
             } else if (board[i] == 4) {
                 boardStr[i] = "FIN";
             }
@@ -84,7 +99,6 @@ public class Board {
         System.out.println("Affichage du plateau de jeu :");
         System.out.println(String.join(", ", boardStr));
     }
-
 
     /**
      * Sets a new board configuration.

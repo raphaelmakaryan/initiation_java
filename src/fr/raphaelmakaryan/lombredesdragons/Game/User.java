@@ -1,8 +1,8 @@
 package fr.raphaelmakaryan.lombredesdragons.Game;
 
 import fr.raphaelmakaryan.lombredesdragons.Configurations.Character;
-import fr.raphaelmakaryan.lombredesdragons.Configurations.Characters.Warrior;
 import fr.raphaelmakaryan.lombredesdragons.Configurations.Characters.Wizard;
+import fr.raphaelmakaryan.lombredesdragons.Configurations.Characters.Warrior;
 
 import java.util.Objects;
 
@@ -28,16 +28,7 @@ public class User {
         }
     }
 
-    public Character getCharacter() {
-        return characterPlayer;
-    }
-
     public void setTypeChoice(String typeChoice) {
         this.typeChoice = typeChoice;
     }
-
-    public String getTypeChoice() {
-        return this.typeChoice;
-    }
-
 }

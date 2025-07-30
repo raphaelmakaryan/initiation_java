@@ -1,7 +1,7 @@
 package fr.raphaelmakaryan.lombredesdragons.Game;
 
 import fr.raphaelmakaryan.lombredesdragons.Configurations.Board;
-import fr.raphaelmakaryan.lombredesdragons.Configurations.Exceptions.OutOfBoardException;
+import fr.raphaelmakaryan.lombredesdragons.Configurations.Colors;
 import fr.raphaelmakaryan.lombredesdragons.Tools.Tools;
 
 import static fr.raphaelmakaryan.lombredesdragons.Verifications.EndGame.endGame;
@@ -23,7 +23,7 @@ public class Menu {
         boolean verifType;
         String name;
 
-        System.out.println("Quel type de personnage souhaitez-vous créer ? (Magicien / Guerrier)");
+        System.out.println(Colors.RESET + "Quel type de personnage souhaitez-vous créer ? (Magicien / Guerrier)");
         typeUser = clavier.next();
         type = itIsString(typeUser, true);
         verifType = Boolean.parseBoolean(String.valueOf(isACharacter(type)));
@@ -41,7 +41,7 @@ public class Menu {
     // Menu a la validation du creation du personnage
     public void creationPlayerMenu(User user) {
         user.createCharacter();
-        System.out.println("Votre personnage a été créé avec succès !");
+        System.out.println(Colors.START_WHITE + "Votre personnage a été créé avec succès !" + Colors.RESET);
         toolsMain.clearLine();
     }
 
@@ -50,7 +50,7 @@ public class Menu {
         int choiceUser;
         int choice;
 
-        System.out.println("Que voulez-vous faire maintenant ?");
+        System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
         System.out.println("1. Démarrer une nouvelle partie");
         System.out.println("2. Afficher toutes les infos de votre personnage");
         System.out.println("3. Modifier ses informations");
@@ -81,7 +81,7 @@ public class Menu {
         int choice;
         Game Game = new Game();
 
-        System.out.println("Que voulez-vous faire maintenant ?");
+        System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
         System.out.println("1. Lancer le dé");
         System.out.println("2. Voir ma position actuelle");
         System.out.println("3. Quitter le jeu");
@@ -110,7 +110,7 @@ public class Menu {
     public void endGameCase() {
         int choiceUser;
         int choice;
-        System.out.println("Vous avez gagné !");
+        System.out.println(Colors.END_PURPLE + "Vous avez gagné !");
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. Quitter le jeu");
         System.out.println("2. Recommencer une nouvelle partie");
@@ -124,6 +124,46 @@ public class Menu {
             System.out.println("Recommençons une nouvelle partie !");
         } else {
             toolsMain.verificationChoiceNotWhile("endGameCase", this, (Object) null);
+        }
+    }
+
+    public void enemiesCell(Board boardClass) {
+        int choiceUser;
+        int choice;
+        System.out.println(Colors.ENEMY_RED + "Vous etes tomber sur un ennemi !" + Colors.RESET);
+        System.out.println("Que voulez-vous faire maintenant ?");
+        System.out.println("1. Se battre contre l'ennemi");
+        System.out.println("2. Fuir l'ennemi");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        toolsMain.clearLine();
+        if (choice == 1) {
+            toolsMain.maintenance("commande");
+        } else if (choice == 2) {
+            choiceGameProgress(boardClass);
+        } else {
+            toolsMain.verificationChoiceNotWhile("enemiesCell", this, (Object) null);
+        }
+    }
+
+    public void boxCell(Board boardClass) {
+        int choiceUser;
+        int choice;
+        System.out.println(Colors.BOX_GREEN + "Vous etes tomber sur une boîte !" + Colors.RESET);
+        System.out.println("Que voulez-vous faire maintenant ?");
+        System.out.println("1. L'ouvrir");
+        System.out.println("2. Laisser la boîte");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        toolsMain.clearLine();
+        if (choice == 1) {
+            toolsMain.maintenance("commande");
+        } else if (choice == 2) {
+            choiceGameProgress(boardClass);
+        } else {
+            toolsMain.verificationChoiceNotWhile("boxCell", this, (Object) null);
         }
     }
 }

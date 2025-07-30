@@ -1,6 +1,7 @@
 package fr.raphaelmakaryan.lombredesdragons.Tools;
 
 
+import fr.raphaelmakaryan.lombredesdragons.Configurations.Colors;
 import fr.raphaelmakaryan.lombredesdragons.Game.Menu;
 
 import java.util.Arrays;
@@ -48,6 +49,12 @@ public class Tools {
         return false;
     }
 
+    /**
+     * Maintenance method for the command.
+     * This method is not implemented yet.
+     *
+     * @param type: the type of command to maintain | commande
+     */
     public void maintenance(String type) {
         if (type.equals("commande")) {
             System.out.println("Cet commande n'est pas implémentée.");
@@ -67,16 +74,16 @@ public class Tools {
      * Displays the line separation in the console.
      */
     public void clearLine() {
-        System.out.println("\n" + "-".repeat(40) + "\n");
+        System.out.println(Colors.SEPARATION_BLACK + "\n" + "-".repeat(40) + "\n" + Colors.RESET);
     }
 
     /**
      * Choice verification loop for menus.
      *
      * @param condition: the condition to check
-     * @param type: the type of condition to check (true or false)
-     * @param menu: the instance of the Menu class to call the methods
-     * @param function: the name of the method to call in the Menu class
+     * @param type:      the type of condition to check (true or false)
+     * @param menu:      the instance of the Menu class to call the methods
+     * @param function:  the name of the method to call in the Menu class
      */
     public void verificationChoiceWhile(boolean condition, boolean type, Menu menu, String function) {
         while (condition != type) {
@@ -95,8 +102,8 @@ public class Tools {
      * Choice verification loop for menus with arguments.
      *
      * @param function: the name of the method to call in the Menu class
-     * @param menu: the instance of the Menu class to call the methods on
-     * @param args: the arguments to pass to the method
+     * @param menu:     the instance of the Menu class to call the methods on
+     * @param args:     the arguments to pass to the method
      */
     public void verificationChoiceNotWhile(String function, Menu menu, Object... args) {
         try {
