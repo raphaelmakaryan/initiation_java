@@ -5,6 +5,16 @@ import fr.raphaelmakaryan.lombredesdragons.Configurations.Exceptions.OutOfBoardE
 import fr.raphaelmakaryan.lombredesdragons.Game.Menu;
 
 public class Case {
+    /**
+     * Checks if the square number is valid and updates the game board state.
+     *
+     * @param caseNumber
+     * @param boardInt
+     * @param boardClass
+     * @param menu
+     * @param dee
+     * @throws OutOfBoardException
+     */
     public static void verifyCase(int caseNumber, int[] boardInt, Board boardClass, Menu menu, int dee) throws OutOfBoardException {
         if (caseNumber >= 63) {
             boardClass.outOfBoard(caseNumber, boardClass, boardInt);

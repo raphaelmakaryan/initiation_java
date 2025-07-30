@@ -70,6 +70,10 @@ public class Menu {
         return false;
     }
 
+    /**
+     * Method to manage user choices during game progress
+     * @param boardClass
+     */
     // Choix pendant la progression du jeu
     public void choiceGameProgress(Board boardClass) {
         int choiceUser;
@@ -98,6 +102,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Method to handle user selection at the end of the game
+     */
     // Choix a la fin du jeu si le joueur est aller au bout du plateau
     public void endGameCase() {
         int choiceUser;

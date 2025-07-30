@@ -54,14 +54,30 @@ public class Tools {
         }
     }
 
+    /**
+     * Displays an array of integers as a string.
+     *
+     * @param array: the array of integers to display
+     */
     public static void displayAArrayint(int[] array) {
         System.out.println(Arrays.toString(array));
     }
 
+    /**
+     * Displays the line separation in the console.
+     */
     public void clearLine() {
         System.out.println("\n" + "-".repeat(40) + "\n");
     }
 
+    /**
+     * Choice verification loop for menus.
+     *
+     * @param condition: the condition to check
+     * @param type: the type of condition to check (true or false)
+     * @param menu: the instance of the Menu class to call the methods
+     * @param function: the name of the method to call in the Menu class
+     */
     public void verificationChoiceWhile(boolean condition, boolean type, Menu menu, String function) {
         while (condition != type) {
             clearLine();
@@ -75,6 +91,13 @@ public class Tools {
         }
     }
 
+    /**
+     * Choice verification loop for menus with arguments.
+     *
+     * @param function: the name of the method to call in the Menu class
+     * @param menu: the instance of the Menu class to call the methods on
+     * @param args: the arguments to pass to the method
+     */
     public void verificationChoiceNotWhile(String function, Menu menu, Object... args) {
         try {
             clearLine();

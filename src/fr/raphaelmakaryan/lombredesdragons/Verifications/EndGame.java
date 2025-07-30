@@ -3,6 +3,12 @@ package fr.raphaelmakaryan.lombredesdragons.Verifications;
 import fr.raphaelmakaryan.lombredesdragons.Game.Menu;
 
 public class EndGame {
+    /**
+     * Ends the game according to the specified ending type.
+     *
+     * @param type
+     * @param menu
+     */
     public static void endGame(String type, Menu menu) {
         if (type.equals("exit")) {
             System.out.println("Merci d'avoir joué ! À bientôt !");

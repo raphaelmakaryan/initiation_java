@@ -29,6 +29,11 @@ public class Board {
         return board;
     }
 
+    /**
+     * @param steps
+     * @param boardClass
+     * @param menu
+     */
     public void movePlayer(int steps, Board boardClass, Menu menu) {
         int[] boardInt = boardClass.getBoard();
         int newPosition = currentCasePlayers + steps;
@@ -40,6 +45,13 @@ public class Board {
         }
     }
 
+
+    /**
+     * Checks if the player is trying to move out of the board and handles the situation.
+     * @param positionNow
+     * @param boardClass
+     * @param boardInt
+     */
     public void outOfBoard(int positionNow, Board boardClass, int[] boardInt) {
         int calculReturnGame;
         int difference;
@@ -73,6 +85,12 @@ public class Board {
         System.out.println(String.join(", ", boardStr));
     }
 
+
+    /**
+     * Sets a new board configuration.
+     *
+     * @param newBoard the new board configuration as an array of integers
+     */
     public void setNewBoard(int[] newBoard) {
         this.board = newBoard;
     }
