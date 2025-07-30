@@ -7,6 +7,7 @@ public abstract class Character {
     protected int attackLevel;
     protected String offensiveEquipment;
 
+    // constructor
     public Character(String name, int healthLevel, int attackLevel, String offensiveEquipment) {
         this.name = name;
         this.healthLevel = healthLevel;
@@ -54,6 +55,7 @@ public abstract class Character {
         this.offensiveEquipment = offensiveEquipment;
     }
 
+    // Methode pour afficher les informations du personnage
     @Override
     public String toString() {
         return "Character{" +

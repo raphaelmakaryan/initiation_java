@@ -6,12 +6,15 @@ import fr.raphaelmakaryan.lombredesdragons.Tools.Tools;
 import static fr.raphaelmakaryan.lombredesdragons.Verifications.EndGame.endGame;
 import static fr.raphaelmakaryan.lombredesdragons.Tools.Tools.*;
 
+import fr.raphaelmakaryan.lombredesdragons.Verifications.EndGame;
+
 import java.util.Scanner;
 
 public class Menu {
     Tools toolsMain = new Tools();
     Scanner clavier = new Scanner(System.in);
 
+    // Menu a la creation du personnage
     public void startMenu(User user) {
         String typeUser;
         String nameUser;
@@ -34,12 +37,14 @@ public class Menu {
         toolsMain.clearLine();
     }
 
+    // Menu a la validation du creation du personnage
     public void creationPlayerMenu(User user) {
         user.createCharacter();
         System.out.println("Votre personnage a été créé avec succès !");
         toolsMain.clearLine();
     }
 
+    // Choix apres la creation du personnage
     public boolean afterCreationPlayerMenu() {
         int choiceUser;
         int choice;
@@ -54,16 +59,21 @@ public class Menu {
         choice = itIsInt(String.valueOf(choiceUser), false);
         if (choice == 1) {
             return true;
-        } else if (choice == 3) {
-            endGame("exit");
+        } else if (choice == 3 || choice == 2) {
+            toolsMain.maintenance("commande");
+            return false;
+        } else if (choice == 4) {
+            endGame("exit", this);
+            return false;
         }
-        toolsMain.maintenance("commande");
         return false;
     }
 
+    // Choix pendant la progression du jeu
     public void choiceGameProgress(Board boardClass) {
         int choiceUser;
         int choice;
+        Game Game = new Game();
 
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. Lancer le dé");
@@ -75,13 +85,36 @@ public class Menu {
         toolsMain.clearLine();
 
         if (choice == 1) {
-            Game.gameProgress();
+            Game.gameProgress(boardClass);
         } else if (choice == 2) {
             boardClass.displayBoard();
             toolsMain.clearLine();
             choiceGameProgress(boardClass);
         } else if (choice == 3) {
-            endGame("exit");
+            endGame("exit", this);
+        } else {
+            toolsMain.verificationChoiceNotWhile("choiceGameProgress", this, boardClass);
+        }
+    }
+
+    // Choix a la fin du jeu si le joueur est aller au bout du plateau
+    public void endGameCase() {
+        int choiceUser;
+        int choice;
+        System.out.println("Vous avez gagné !");
+        System.out.println("Que voulez-vous faire maintenant ?");
+        System.out.println("1. Quitter le jeu");
+        System.out.println("2. Recommencer une nouvelle partie");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        toolsMain.clearLine();
+        if (choice == 1) {
+            EndGame.endGame("exit", this);
+        } else if (choice == 2) {
+            System.out.println("Recommençons une nouvelle partie !");
+        } else {
+            toolsMain.verificationChoiceNotWhile("endGameCase", this, null);
         }
     }
 }

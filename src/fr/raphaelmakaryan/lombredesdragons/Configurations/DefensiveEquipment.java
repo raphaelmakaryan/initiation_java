@@ -5,6 +5,7 @@ public abstract class DefensiveEquipment {
     protected String name;
     protected int levelDefense;
 
+    // Constructor
     public DefensiveEquipment(String name, int levelDefense) {
         this.name = name;
         this.levelDefense = levelDefense;

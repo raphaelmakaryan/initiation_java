@@ -1,6 +1,8 @@
 package fr.raphaelmakaryan.lombredesdragons.Tools;
 
 
+import fr.raphaelmakaryan.lombredesdragons.Game.Menu;
+
 import java.util.Arrays;
 
 public class Tools {
@@ -60,4 +62,34 @@ public class Tools {
         System.out.println("\n" + "-".repeat(40) + "\n");
     }
 
+    public void verificationChoiceWhile(boolean condition, boolean type, Menu menu, String function) {
+        while (condition != type) {
+            clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+            try {
+                java.lang.reflect.Method method = menu.getClass().getMethod(function);
+                method.invoke(menu);
+            } catch (Exception e) {
+                System.err.println("Erreur lors de l'appel de la fonction " + function + " : " + e.getMessage());
+            }
+        }
+    }
+
+    public void verificationChoiceNotWhile(String function, Menu menu, Object... args) {
+        try {
+            clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+            if (args.length == 0) {
+                java.lang.reflect.Method method = menu.getClass().getMethod(function);
+                method.invoke(menu);
+            } else {
+                java.lang.reflect.Method method = menu.getClass().getMethod(function, Arrays.stream(args)
+                        .map(Object::getClass)
+                        .toArray(Class[]::new));
+                method.invoke(menu, args);
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'appel de la fonction " + function + " : " + e.getMessage());
+        }
+    }
 }

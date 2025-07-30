@@ -1,0 +1,137 @@
+GLOSSAIRE DES SYNTAXES ET CONCEPTS JAVA UTILISÉS DANS LE PROJET
+
+1\. Déclaration de classe
+    public class NomDeLaClasse { ... }
+    Définit une classe.
+
+2\. Déclaration de package
+    package fr.raphaelmakaryan.lombredesdragons.Game;
+    Indique le package du fichier.
+
+3\. Import de classes
+    import fr.raphaelmakaryan.lombredesdragons.Game.Game;
+    Permet d’utiliser des classes d’autres packages.
+
+4\. Déclaration de méthode
+    public void nomDeLaMethode() { ... }
+    Définit une méthode.
+
+5\. Appel de méthode
+    objet.nomDeLaMethode();
+    Appelle une méthode sur un objet.
+
+6\. Création d’objet
+    NomDeLaClasse obj = new NomDeLaClasse();
+    Instancie une classe.
+
+7\. Boucle for
+    for (int i = 0; i < n; i++) { ... }
+    Boucle avec compteur.
+
+8\. Boucle while
+    while (condition) { ... }
+    Boucle tant que la condition est vraie.
+
+9\. Condition if/else
+    if (condition) { ... } else { ... }
+    Exécute un bloc selon la condition.
+
+10\. Affichage console
+    System.out.println("Texte");
+    Affiche du texte dans la console.
+
+11\. Tableau
+    Type[] tab = new Type[taille];
+    Déclare un tableau.
+
+12\. Enumération
+    public enum NomEnum { ... }
+    Définit un type énuméré.
+
+13\. Héritage
+    public class Warrior extends Character { ... }
+    Une classe hérite d’une autre.
+
+14\. Interface
+    public interface NomInterface { ... }
+    Déclare une interface.
+
+15\. Implémentation d’interface
+    public class NomClasse implements NomInterface { ... }
+    Implémente une interface.
+
+16\. Gestion des exceptions
+    try { ... } catch (Exception e) { ... }
+    Gère les erreurs.
+
+17\. Attributs de classe
+    private int vie;
+    Déclare une variable membre.
+
+18\. Constructeur
+    public NomDeLaClasse() { ... }
+    Méthode spéciale pour créer un objet.
+
+19\. Surcharge de méthode
+    public void attaque() { ... }
+    public void attaque(int force) { ... }
+    Plusieurs méthodes avec le même nom mais des paramètres différents.
+
+20\. Collections
+    List<Type> liste = new ArrayList<>();
+    Utilise des listes dynamiques.
+
+21\. Réflexion
+    Method method = obj.getClass().getMethod("nomMethode");
+    method.invoke(obj);
+    Appelle une méthode par son nom.
+
+22\. Accesseurs (getters/setters)
+    public int getVie() { return vie; }
+    public void setVie(int vie) { this.vie = vie; }
+    Méthodes pour accéder/modifier les attributs.
+
+23\. Static
+    public static void main(String[] args) { ... }
+    Méthode ou attribut partagé par toutes les instances.
+
+24\. Final
+    public final class NomDeLaClasse { ... }
+    Empêche l’héritage ou la modification.
+
+25\. Super
+    super.nomDeLaMethode();
+    Appelle une méthode de la classe parente.
+
+26\. Override
+    @Override
+    public void nomDeLaMethode() { ... }
+    Redéfinit une méthode héritée.
+
+27\. Scanner (entrée utilisateur)
+    Scanner sc = new Scanner(System.in);
+    Lit l’entrée clavier.
+
+28\. Switch
+    switch (choix) {
+        case 1: ...; break;
+        case 2: ...; break;
+        default: ...;
+    }
+    Choix multiples selon une variable.
+
+29\. Opérateurs logiques
+    &&, ||, !
+    Utilisés dans les conditions.
+
+30\. Opérateurs arithmétiques
+    +, -, *, /, %
+    Calculs mathématiques.
+
+31\. ToString
+    public String toString() { ... }
+    Affichage personnalisé d’un objet.
+
+32\. Equals
+    public boolean equals(Object obj) { ... }
+    Comparaison d’objets.

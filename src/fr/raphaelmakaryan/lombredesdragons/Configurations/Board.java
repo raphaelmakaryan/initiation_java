@@ -30,7 +30,7 @@ public class Board {
 
     public void movePlayer(int steps, Board board, Menu menu) {
         int[] boardCases = board.getBoard();
-        int newPosition = (currentCasePlayers + 1) + steps;
+        int newPosition = currentCasePlayers + steps;
         boardCases[currentCasePlayers] = 0;
         setNewBoard(boardCases);
         Case.verifyCase(newPosition, boardCases, board, menu);
@@ -47,7 +47,7 @@ public class Board {
                 boardStr[i] = "VIDE";
             }
             else if (board[i] == 1) {
-                boardStr[i] = "VOUS";
+                boardStr[i] = "X";
             } else if (board[i] == 4) {
                 boardStr[i] = "FIN";
             }
