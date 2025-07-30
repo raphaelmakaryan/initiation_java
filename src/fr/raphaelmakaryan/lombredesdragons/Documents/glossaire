@@ -135,3 +135,21 @@ GLOSSAIRE DES SYNTAXES ET CONCEPTS JAVA UTILISÉS DANS LE PROJET
 32\. Equals
     public boolean equals(Object obj) { ... }
     Comparaison d’objets.
+
+33\. Exception
+Classe de base pour la gestion des erreurs et événements exceptionnels.
+Permet d’interrompre le déroulement normal du programme et de traiter les erreurs de façon contrôlée.
+
+34\. throw
+Mot-clé utilisé pour lancer une exception explicitement dans le code.
+
+35\. throws
+Mot-clé utilisé dans la déclaration d’une méthode pour indiquer qu’elle peut lancer une ou plusieurs exceptions.
+
+36\. Exception personnalisée
+ Classe qui hérite de Exception et permet de définir des erreurs spécifiques à l’application (ex: OutOfBoardException).
+ try {
+     // code susceptible de provoquer une exception
+ } catch (OutOfBoardException e) {
+     // traitement de l’exception
+ }

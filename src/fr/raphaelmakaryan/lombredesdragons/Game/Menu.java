@@ -72,6 +72,7 @@ public class Menu {
 
     /**
      * Method to manage user choices during game progress
+     *
      * @param boardClass
      */
     // Choix pendant la progression du jeu
@@ -122,7 +123,7 @@ public class Menu {
         } else if (choice == 2) {
             System.out.println("Recommençons une nouvelle partie !");
         } else {
-            toolsMain.verificationChoiceNotWhile("endGameCase", this, null);
+            toolsMain.verificationChoiceNotWhile("endGameCase", this, (Object) null);
         }
     }
 }
