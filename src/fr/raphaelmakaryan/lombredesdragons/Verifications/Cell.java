@@ -29,23 +29,17 @@ public class Cell {
         } else if (verificationCase == 2) {
             // ENEMY
             Enemies enemies = new Enemies();
-            boardClass.setNewCurrentCasePlayers(caseNumber);
-            boardInt[caseNumber] = 1;
-            boardClass.setNewBoard(boardInt);
+            boardClass.setNewCellPlayer(boardInt, caseNumber);
             enemies.haveEnemies(menu, boardClass);
         } else if (verificationCase == 3) {
             // BOX
             Box box = new Box();
-            boardClass.setNewCurrentCasePlayers(caseNumber);
-            boardInt[caseNumber] = 1;
-            boardClass.setNewBoard(boardInt);
+            boardClass.setNewCellPlayer(boardInt, caseNumber);
             box.haveBox(menu, boardClass);
         } else if (verificationCase == 0) {
             // NOTHING
             System.out.println(Colors.NOTHING_BLUE + "Il n'y a rien ici !\n" + Colors.RESET);
-            boardClass.setNewCurrentCasePlayers(caseNumber);
-            boardInt[caseNumber] = 1;
-            boardClass.setNewBoard(boardInt);
+            boardClass.setNewCellPlayer(boardInt, caseNumber);
             menu.choiceGameProgress(boardClass);
         }
     }

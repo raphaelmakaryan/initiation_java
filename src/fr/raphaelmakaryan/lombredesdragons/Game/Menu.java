@@ -130,6 +130,7 @@ public class Menu {
     public void enemiesCell(Board boardClass) {
         int choiceUser;
         int choice;
+        toolsMain.clearLine();
         System.out.println(Colors.ENEMY_RED + "Vous etes tomber sur un ennemi !" + Colors.RESET);
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. Se battre contre l'ennemi");
@@ -150,6 +151,7 @@ public class Menu {
     public void boxCell(Board boardClass) {
         int choiceUser;
         int choice;
+        toolsMain.clearLine();
         System.out.println(Colors.BOX_GREEN + "Vous etes tomber sur une boîte !" + Colors.RESET);
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. L'ouvrir");

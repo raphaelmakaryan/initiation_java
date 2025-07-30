@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Dice {
     public int diceRoll() {
-        boolean debug = true;
+        boolean debug = false;
         Random rand = new Random();
         if (debug) {
             return 1;

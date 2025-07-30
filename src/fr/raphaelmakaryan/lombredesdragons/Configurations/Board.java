@@ -3,6 +3,7 @@ package fr.raphaelmakaryan.lombredesdragons.Configurations;
 import fr.raphaelmakaryan.lombredesdragons.Configurations.Exceptions.OutOfBoardException;
 import fr.raphaelmakaryan.lombredesdragons.Game.Menu;
 import fr.raphaelmakaryan.lombredesdragons.Verifications.Cell;
+
 import java.util.Random;
 
 public class Board {
@@ -14,8 +15,11 @@ public class Board {
     public Board() {
         boolean debug = false;
         Random rand = new Random();
-        board = new int[10];
-
+        if (debug) {
+            board = new int[10];
+        } else {
+            board = new int[caseEnd];
+        }
         int minIndex = caseStart + 1;
         int maxIndex = board.length - 2;
         int nbValues = rand.nextInt(1, (maxIndex - minIndex + 1));
@@ -85,18 +89,24 @@ public class Board {
         }
         for (int i = 0; i < board.length; i++) {
             if (board[i] == 0) {
-                boardStr[i] = "VIDE";
+                boardStr[i] = Colors.NOTHING_BLUE + "NT" + Colors.RESET;
             } else if (board[i] == 1) {
-                boardStr[i] = "X";
+                boardStr[i] = Colors.PLAYER_BRIYEL + "YOU" + Colors.RESET;
             } else if (board[i] == 2) {
-                boardStr[i] = "ENEMY";
+                boardStr[i] = Colors.ENEMY_RED + "ENEMY" + Colors.RESET;
             } else if (board[i] == 3) {
-                boardStr[i] = "BOX";
+                boardStr[i] = Colors.BOX_GREEN + "BOX" + Colors.RESET;
             } else if (board[i] == 4) {
-                boardStr[i] = "FIN";
+                boardStr[i] = Colors.END_PURPLE + "END" + Colors.RESET;
             }
         }
-        System.out.println("Affichage du plateau de jeu :");
+        System.out.println("Game board display :");
+        System.out.println(Colors.PLAYER_BRIYEL + "'YOU' : Your position on the board" + Colors.RESET);
+        System.out.println(Colors.ENEMY_RED + "'ENEMY' : Enemy position on the board" + Colors.RESET);
+        System.out.println(Colors.BOX_GREEN + "'BOX' : Box position on the board" + Colors.RESET);
+        System.out.println(Colors.END_PURPLE + "'END' : End of the game position" + Colors.RESET);
+        System.out.println(Colors.NOTHING_BLUE + "'NT' : Nothing on the board" + Colors.RESET);
+        System.out.println("\n");
         System.out.println(String.join(", ", boardStr));
     }
 
@@ -107,5 +117,18 @@ public class Board {
      */
     public void setNewBoard(int[] newBoard) {
         this.board = newBoard;
+    }
+
+    /**
+     * Sets the new cell for the player on the board.
+     *
+     * @param boardInt
+     * @param newPosition
+     */
+    public void setNewCellPlayer(int[] boardInt, int newPosition) {
+        setNewCurrentCasePlayers(newPosition);
+        boardInt[newPosition] = 1;
+        setNewBoard(boardInt);
+        System.out.println("Vous êtes maintenant à la case " + Colors.CELL_BRIGHTMAGENTA + newPosition + Colors.RESET + ".");
     }
 }

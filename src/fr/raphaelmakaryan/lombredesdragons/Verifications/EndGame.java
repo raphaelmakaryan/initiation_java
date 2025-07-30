@@ -1,5 +1,6 @@
 package fr.raphaelmakaryan.lombredesdragons.Verifications;
 
+import fr.raphaelmakaryan.lombredesdragons.Configurations.Colors;
 import fr.raphaelmakaryan.lombredesdragons.Game.Menu;
 
 public class EndGame {
@@ -11,7 +12,7 @@ public class EndGame {
      */
     public static void endGame(String type, Menu menu) {
         if (type.equals("exit")) {
-            System.out.println("Merci d'avoir joué ! À bientôt !");
+            System.out.println(Colors.END_PURPLE + "Merci d'avoir joué ! À bientôt !");
             System.exit(0);
         } else if (type.equals("fin")) {
             menu.endGameCase();
