@@ -1,6 +1,7 @@
 package fr.raphaelmakaryan.lombredesdragons.Game;
 
 import fr.raphaelmakaryan.lombredesdragons.Configurations.Board;
+import fr.raphaelmakaryan.lombredesdragons.Configurations.Exceptions.OutOfBoardException;
 import fr.raphaelmakaryan.lombredesdragons.Tools.Tools;
 
 import static fr.raphaelmakaryan.lombredesdragons.Verifications.EndGame.endGame;

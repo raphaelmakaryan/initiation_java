@@ -1,7 +1,8 @@
 package fr.raphaelmakaryan.lombredesdragons.Configurations;
 
+import fr.raphaelmakaryan.lombredesdragons.Configurations.Exceptions.OutOfBoardException;
+import fr.raphaelmakaryan.lombredesdragons.Game.Game;
 import fr.raphaelmakaryan.lombredesdragons.Game.Menu;
-import fr.raphaelmakaryan.lombredesdragons.Tools.Tools;
 import fr.raphaelmakaryan.lombredesdragons.Verifications.Case;
 
 public class Board {
@@ -28,12 +29,29 @@ public class Board {
         return board;
     }
 
-    public void movePlayer(int steps, Board board, Menu menu) {
-        int[] boardCases = board.getBoard();
+    public void movePlayer(int steps, Board boardClass, Menu menu) {
+        int[] boardInt = boardClass.getBoard();
         int newPosition = currentCasePlayers + steps;
-        boardCases[currentCasePlayers] = 0;
-        setNewBoard(boardCases);
-        Case.verifyCase(newPosition, boardCases, board, menu);
+        boardInt[currentCasePlayers] = 0;
+        setNewBoard(boardInt);
+        try {
+            Case.verifyCase(newPosition, boardInt, boardClass, menu, steps);
+        } catch (OutOfBoardException ignored) {
+        }
+    }
+
+    public void outOfBoard(int positionNow, Board boardClass, int[] boardInt) {
+        int calculReturnGame;
+        int difference;
+        if (positionNow >= 63) {
+            difference = (positionNow - 63);
+            calculReturnGame = 63 - difference;
+            boardInt[currentCasePlayers] = 0;
+            boardClass.setNewCurrentCasePlayers(calculReturnGame);
+            boardInt[calculReturnGame] = 1;
+            boardClass.setNewBoard(boardInt);
+            System.out.println("Vous avez essayez de sortir du plateau de jeu ! Vous avez été renvoyé à la case " + calculReturnGame + ".");
+        }
     }
 
     public void displayBoard() {
@@ -45,8 +63,7 @@ public class Board {
         for (int i = 0; i < board.length; i++) {
             if (board[i] == 0) {
                 boardStr[i] = "VIDE";
-            }
-            else if (board[i] == 1) {
+            } else if (board[i] == 1) {
                 boardStr[i] = "X";
             } else if (board[i] == 4) {
                 boardStr[i] = "FIN";

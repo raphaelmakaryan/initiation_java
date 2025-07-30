@@ -26,4 +26,12 @@ public abstract class OffensiveEquipment {
     public void setLevelAttack(int levelAttack) {
         this.levelAttack = levelAttack;
     }
+
+    @Override
+    public String toString() {
+        return "OffensiveEquipment{" +
+                "name='" + name + '\'' +
+                ", levelAttack=" + levelAttack +
+                '}';
+    }
 }
