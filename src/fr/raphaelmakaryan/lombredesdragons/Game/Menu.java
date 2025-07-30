@@ -1,6 +1,7 @@
 package fr.raphaelmakaryan.lombredesdragons.Game;
 
 import fr.raphaelmakaryan.lombredesdragons.Configurations.Board;
+import fr.raphaelmakaryan.lombredesdragons.Configurations.Character;
 import fr.raphaelmakaryan.lombredesdragons.Configurations.Colors;
 import fr.raphaelmakaryan.lombredesdragons.Tools.Tools;
 
@@ -46,7 +47,7 @@ public class Menu {
     }
 
     // Choix apres la creation du personnage
-    public boolean afterCreationPlayerMenu() {
+    public boolean afterCreationPlayerMenu(User user, Menu menu) {
         int choiceUser;
         int choice;
 
@@ -60,9 +61,14 @@ public class Menu {
         choice = itIsInt(String.valueOf(choiceUser), false);
         if (choice == 1) {
             return true;
-        } else if (choice == 3 || choice == 2) {
-            toolsMain.maintenance("commande");
-            return false;
+        } else if (choice == 2) {
+            displayInformationCharacter(user);
+            toolsMain.clearLine();
+            menu.afterCreationPlayerMenu(user, menu);
+        } else if (choice == 3) {
+            displayModifyInformationCharacter(user);
+            toolsMain.clearLine();
+            menu.afterCreationPlayerMenu(user, menu);
         } else if (choice == 4) {
             endGame("exit", this);
             return false;
@@ -167,5 +173,29 @@ public class Menu {
         } else {
             toolsMain.verificationChoiceNotWhile("boxCell", this, (Object) null);
         }
+    }
+
+    public void displayInformationCharacter(User user) {
+        Character character = user.getCharacterPlayer();
+        toolsMain.clearLine();
+        System.out.println("Voici les informations de votre personnage :");
+        System.out.println("Nom : " + character.getName());
+        System.out.println("Type : " + character.getType());
+        System.out.println("Points de vie : " + character.getLifePoints());
+        System.out.println("Niveau d'attaque : " + character.getAttackLevel());
+        System.out.println("Equipement offensif : " + character.getOffensiveEquipment());
+        System.out.println("Equipement defensif : " + character.getDefensiveEquipment());
+        toolsMain.clearLine();
+    }
+
+    public void displayModifyInformationCharacter(User user) {
+        String nameUser;
+        String name;
+
+        System.out.println("Donnez lui son nouveau nom :");
+        nameUser = clavier.next();
+        name = itIsString(nameUser, true);
+        user.setName(name);
+        toolsMain.clearLine();
     }
 }

@@ -20,6 +20,10 @@ public class User {
         return this.name;
     }
 
+    public Character getCharacterPlayer() {
+        return this.characterPlayer;
+    }
+
     public void createCharacter() {
         if (Objects.equals(this.typeChoice, "magicien")) {
             characterPlayer = new Wizard(this.name);

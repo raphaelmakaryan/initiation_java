@@ -14,7 +14,7 @@ public class Game {
     public void main() {
         start(menuGame, user);
         creationPlayer(menuGame, user);
-        afterCreationPlayer(menuGame);
+        afterCreationPlayer(menuGame, user);
     }
 
     /**
@@ -43,9 +43,9 @@ public class Game {
      * @param menu The menu to launch the game
      */
     // Après la création du joueur, on lance le systeme du jeu
-    public void afterCreationPlayer(Menu menu) {
+    public void afterCreationPlayer(Menu menu, User user) {
         Tools tools = new Tools();
-        boolean startGame = menu.afterCreationPlayerMenu();
+        boolean startGame = menu.afterCreationPlayerMenu(user, menu);
         tools.verificationChoiceWhile(startGame, true, menu, "afterCreationPlayerMenu");
         Board board = new Board();
         startGame(board);

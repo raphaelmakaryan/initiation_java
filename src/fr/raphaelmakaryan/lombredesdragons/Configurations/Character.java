@@ -11,6 +11,7 @@ public abstract class Character {
     // constructor
     public Character(String name, int lifePoints, int attackLevel, String offensiveEquipment, String defensiveEquipment) {
         this.name = name;
+        this.type = this.getClass().getSimpleName();
         this.lifePoints = lifePoints;
         this.attackLevel = attackLevel;
         this.offensiveEquipment = offensiveEquipment;
@@ -27,6 +28,38 @@ public abstract class Character {
 
     public String getName() {
         return name;
+    }
+
+    public int getLifePoints() {
+        return lifePoints;
+    }
+
+    public void setLifePoints(int lifePoints) {
+        this.lifePoints = lifePoints;
+    }
+
+    public int getAttackLevel() {
+        return attackLevel;
+    }
+
+    public void setAttackLevel(int attackLevel) {
+        this.attackLevel = attackLevel;
+    }
+
+    public String getOffensiveEquipment() {
+        return offensiveEquipment;
+    }
+
+    public void setOffensiveEquipment(String offensiveEquipment) {
+        this.offensiveEquipment = offensiveEquipment;
+    }
+
+    public String getDefensiveEquipment() {
+        return defensiveEquipment;
+    }
+
+    public void setDefensiveEquipment(String defensiveEquipment) {
+        this.defensiveEquipment = defensiveEquipment;
     }
 
     public void setName(String name) {
