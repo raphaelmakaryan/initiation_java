@@ -3,6 +3,7 @@ package fr.raphaelmakaryan.lombredesdragons.configurations;
 import fr.raphaelmakaryan.lombredesdragons.game.User;
 
 import java.sql.*;
+import java.util.Arrays;
 
 public class Database {
 
@@ -65,6 +66,16 @@ public class Database {
     }
 
     public void editHero(Connection connection, String oldName, String newName, User user) throws SQLException {
+        String query = "UPDATE `Character` SET `Name` = ? WHERE ID = ? AND `Name` = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, newName);
+            pstmt.setInt(2, user.getIDPlayerDatabase());
+            pstmt.setString(3, oldName);
+            pstmt.executeUpdate();
+            System.out.println("Nom du personnage modifié avec succès !");
+        } catch (SQLException e) {
+            System.out.println("Anomalie lors de l'execution de la requête");
+        }
     }
 
     public void changeLifePoints(Connection connection, Character character) throws SQLException {
@@ -78,4 +89,14 @@ public class Database {
         */
     }
 
+    public void addBoard(Connection connection, Board boardClass, User user) throws SQLException {
+        String query = "INSERT INTO `Board` (`IDCharacter`, `Board`) VALUES (?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, user.getIDPlayerDatabase());
+            pstmt.setString(2, Arrays.toString(boardClass.getBoard()));
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Une anomalie est survenue lors de l'insertion du plateau de jeu dans la base de données.");
+        }
+    }
 }

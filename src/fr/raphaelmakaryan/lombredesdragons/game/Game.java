@@ -52,6 +52,7 @@ public class Game {
         boolean startGame = menu.afterCreationPlayerMenu(user, menu, database, connection);
         tools.verificationChoiceWhile(startGame, true, menu, "afterCreationPlayerMenu");
         Board board = new Board();
+        database.addBoard(connection, board, user);
         startGame(board);
     }
 
