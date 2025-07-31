@@ -153,3 +153,45 @@ Mot-clé utilisé dans la déclaration d’une méthode pour indiquer qu’elle 
  } catch (OutOfBoardException e) {
      // traitement de l’exception
  }
+
+37\. Connetion à une base de données
+    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/nom_db", "utilisateur", "mot_de_passe");
+    Permet de se connecter à une base de données.
+
+38\. Statement
+    Statement stmt = conn.createStatement();
+    Permet d’exécuter des requêtes SQL.
+
+39\. ResultSet
+    ResultSet rs = stmt.executeQuery("SELECT * FROM table");
+    Permet de récupérer les résultats d’une requête SQL.
+
+40\. PreparedStatement
+    PreparedStatement pstmt = conn.prepareStatement("INSERT INTO table (colonne) VALUES (?)");
+    Permet d’exécuter des requêtes SQL avec des paramètres.
+
+41\. ResultSetMetaData
+    ResultSetMetaData rsmd = rs.getMetaData();
+    Permet d’obtenir des informations sur les colonnes d’un ResultSet.
+
+42\. ResultSet.next()
+    rs.next();
+    Permet de parcourir les lignes d’un ResultSet.
+
+43\. Statement RETURN GENERATED KEYS
+    Statement stmt = conn.createStatement();
+    stmt.executeUpdate("INSERT INTO table (colonne) VALUES ('valeur')", Statement.RETURN_GENERATED_KEYS);
+    Permet de récupérer les clés générées par une requête d’insertion.
+
+44\. ResultSet.getInt("colonne")
+    int valeur = rs.getInt("colonne");
+    Permet de récupérer la valeur d’une colonne d’un ResultSet.
+
+45\. ResultSet.getString("colonne")
+    String valeur = rs.getString("colonne");
+    Permet de récupérer la valeur d’une colonne d’un ResultSet sous forme de chaîne de caractères.
+
+
+46\. Execution de requêtes SQL
+    stmt.executeUpdate("UPDATE table SET colonne = 'valeur' WHERE condition");
+    Permet d’exécuter des requêtes de mise à jour, d’insertion ou de suppression.
