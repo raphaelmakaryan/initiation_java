@@ -192,11 +192,12 @@ public class Menu {
     public void displayModifyInformationCharacter(User user) {
         String nameUser;
         String name;
-
+        Character character = user.getCharacterPlayer();
         System.out.println("Donnez lui son nouveau nom :");
         nameUser = clavier.next();
         name = itIsString(nameUser, true);
         user.setName(name);
+        character.setName(name);
         toolsMain.clearLine();
     }
 }
