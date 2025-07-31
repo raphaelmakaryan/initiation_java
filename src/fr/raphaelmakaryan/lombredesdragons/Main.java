@@ -1,6 +1,6 @@
 package fr.raphaelmakaryan.lombredesdragons;
-import fr.raphaelmakaryan.lombredesdragons.Configurations.Colors;
-import fr.raphaelmakaryan.lombredesdragons.Game.Game;
+import fr.raphaelmakaryan.lombredesdragons.configurations.Colors;
+import fr.raphaelmakaryan.lombredesdragons.game.Game;
 
 public class Main {
     public static void main(String[] args) {
