@@ -1,0 +1,15 @@
+Listes des cases du jeu :
+0 => "Vide",
+1 => "Joueur",
+2 => "Ennemi",
+  20 => "Wizard",
+  21 => "Goblin",
+  22 => "Dragon",
+3 => "BOX",
+  300 => "Potion standard",
+  301 => "Grande potion",
+  310 => "Mage : eclair",
+  311 => "Mage : boule de feu",
+  320 => "Guerrier : Massue",
+  321 => "Guerrier : Epee",
+4 => "Fin"

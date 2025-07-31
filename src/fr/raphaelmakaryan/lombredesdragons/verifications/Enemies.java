@@ -4,13 +4,12 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.Admin;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Enemie;
 import fr.raphaelmakaryan.lombredesdragons.configurations.enemies.Dragon;
-import fr.raphaelmakaryan.lombredesdragons.configurations.enemies.Gobelin;
+import fr.raphaelmakaryan.lombredesdragons.configurations.enemies.Goblin;
 import fr.raphaelmakaryan.lombredesdragons.configurations.enemies.Wizard;
 import fr.raphaelmakaryan.lombredesdragons.game.Fight;
 import fr.raphaelmakaryan.lombredesdragons.game.Game;
 import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 import fr.raphaelmakaryan.lombredesdragons.game.User;
-import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 
 public class Enemies extends Admin {
     private Enemie enemiesPlayer;
@@ -35,7 +34,7 @@ public class Enemies extends Admin {
         if (calculatedCell == 0) {
             enemiesPlayer = new Wizard();
         } else if (calculatedCell == 1) {
-            enemiesPlayer = new Gobelin();
+            enemiesPlayer = new Goblin();
         } else {
             enemiesPlayer = new Dragon();
         }

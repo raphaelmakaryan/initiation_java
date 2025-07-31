@@ -3,11 +3,13 @@ package fr.raphaelmakaryan.lombredesdragons.configurations;
 public abstract class DefensiveEquipment {
     protected String name;
     protected int levelDefense;
+    protected int idObject;
 
     // Constructor
-    public DefensiveEquipment(String name, int levelDefense) {
+    public DefensiveEquipment(String name, int levelDefense, int idObject) {
         this.name = name;
         this.levelDefense = levelDefense;
+        this.idObject = idObject;
     }
 
     public String getName() {
@@ -23,6 +25,7 @@ public abstract class DefensiveEquipment {
         return "DefensiveEquipment{" +
                 "name='" + name + '\'' +
                 ", levelDefense=" + levelDefense +
+                ", idObject=" + idObject +
                 '}';
     }
 }
