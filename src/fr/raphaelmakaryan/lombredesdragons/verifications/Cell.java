@@ -44,8 +44,8 @@ public class Cell {
         if (verificationCase == 20 || verificationCase == 21 || verificationCase == 22) {
             // ENEMY
             Enemies enemies = new Enemies();
-            boardClass.setNewCellPlayer(boardInt, caseNumber);
-            enemies.haveEnemies(menu, boardClass, user, game);
+
+            enemies.haveEnemies(menu, boardClass, user, game, boardInt, caseNumber);
         }
     }
 

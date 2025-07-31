@@ -142,7 +142,7 @@ public class Menu {
         }
     }
 
-    public void enemiesCell(Board boardClass, Menu menu, User user, Game game) {
+    public void enemiesCell(Board boardClass, Menu menu, User user, Game game, int[] boardInt, int caseNumber) {
         Enemies enemy = new Enemies();
         int choiceUser;
         int choice;
@@ -156,8 +156,9 @@ public class Menu {
         choice = itIsInt(String.valueOf(choiceUser), false);
         toolsMain.clearLine();
         if (choice == 1) {
-            enemy.chooseFight(menu, boardClass, user, game);
+            enemy.chooseFight(menu, boardClass, user, game, boardInt, caseNumber);
         } else if (choice == 2) {
+            boardClass.setNewCellPlayer(boardInt, caseNumber);
             choiceGameProgress(boardClass, user, game);
         } else {
             toolsMain.verificationChoiceNotWhile("enemiesCell", this, (Object) null);

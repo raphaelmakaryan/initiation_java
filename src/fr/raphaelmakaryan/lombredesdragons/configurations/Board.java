@@ -56,6 +56,14 @@ public class Board extends Admin {
         int newPosition = currentCasePlayers + steps;
         boardInt[currentCasePlayers] = 0;
         setNewBoard(boardInt);
+        if (debugBoardDisplay) {
+            boardClass.displayBoard();
+        }
+        if (debugBoardIndexCell) {
+            int indexDebug = boardClass.getCurrentCasePlayers();
+            int valueDebug = boardInt[indexDebug];
+            System.out.println("Le joueur est actuellement à la case " + indexDebug + " | La case a comme valeur : " + valueDebug);
+        }
         try {
             cellInstance.verifyCase(newPosition, boardInt, boardClass, menu, user, game);
         } catch (OutOfBoardException ignored) {

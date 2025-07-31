@@ -70,10 +70,6 @@ public class Tools {
         System.out.println(Arrays.toString(array));
     }
 
-    public static void displayAArrayInt2D(int[][] array) {
-        System.out.println(Arrays.toString(array));
-    }
-
     /**
      * Displays the line separation in the console.
      */
