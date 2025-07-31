@@ -16,6 +16,9 @@ public class EndGame {
             System.exit(0);
         } else if (type.equals("fin")) {
             menu.endGameCase();
+        } else if (type.equals("dead")) {
+            menu.endGameDead();
+            System.exit(0);
         } else {
             System.out.println("Commande non reconnue. Veuillez réessayer.");
         }

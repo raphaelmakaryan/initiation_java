@@ -1,13 +1,14 @@
 package fr.raphaelmakaryan.lombredesdragons.game;
 
+import fr.raphaelmakaryan.lombredesdragons.configurations.Admin;
+
 import java.util.Random;
 
-public class Dice {
+public class Dice extends Admin {
     public int diceRoll() {
-        boolean debug = false;
         Random rand = new Random();
-        if (debug) {
-            return 1;
+        if (debugDice) {
+            return valueDebugDice;
         }
         return rand.nextInt(1, 6);
     }

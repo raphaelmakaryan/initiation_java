@@ -1,12 +1,14 @@
 package fr.raphaelmakaryan.lombredesdragons.configurations;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.exceptions.OutOfBoardException;
+import fr.raphaelmakaryan.lombredesdragons.game.Game;
 import fr.raphaelmakaryan.lombredesdragons.game.Menu;
+import fr.raphaelmakaryan.lombredesdragons.game.User;
 import fr.raphaelmakaryan.lombredesdragons.verifications.Cell;
 
 import java.util.Random;
 
-public class Board {
+public class Board extends Admin {
     private int currentCasePlayers = 0;
     private int caseEnd = 64;
     private int caseStart = 0;
@@ -14,9 +16,14 @@ public class Board {
 
 
     public Board() {
-        boolean debug = false;
         Random rand = new Random();
-        board = new int[caseEnd];
+        int valueBoard;
+        if (debugBoard) {
+            valueBoard = valueDebugBoard;
+        } else {
+            valueBoard = caseEnd;
+        }
+        board = new int[valueBoard];
         int minIndex = caseStart + 1;
         int maxIndex = board.length - 2;
         int nbValues = rand.nextInt(1, (maxIndex - minIndex + 1));
@@ -42,7 +49,7 @@ public class Board {
      * @param boardClass
      * @param menu
      */
-    public void movePlayer(int steps, Board boardClass, Menu menu) {
+    public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game) {
         Cell cellInstance = new Cell();
         System.out.println("Vous avez lancé le dé et obtenu : " + Colors.DICE_MAGENTA + steps + Colors.RESET + " !");
         int[] boardInt = boardClass.getBoard();
@@ -50,7 +57,7 @@ public class Board {
         boardInt[currentCasePlayers] = 0;
         setNewBoard(boardInt);
         try {
-            cellInstance.verifyCase(newPosition, boardInt, boardClass, menu);
+            cellInstance.verifyCase(newPosition, boardInt, boardClass, menu, user, game);
         } catch (OutOfBoardException ignored) {
         }
     }

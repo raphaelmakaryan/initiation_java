@@ -15,10 +15,10 @@ public class Game {
     User user = new User();
 
     // Méthode principale pour la creation du joueur
-    public void preStart(Connection connection, Database database) throws SQLException {
+    public void preStart(Connection connection, Database database, Game game) throws SQLException {
         start(menuGame, user);
         creationPlayer(menuGame, user, connection, database);
-        afterCreationPlayer(menuGame, user, database, connection);
+        afterCreationPlayer(menuGame, user, database, connection, game);
     }
 
     /**
@@ -47,13 +47,13 @@ public class Game {
      * @param menu The menu to launch the game
      */
     // Après la création du joueur, on lance le systeme du jeu
-    public void afterCreationPlayer(Menu menu, User user, Database database, Connection connection) throws SQLException {
+    public void afterCreationPlayer(Menu menu, User user, Database database, Connection connection, Game game) throws SQLException {
         Tools tools = new Tools();
         boolean startGame = menu.afterCreationPlayerMenu(user, menu, database, connection);
         tools.verificationChoiceWhile(startGame, true, menu, "afterCreationPlayerMenu");
         Board board = new Board();
         database.addBoard(connection, board, user);
-        startGame(board);
+        startGame(board, user, game);
     }
 
     /**
@@ -62,14 +62,14 @@ public class Game {
      * @param board The game board
      */
     // Démarrage du jeu
-    public void startGame(Board board) {
-        playTurn(board);
+    public void startGame(Board board, User user, Game game) {
+        playTurn(board, user, game);
     }
 
     // Méthode pour gérer la progression du jeu
-    public void playTurn(Board board) {
+    public void playTurn(Board board, User user, Game game) {
         Dice dice = new Dice();
         int diceValue = dice.diceRoll();
-        board.movePlayer(diceValue, board, menuGame);
+        board.movePlayer(diceValue, board, menuGame, user, game);
     }
 }

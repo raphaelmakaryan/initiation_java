@@ -92,10 +92,9 @@ public class Menu {
      * @param boardClass
      */
     // Choix pendant la progression du jeu
-    public void choiceGameProgress(Board boardClass) {
+    public void choiceGameProgress(Board boardClass, User user, Game game) {
         int choiceUser;
         int choice;
-        Game Game = new Game();
 
         System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
         System.out.println("1. Lancer le dé");
@@ -107,11 +106,11 @@ public class Menu {
         toolsMain.clearLine();
 
         if (choice == 1) {
-            Game.playTurn(boardClass);
+            game.playTurn(boardClass, user, game);
         } else if (choice == 2) {
             boardClass.displayBoard();
             toolsMain.clearLine();
-            choiceGameProgress(boardClass);
+            choiceGameProgress(boardClass, user, game);
         } else if (choice == 3) {
             endGame("exit", this);
         } else {
@@ -126,7 +125,7 @@ public class Menu {
     public void endGameCase() {
         int choiceUser;
         int choice;
-        System.out.println(Colors.END_PURPLE + "Vous avez gagné !");
+        System.out.println(Colors.END_PURPLE + "Vous avez gagné !" + Colors.RESET);
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. Quitter le jeu");
         System.out.println("2. Recommencer une nouvelle partie");
@@ -143,7 +142,7 @@ public class Menu {
         }
     }
 
-    public void enemiesCell(Board boardClass, Menu menu) {
+    public void enemiesCell(Board boardClass, Menu menu, User user, Game game) {
         Enemies enemy = new Enemies();
         int choiceUser;
         int choice;
@@ -157,15 +156,15 @@ public class Menu {
         choice = itIsInt(String.valueOf(choiceUser), false);
         toolsMain.clearLine();
         if (choice == 1) {
-            enemy.chooseFight(menu, boardClass);
+            enemy.chooseFight(menu, boardClass, user, game);
         } else if (choice == 2) {
-            choiceGameProgress(boardClass);
+            choiceGameProgress(boardClass, user, game);
         } else {
             toolsMain.verificationChoiceNotWhile("enemiesCell", this, (Object) null);
         }
     }
 
-    public void boxCell(Board boardClass) {
+    public void boxCell(Board boardClass, User user, Game game) {
         int choiceUser;
         int choice;
         toolsMain.clearLine();
@@ -180,7 +179,7 @@ public class Menu {
         if (choice == 1) {
             toolsMain.maintenance("commande");
         } else if (choice == 2) {
-            choiceGameProgress(boardClass);
+            choiceGameProgress(boardClass, user, game);
         } else {
             toolsMain.verificationChoiceNotWhile("boxCell", this, (Object) null);
         }
@@ -222,6 +221,28 @@ public class Menu {
 
     public void displayAdminGetHeros(Database database, Connection connection) throws SQLException {
         database.getHeroes(connection);
+    }
+
+    public void displayFightPlayerAttack() {
+        System.out.println("Vous avez attaqué l'ennemi !" + Colors.RESET);
+        toolsMain.clearLine();
+    }
+
+    public void displayFightEnemyAttack() {
+        System.out.println("L'ennemie vous attaque !" + Colors.RESET);
+        toolsMain.clearLine();
+    }
+
+    public void endGameDead() {
+        System.out.println("GAME OVER !");
+        System.out.println("Vous avez été vaincu par l'ennemi.");
+        System.out.println("Merci d'avoir joué. À bientôt !");
+    }
+
+    public void displayEscape() {
+        System.out.println("L'ennemi a fui !");
+        System.out.println("Vous pouvez continuer votre chemin.");
+        toolsMain.clearLine();
     }
 
 }
