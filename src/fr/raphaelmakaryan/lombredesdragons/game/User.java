@@ -1,9 +1,12 @@
 package fr.raphaelmakaryan.lombredesdragons.game;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
+import fr.raphaelmakaryan.lombredesdragons.configurations.Database;
 import fr.raphaelmakaryan.lombredesdragons.configurations.characters.Wizard;
 import fr.raphaelmakaryan.lombredesdragons.configurations.characters.Warrior;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class User {
@@ -24,12 +27,13 @@ public class User {
         return this.characterPlayer;
     }
 
-    public void createCharacter() {
+    public void createCharacter(User user, Connection connection, Database database) throws SQLException {
         if (Objects.equals(this.typeChoice, "magicien")) {
             characterPlayer = new Wizard(this.name);
         } else if (Objects.equals(this.typeChoice, "guerrier")) {
             characterPlayer = new Warrior(this.name);
         }
+        database.createHero(connection, user, database);
     }
 
     public void setTypeChoice(String typeChoice) {

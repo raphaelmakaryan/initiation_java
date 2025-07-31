@@ -1,5 +1,7 @@
 package fr.raphaelmakaryan.lombredesdragons.configurations;
 
+import java.util.ArrayList;
+
 public abstract class Character {
     protected String type;
     protected String name;

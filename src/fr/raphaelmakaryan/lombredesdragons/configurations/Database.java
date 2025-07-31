@@ -1,0 +1,74 @@
+package fr.raphaelmakaryan.lombredesdragons.configurations;
+
+import fr.raphaelmakaryan.lombredesdragons.game.User;
+
+import java.sql.*;
+
+public class Database {
+
+    public Connection connectDatabase() throws SQLException {
+        try {
+            String urlDB = "jdbc:mysql://localhost:3306/lombredesdragons";
+            Connection con = DriverManager.getConnection(urlDB, "root", "");
+            return con;
+        } catch (SQLException e) {
+            System.out.println("Connection à la base de données impossible");
+        }
+        return null;
+    }
+
+    public void getHeroes(Connection connection) throws SQLException {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet resultats = stmt.executeQuery("SELECT * FROM `Character`");
+            ResultSetMetaData rsmd = resultats.getMetaData();
+            int nbCols = rsmd.getColumnCount();
+            boolean encore = resultats.next();
+
+            System.out.println("ID | Type | Nom | LifePoints | Strength | OffensiveEquipment | DefensiveEquipment");
+            System.out.println("---+------+----+------------+----------+-------------------+------------------");
+
+            while (encore) {
+                for (int i = 1; i <= nbCols; i++) {
+                    if (i > 1) {
+                        System.out.print(" | ");
+                    }
+                    System.out.print(resultats.getString(i));
+                }
+                System.out.println();
+                encore = resultats.next();
+            }
+
+        } catch (
+                SQLException e) {
+            System.out.println("Anomalie lors de l'execution de la requête");
+        }
+    }
+
+    public void createHero(Connection connection, User user, Database database) throws SQLException {
+        String query = "INSERT INTO `Character` (`Type`, `Name`, `LifePoints`, `Strength`, `OffensiveEquipment`, `DefensiveEquipment`) VALUES (?, ?, ?, ?, NULL, NULL)";
+        Character character = user.getCharacterPlayer();
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, character.type);
+            pstmt.setString(2, character.name);
+            pstmt.setInt(3, character.lifePoints);
+            pstmt.setInt(4, character.attackLevel);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void editHero(Connection connection, Character character) throws SQLException {
+    }
+
+    public void changeLifePoints(Connection connection, Character character) throws SQLException {
+        /*
+        String query = "UPDATE `Character` SET `lifePoints` = ? WHERE `name` = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, lifePoints);
+            pstmt.setString(2, character.getName());
+            pstmt.executeUpdate();
+        }
+        */
+    }
+
+}

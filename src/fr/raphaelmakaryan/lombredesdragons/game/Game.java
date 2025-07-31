@@ -2,19 +2,23 @@ package fr.raphaelmakaryan.lombredesdragons.game;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Colors;
+import fr.raphaelmakaryan.lombredesdragons.configurations.Database;
 import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 import fr.raphaelmakaryan.lombredesdragons.game.User;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Game {
     Menu menuGame = new Menu();
     User user = new User();
 
     // Méthode principale pour la creation du joueur
-    public void main() {
+    public void preStart(Connection connection, Database database) throws SQLException {
         start(menuGame, user);
-        creationPlayer(menuGame, user);
-        afterCreationPlayer(menuGame, user);
+        creationPlayer(menuGame, user, connection, database);
+        afterCreationPlayer(menuGame, user, database, connection);
     }
 
     /**
@@ -33,8 +37,8 @@ public class Game {
      * @param user The user
      */
     // Création du joueur
-    public void creationPlayer(Menu menu, User user) {
-        menu.creationPlayerMenu(user);
+    public void creationPlayer(Menu menu, User user, Connection connection, Database database) throws SQLException {
+        menu.creationPlayerMenu(user, connection, database);
     }
 
     /**
@@ -43,9 +47,9 @@ public class Game {
      * @param menu The menu to launch the game
      */
     // Après la création du joueur, on lance le systeme du jeu
-    public void afterCreationPlayer(Menu menu, User user) {
+    public void afterCreationPlayer(Menu menu, User user, Database database, Connection connection) throws SQLException {
         Tools tools = new Tools();
-        boolean startGame = menu.afterCreationPlayerMenu(user, menu);
+        boolean startGame = menu.afterCreationPlayerMenu(user, menu, database, connection);
         tools.verificationChoiceWhile(startGame, true, menu, "afterCreationPlayerMenu");
         Board board = new Board();
         startGame(board);

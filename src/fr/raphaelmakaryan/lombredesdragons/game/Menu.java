@@ -1,9 +1,7 @@
 package fr.raphaelmakaryan.lombredesdragons.game;
 
-import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
+import fr.raphaelmakaryan.lombredesdragons.configurations.*;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
-import fr.raphaelmakaryan.lombredesdragons.configurations.Colors;
-import fr.raphaelmakaryan.lombredesdragons.configurations.Enemie;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 import fr.raphaelmakaryan.lombredesdragons.verifications.Enemies;
 
@@ -12,11 +10,14 @@ import static fr.raphaelmakaryan.lombredesdragons.tools.Tools.*;
 
 import fr.raphaelmakaryan.lombredesdragons.verifications.EndGame;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Menu {
     Tools toolsMain = new Tools();
     Scanner clavier = new Scanner(System.in);
+    public boolean isAdmin = true;
 
     // Menu a la creation du personnage
     public void startMenu(User user) {
@@ -42,14 +43,14 @@ public class Menu {
     }
 
     // Menu a la validation du creation du personnage
-    public void creationPlayerMenu(User user) {
-        user.createCharacter();
+    public void creationPlayerMenu(User user, Connection connection, Database database) throws SQLException {
+        user.createCharacter(user, connection, database);
         System.out.println(Colors.START_WHITE + "Votre personnage a été créé avec succès !" + Colors.RESET);
         toolsMain.clearLine();
     }
 
     // Choix apres la creation du personnage
-    public boolean afterCreationPlayerMenu(User user, Menu menu) {
+    public boolean afterCreationPlayerMenu(User user, Menu menu, Database database, Connection connection) throws SQLException {
         int choiceUser;
         int choice;
 
@@ -58,6 +59,9 @@ public class Menu {
         System.out.println("2. Afficher toutes les infos de votre personnage");
         System.out.println("3. Modifier ses informations");
         System.out.println("4. Quitter le jeu");
+        if (isAdmin) {
+            System.out.println("5. Affichez tout les héros de la base de données");
+        }
         System.out.println("Veuillez entrer le numéro de votre choix !");
         choiceUser = clavier.nextInt();
         choice = itIsInt(String.valueOf(choiceUser), false);
@@ -66,14 +70,18 @@ public class Menu {
         } else if (choice == 2) {
             displayInformationCharacter(user);
             toolsMain.clearLine();
-            menu.afterCreationPlayerMenu(user, menu);
+            menu.afterCreationPlayerMenu(user, menu, database, connection);
         } else if (choice == 3) {
             displayModifyInformationCharacter(user);
             toolsMain.clearLine();
-            menu.afterCreationPlayerMenu(user, menu);
+            menu.afterCreationPlayerMenu(user, menu, database, connection);
         } else if (choice == 4) {
             endGame("exit", this);
             return false;
+        } else if (choice == 5 && isAdmin) {
+            displayAdminGetHeros(database, connection);
+            toolsMain.clearLine();
+            menu.afterCreationPlayerMenu(user, menu, database, connection);
         }
         return false;
     }
@@ -209,4 +217,9 @@ public class Menu {
         System.out.println("Vous l'attaquez en premier !");
         toolsMain.clearLine();
     }
+
+    public void displayAdminGetHeros(Database database, Connection connection) throws SQLException {
+        database.getHeroes(connection);
+    }
+
 }
