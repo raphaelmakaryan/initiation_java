@@ -1,4 +1,4 @@
-package fr.raphaelmakaryan.lombredesdragons.configurations.Exceptions;
+package fr.raphaelmakaryan.lombredesdragons.configurations.exceptions;
 
 /**
  * Exception thrown when a move is attempted outside the boundaries of the game board.

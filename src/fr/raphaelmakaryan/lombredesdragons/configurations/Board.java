@@ -1,6 +1,6 @@
 package fr.raphaelmakaryan.lombredesdragons.configurations;
 
-import fr.raphaelmakaryan.lombredesdragons.configurations.Exceptions.OutOfBoardException;
+import fr.raphaelmakaryan.lombredesdragons.configurations.exceptions.OutOfBoardException;
 import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 import fr.raphaelmakaryan.lombredesdragons.verifications.Cell;
 
@@ -12,22 +12,15 @@ public class Board {
     private int caseStart = 0;
     private int[] board;
 
+
     public Board() {
         boolean debug = false;
         Random rand = new Random();
-        if (debug) {
-            board = new int[10];
-        } else {
-            board = new int[caseEnd];
-        }
+        board = new int[caseEnd];
         int minIndex = caseStart + 1;
         int maxIndex = board.length - 2;
         int nbValues = rand.nextInt(1, (maxIndex - minIndex + 1));
-        for (int i = 0; i < nbValues; i++) {
-            int index = rand.nextInt(minIndex, maxIndex + 1);
-            int value = rand.nextInt(2, 4);
-            board[index] = value;
-        }
+        setExtraBoard(nbValues, rand, minIndex, maxIndex);
         board[caseStart] = 1;
         board[board.length - 1] = 4;
     }
@@ -50,12 +43,14 @@ public class Board {
      * @param menu
      */
     public void movePlayer(int steps, Board boardClass, Menu menu) {
+        Cell cellInstance = new Cell();
+        System.out.println("Vous avez lancé le dé et obtenu : " + Colors.DICE_MAGENTA + steps + Colors.RESET + " !");
         int[] boardInt = boardClass.getBoard();
         int newPosition = currentCasePlayers + steps;
         boardInt[currentCasePlayers] = 0;
         setNewBoard(boardInt);
         try {
-            Cell.verifyCase(newPosition, boardInt, boardClass, menu);
+            cellInstance.verifyCase(newPosition, boardInt, boardClass, menu);
         } catch (OutOfBoardException ignored) {
         }
     }
@@ -92,9 +87,9 @@ public class Board {
                 boardStr[i] = Colors.NOTHING_BLUE + "NT" + Colors.RESET;
             } else if (board[i] == 1) {
                 boardStr[i] = Colors.PLAYER_BRIYEL + "YOU" + Colors.RESET;
-            } else if (board[i] == 2) {
+            } else if (board[i] == 20 || board[i] == 21 || board[i] == 22) {
                 boardStr[i] = Colors.ENEMY_RED + "ENEMY" + Colors.RESET;
-            } else if (board[i] == 3) {
+            } else if (board[i] == 30 || board[i] == 31 || board[i] == 32 || board[i] == 33) {
                 boardStr[i] = Colors.BOX_GREEN + "BOX" + Colors.RESET;
             } else if (board[i] == 4) {
                 boardStr[i] = Colors.END_PURPLE + "END" + Colors.RESET;
@@ -130,5 +125,19 @@ public class Board {
         boardInt[newPosition] = 1;
         setNewBoard(boardInt);
         System.out.println("Vous êtes maintenant à la case " + Colors.CELL_BRIGHTMAGENTA + newPosition + Colors.RESET + ".");
+    }
+
+    public void setExtraBoard(int nbValues, Random rand, int minIndex, int maxIndex) {
+        for (int i = 0; i < nbValues; i++) {
+            int index = rand.nextInt(minIndex, maxIndex + 1);
+            int value = rand.nextInt(2, 4);
+            if (value == 2) {
+                int valueEnemy = rand.nextInt(0, 2);
+                board[index] = Integer.sum(20, valueEnemy);
+            } else if (value == 3) {
+                int valueBox = rand.nextInt(0, 3);
+                board[index] = Integer.sum(30, valueBox);
+            }
+        }
     }
 }

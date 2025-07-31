@@ -1,10 +1,10 @@
-package fr.raphaelmakaryan.lombredesdragons.configurations.Equipment;
+package fr.raphaelmakaryan.lombredesdragons.configurations.equipments;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.DefensiveEquipment;
 
 /**
  * Represents a potion in the game.
- * Potions are a type of defensive equipment that can be used to enhance a character's defense.
+ * Potions are a type of defensive equipments that can be used to enhance a character's defense.
  */
 public class Potion extends DefensiveEquipment {
     private String type;

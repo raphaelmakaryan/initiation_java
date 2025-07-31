@@ -1,8 +1,8 @@
 package fr.raphaelmakaryan.lombredesdragons.game;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
-import fr.raphaelmakaryan.lombredesdragons.configurations.Characters.Wizard;
-import fr.raphaelmakaryan.lombredesdragons.configurations.Characters.Warrior;
+import fr.raphaelmakaryan.lombredesdragons.configurations.characters.Wizard;
+import fr.raphaelmakaryan.lombredesdragons.configurations.characters.Warrior;
 
 import java.util.Objects;
 

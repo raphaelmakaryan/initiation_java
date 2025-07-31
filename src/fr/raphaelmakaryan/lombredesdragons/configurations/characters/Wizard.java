@@ -1,4 +1,4 @@
-package fr.raphaelmakaryan.lombredesdragons.configurations.Characters;
+package fr.raphaelmakaryan.lombredesdragons.configurations.characters;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
 

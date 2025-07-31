@@ -1,4 +1,4 @@
-package fr.raphaelmakaryan.lombredesdragons.configurations.Equipment;
+package fr.raphaelmakaryan.lombredesdragons.configurations.equipments;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.OffensiveEquipment;
 

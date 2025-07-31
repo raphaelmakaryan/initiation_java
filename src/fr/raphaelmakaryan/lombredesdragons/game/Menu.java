@@ -1,10 +1,11 @@
 package fr.raphaelmakaryan.lombredesdragons.game;
 
-import fr.raphaelmakaryan.lombredesdragons.game.Game;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Colors;
+import fr.raphaelmakaryan.lombredesdragons.configurations.Enemie;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
+import fr.raphaelmakaryan.lombredesdragons.verifications.Enemies;
 
 import static fr.raphaelmakaryan.lombredesdragons.verifications.EndGame.endGame;
 import static fr.raphaelmakaryan.lombredesdragons.tools.Tools.*;
@@ -98,7 +99,7 @@ public class Menu {
         toolsMain.clearLine();
 
         if (choice == 1) {
-            Game.gameProgress(boardClass);
+            Game.playTurn(boardClass);
         } else if (choice == 2) {
             boardClass.displayBoard();
             toolsMain.clearLine();
@@ -134,7 +135,8 @@ public class Menu {
         }
     }
 
-    public void enemiesCell(Board boardClass) {
+    public void enemiesCell(Board boardClass, Menu menu) {
+        Enemies enemy = new Enemies();
         int choiceUser;
         int choice;
         toolsMain.clearLine();
@@ -147,7 +149,7 @@ public class Menu {
         choice = itIsInt(String.valueOf(choiceUser), false);
         toolsMain.clearLine();
         if (choice == 1) {
-            toolsMain.maintenance("commande");
+            enemy.chooseFight(menu, boardClass);
         } else if (choice == 2) {
             choiceGameProgress(boardClass);
         } else {
@@ -198,6 +200,13 @@ public class Menu {
         name = itIsString(nameUser, true);
         user.setName(name);
         character.setName(name);
+        toolsMain.clearLine();
+    }
+
+    public void displayEnemyFight(Enemie enemies) {
+        toolsMain.clearLine();
+        System.out.println(Colors.ENEMY_RED + "Vous etes en train de vous battre contre un " + enemies.getName() + " !" + Colors.RESET);
+        System.out.println("Vous l'attaquez en premier !");
         toolsMain.clearLine();
     }
 }

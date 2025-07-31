@@ -58,14 +58,13 @@ public class Game {
      */
     // Démarrage du jeu
     public void startGame(Board board) {
-        gameProgress(board);
+        playTurn(board);
     }
 
     // Méthode pour gérer la progression du jeu
-    public void gameProgress(Board board) {
+    public void playTurn(Board board) {
         Dice dice = new Dice();
         int diceValue = dice.diceRoll();
-        System.out.println("Vous avez lancé le dé et obtenu : " + Colors.DICE_MAGENTA + diceValue + Colors.RESET + " !");
         board.movePlayer(diceValue, board, menuGame);
     }
 }
