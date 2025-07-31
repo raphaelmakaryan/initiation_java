@@ -72,7 +72,7 @@ public class Menu {
             toolsMain.clearLine();
             menu.afterCreationPlayerMenu(user, menu, database, connection);
         } else if (choice == 3) {
-            displayModifyInformationCharacter(user);
+            displayModifyInformationCharacter(user, database, connection);
             toolsMain.clearLine();
             menu.afterCreationPlayerMenu(user, menu, database, connection);
         } else if (choice == 4) {
@@ -199,15 +199,17 @@ public class Menu {
         toolsMain.clearLine();
     }
 
-    public void displayModifyInformationCharacter(User user) {
-        String nameUser;
-        String name;
+    public void displayModifyInformationCharacter(User user, Database database, Connection connection) throws SQLException {
+        String nameUserChoice;
+        String newName;
         Character character = user.getCharacterPlayer();
+        String oldName = character.getName();
         System.out.println("Donnez lui son nouveau nom :");
-        nameUser = clavier.next();
-        name = itIsString(nameUser, true);
-        user.setName(name);
-        character.setName(name);
+        nameUserChoice = clavier.next();
+        newName = itIsString(nameUserChoice, true);
+        user.setName(newName);
+        character.setName(newName);
+        database.editHero(connection, oldName, newName, user);
         toolsMain.clearLine();
     }
 

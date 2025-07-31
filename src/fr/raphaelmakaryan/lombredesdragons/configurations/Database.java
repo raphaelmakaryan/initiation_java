@@ -48,16 +48,23 @@ public class Database {
     public void createHero(Connection connection, User user, Database database) throws SQLException {
         String query = "INSERT INTO `Character` (`Type`, `Name`, `LifePoints`, `Strength`, `OffensiveEquipment`, `DefensiveEquipment`) VALUES (?, ?, ?, ?, NULL, NULL)";
         Character character = user.getCharacterPlayer();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, character.type);
             pstmt.setString(2, character.name);
             pstmt.setInt(3, character.lifePoints);
             pstmt.setInt(4, character.attackLevel);
             pstmt.executeUpdate();
+
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int insertedId = generatedKeys.getInt(1);
+                    user.setIDPlayerDatabase(insertedId);
+                }
+            }
         }
     }
 
-    public void editHero(Connection connection, Character character) throws SQLException {
+    public void editHero(Connection connection, String oldName, String newName, User user) throws SQLException {
     }
 
     public void changeLifePoints(Connection connection, Character character) throws SQLException {

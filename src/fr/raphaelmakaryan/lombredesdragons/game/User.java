@@ -13,6 +13,7 @@ public class User {
 
     private String name;
     private String typeChoice;
+    private int IDPlayerDatabase;
     private Character characterPlayer;
 
     public void setName(String name) {
@@ -38,5 +39,13 @@ public class User {
 
     public void setTypeChoice(String typeChoice) {
         this.typeChoice = typeChoice;
+    }
+
+    public int getIDPlayerDatabase() {
+        return IDPlayerDatabase;
+    }
+
+    public void setIDPlayerDatabase(int IDPlayerDatabase) {
+        this.IDPlayerDatabase = IDPlayerDatabase;
     }
 }
