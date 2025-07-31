@@ -27,7 +27,7 @@ public class Board extends Admin {
         int minIndex = caseStart + 1;
         int maxIndex = board.length - 2;
         int nbValues = rand.nextInt(1, (maxIndex - minIndex + 1));
-        setExtraBoard(nbValues, rand, minIndex, maxIndex);
+        setRandomBoard(minIndex, maxIndex, rand);
         board[caseStart] = 1;
         board[board.length - 1] = 4;
     }
@@ -142,7 +142,7 @@ public class Board extends Admin {
         System.out.println("Vous êtes maintenant à la case " + Colors.CELL_BRIGHTMAGENTA + newPosition + Colors.RESET + ".");
     }
 
-    public void setExtraBoard(int nbValues, Random rand, int minIndex, int maxIndex) {
+    public void setRandomAdminBoard(int nbValues, Random rand, int minIndex, int maxIndex) {
         for (int i = 0; i < nbValues; i++) {
             int index = rand.nextInt(minIndex, maxIndex + 1);
             int value = rand.nextInt(2, 4);
@@ -152,6 +152,78 @@ public class Board extends Admin {
             } else if (value == 3) {
                 int valueBox = rand.nextInt(0, 3);
                 board[index] = Integer.sum(30, valueBox);
+            }
+        }
+    }
+
+    /*
+    public void setRandomBoard(int minIndex, int maxIndex, Random rand) {
+        int[] ennemis = {45, 52, 56, 62, 10, 20, 25, 32, 35, 36, 37, 40, 44, 47, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30};
+        int[] bonus = {2, 11, 5, 22, 38, 19, 26, 42, 53, 1, 4, 8, 17, 23, 48, 49, 7, 13, 31, 33, 39, 43, 28, 41};
+
+        for (int i = 0; i < ennemis.length; i++) {
+            int index = rand.nextInt(minIndex, maxIndex + 1);
+            int valueEnemy = rand.nextInt(0, 2);
+            board[index] = Integer.sum(20, valueEnemy);
+        }
+
+        for (int i = 0; i < bonus.length; i++) {
+            int index = rand.nextInt(minIndex, maxIndex + 1);
+            if (index != ennemis[i]) {
+                int valueBox = rand.nextInt(0, 3);
+                board[index] = Integer.sum(30, valueBox);
+            }
+        }
+
+    }
+     */
+
+    public void setRandomBoard(int minIndex, int maxIndex, Random rand) {
+        int[] bonus = {2, 11, 5, 22, 38, 19, 26, 42, 53, 1, 4, 8, 17, 23, 48, 49, 7, 13, 31, 33, 39, 43, 28, 41};
+ /*
+        for (int i = 0; i < ennemis.length; i++) {
+            int index = rand.nextInt(minIndex, maxIndex + 1);
+            int valueEnemy = rand.nextInt(0, 2);
+            board[index] = Integer.sum(20, valueEnemy);
+        }
+        // Recupere index d'une du tableau ennemi, si dans la boucle du tableau je tombe sur l'index 45
+
+
+        for (int i = 0; i < bonus.length; i++) {
+            int index = rand.nextInt(minIndex, maxIndex + 1);
+            if (index != ennemis[i]) {
+                int valueBox = rand.nextInt(0, 3);
+                board[index] = Integer.sum(30, valueBox);
+            }
+        }
+         */
+    }
+
+
+    public void setEnemyRandomOnBoard() {
+        int[] ennemisCell = {45, 52, 56, 62, 10, 20, 25, 32, 35, 36, 37, 40, 44, 47, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30};
+        int[] ennemiPerson = {2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+       /*
+    for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < ennemisCell.length; j++) {
+                if (board[i] == ennemisCell[j]) {
+                    board[i] = ennemiPerson[j];
+                }
+            }
+        }
+    }
+
+        for (int i = 0; i < board.length; i++) {
+            if (ennemisCell[i]) {
+
+            }
+        }
+        */
+
+        int[][] ennemisCell2D = {{45, 2}, {52, 2}, {56, 2}, {62, 2}, {10, 1}, {20, 1}, {25, 1}, {32, 1}, {35, 1}, {36, 1}, {37, 1}, {40, 1}, {44, 1}, {47, 1}, {3, 0}, {6, 0}, {9, 0}, {12, 0}, {15, 0}, {18, 0}, {21, 0}, {24, 0}, {27, 0}, {30, 0}};
+        for (int i = 0; i < board.length; i++) {
+            if (board[i] == ennemisCell2D[i][0]) {
+                board[i] = ennemisCell2D[i][1];
             }
         }
     }
