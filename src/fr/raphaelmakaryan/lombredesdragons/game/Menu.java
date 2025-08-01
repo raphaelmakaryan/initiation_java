@@ -14,10 +14,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class Menu {
+public class Menu extends Admin {
     Tools toolsMain = new Tools();
     Scanner clavier = new Scanner(System.in);
-    public boolean isAdmin = true;
+
 
     // Menu a la creation du personnage
     public void startMenu(User user) {
@@ -59,7 +59,7 @@ public class Menu {
         System.out.println("2. Afficher toutes les infos de votre personnage");
         System.out.println("3. Modifier ses informations");
         System.out.println("4. Quitter le jeu");
-        if (isAdmin) {
+        if (debugViewHeroMenu) {
             System.out.println("5. Affichez tout les héros de la base de données");
         }
         System.out.println("Veuillez entrer le numéro de votre choix !");
@@ -78,7 +78,7 @@ public class Menu {
         } else if (choice == 4) {
             endGame("exit", this);
             return false;
-        } else if (choice == 5 && isAdmin) {
+        } else if (choice == 5 && debugViewHeroMenu) {
             displayAdminGetHeros(database, connection);
             toolsMain.clearLine();
             menu.afterCreationPlayerMenu(user, menu, database, connection);

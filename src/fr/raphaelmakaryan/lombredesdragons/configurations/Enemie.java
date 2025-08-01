@@ -1,11 +1,5 @@
 package fr.raphaelmakaryan.lombredesdragons.configurations;
 
-import fr.raphaelmakaryan.lombredesdragons.configurations.characters.Warrior;
-import fr.raphaelmakaryan.lombredesdragons.configurations.characters.Wizard;
-import fr.raphaelmakaryan.lombredesdragons.configurations.enemies.Dragon;
-
-import java.util.Objects;
-
 public class Enemie {
     protected String name;
     protected int ID;

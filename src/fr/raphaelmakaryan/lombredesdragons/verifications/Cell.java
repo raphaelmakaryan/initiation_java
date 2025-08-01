@@ -50,7 +50,7 @@ public class Cell {
     }
 
     public void boxCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game) {
-        if (verificationCase == 30 || verificationCase == 31 || verificationCase == 32 || verificationCase == 33) {
+        if (verificationCase >= 300) {
             // BOX
             Box box = new Box();
             boardClass.setNewCellPlayer(boardInt, caseNumber);

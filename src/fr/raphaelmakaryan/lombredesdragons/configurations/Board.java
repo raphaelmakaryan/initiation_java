@@ -11,24 +11,20 @@ import java.util.Random;
 
 public class Board extends Admin {
     private int currentCasePlayers = 0;
-    private int caseEnd = 64;
-    private int caseStart = 0;
     private int[] board;
 
 
     public Board() {
-        Random rand = new Random();
         int valueBoard;
+        Random rand = new Random();
         if (debugBoard) {
             valueBoard = valueDebugBoard;
         } else {
             valueBoard = caseEnd;
         }
         board = new int[valueBoard];
-        int minIndex = caseStart + 1;
-        int maxIndex = board.length - 2;
-        //int nbValues = rand.nextInt(1, (maxIndex - minIndex + 1));
-        setRandomBoard();
+        setRandomCellBoard(ennemisCell, rand, enemyValue);
+        setRandomCellBoard(boxCell, rand, boxValue);
         board[caseStart] = 1;
         board[board.length - 1] = 4;
     }
@@ -105,7 +101,7 @@ public class Board extends Admin {
                 boardStr[i] = Colors.PLAYER_BRIYEL + "YOU" + Colors.RESET;
             } else if (board[i] == 20 || board[i] == 21 || board[i] == 22) {
                 boardStr[i] = Colors.ENEMY_RED + "ENEMY" + Colors.RESET;
-            } else if (board[i] == 30 || board[i] == 31 || board[i] == 32 || board[i] == 33) {
+            } else if (board[i] >= 300) {
                 boardStr[i] = Colors.BOX_GREEN + "BOX" + Colors.RESET;
             } else if (board[i] == 4) {
                 boardStr[i] = Colors.END_PURPLE + "END" + Colors.RESET;
@@ -143,66 +139,13 @@ public class Board extends Admin {
         System.out.println("Vous êtes maintenant à la case " + Colors.CELL_BRIGHTMAGENTA + newPosition + Colors.RESET + ".");
     }
 
-    public void setRandomAdminBoard(int nbValues, Random rand, int minIndex, int maxIndex) {
-        for (int i = 0; i < nbValues; i++) {
-            int index = rand.nextInt(minIndex, maxIndex + 1);
-            int value = rand.nextInt(2, 4);
-            if (value == 2) {
-                int valueEnemy = rand.nextInt(0, 2);
-                board[index] = Integer.sum(20, valueEnemy);
-            } else if (value == 3) {
-                int valueBox = rand.nextInt(0, 3);
-                board[index] = Integer.sum(30, valueBox);
-            }
-        }
-    }
-
-    /*
-    public void setRandomBoard(int minIndex, int maxIndex, Random rand) {
-        int[] ennemis = {45, 52, 56, 62, 10, 20, 25, 32, 35, 36, 37, 40, 44, 47, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30};
-        int[] bonus = {2, 11, 5, 22, 38, 19, 26, 42, 53, 1, 4, 8, 17, 23, 48, 49, 7, 13, 31, 33, 39, 43, 28, 41};
-
-        for (int i = 0; i < ennemis.length; i++) {
-            int index = rand.nextInt(minIndex, maxIndex + 1);
-            int valueEnemy = rand.nextInt(0, 2);
-            board[index] = Integer.sum(20, valueEnemy);
-        }
-
-        for (int i = 0; i < bonus.length; i++) {
-            int index = rand.nextInt(minIndex, maxIndex + 1);
-            if (index != ennemis[i]) {
-                int valueBox = rand.nextInt(0, 3);
-                board[index] = Integer.sum(30, valueBox);
-            }
-        }
-
-    }
- */
-
-    public void setRandomBoard() {
-        setEnemyRandomOnBoard();
-        setBoxRandomOnBoard();
-    }
-
-
-    public void setEnemyRandomOnBoard() {
-        int[][] ennemisCell = {{45, 22}, {52, 22}, {56, 22}, {62, 22}, {10, 21}, {20, 21}, {25, 21}, {32, 21}, {35, 21}, {36, 21}, {37, 21}, {40, 21}, {44, 21}, {47, 21}, {3, 20}, {6, 20}, {9, 20}, {12, 20}, {15, 20}, {18, 20}, {21, 20}, {24, 20}, {27, 20}, {30, 20}};
+    public void setRandomCellBoard(int[] cell, Random random, int[] valueBox) {
         for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < ennemisCell.length; j++) {
-                if (i == ennemisCell[j][0]) {
-                    board[i] = ennemisCell[j][1];
-                    break;
-                }
-            }
-        }
-    }
-
-    public void setBoxRandomOnBoard() {
-        int[][] boxCell = {{2, 320}, {11, 320}, {5, 320}, {22, 320}, {38, 320}, {19, 321}, {26, 321}, {42, 321}, {53, 321}, {1, 310}, {4, 310}, {8, 310}, {17, 310}, {23, 310}, {48, 311}, {49, 311}, {7, 300}, {13, 300}, {31, 300}, {33, 300}, {39, 300}, {43, 300}, {28, 301}, {41, 301}};
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < boxCell.length; j++) {
-                if (i == boxCell[j][0]) {
-                    board[i] = boxCell[j][1];
+            for (int j = 0; j < cell.length; j++) {
+                if (i == cell[j]) {
+                    int index = random.nextInt((valueBox.length - valueBox.length), valueBox.length);
+                    int value = valueBox[index];
+                    board[i] = value;
                     break;
                 }
             }

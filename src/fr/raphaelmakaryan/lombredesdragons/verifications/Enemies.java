@@ -27,7 +27,7 @@ public class Enemies extends Admin {
     public void createEnemy(Board board) {
         int indexPlayer = board.getCurrentCasePlayers() + 1;
         int cellPlayer = board.getBoard()[indexPlayer];
-        if (debugEnemiesCell) {
+        if ( boardClass : Board) : voiddebugEnemiesCell) {
             System.out.println("DEBUG : ID de la case sur ou est le joueur : " + cellPlayer);
         }
         int calculatedCell = 20 - cellPlayer;
