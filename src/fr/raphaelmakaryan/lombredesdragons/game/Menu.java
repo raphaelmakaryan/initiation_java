@@ -115,7 +115,7 @@ public class Menu extends Admin {
         } else if (choice == 3) {
             endGame("exit", this);
         } else {
-            toolsMain.verificationChoiceNotWhile("choiceGameProgress", this, boardClass);
+            toolsMain.verificationChoiceNotWhile("choiceGameProgress", this, boardClass, user, game);
         }
     }
 
@@ -229,7 +229,7 @@ public class Menu extends Admin {
 
     public void displayObjectCantAddToPlayer(Board boardClass, User user, Game game, String objet) {
         toolsMain.clearLine();
-        System.out.println("Vous ne pouvez pas prendre cet objet, vous avez deja un objet et qui est supérieur a cet objet.");
+        System.out.println("Vous ne pouvez pas prendre cet objet, vous avez deja un objet et/ou qui est supérieur a cet objet.");
         System.out.println("Vous continuez votre aventure.");
         choiceGameProgress(boardClass, user, game);
     }
@@ -286,10 +286,14 @@ public class Menu extends Admin {
     public void displayChoicePlayerAttack(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber) {
         int choiceUser;
         int choice;
+        boolean havePotion = fight.verificationHaveDefensive(user);
 
         System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
         System.out.println("1. Attaquer l'ennemi");
         System.out.println("2. Fuir l'ennemi");
+        if (havePotion) {
+            System.out.println("3. Utiliser une potion");
+        }
         System.out.println("Veuillez entrer le numéro de votre choix !");
         choiceUser = clavier.nextInt();
         choice = itIsInt(String.valueOf(choiceUser), false);
@@ -301,10 +305,36 @@ public class Menu extends Admin {
             fight.verifiedPerson(attackLevel[0][0], lifePoints, enemie, "player", user, menu, game, boardClass, boardInt, caseNumber);
         } else if (choice == 2) {
             fight.espace(menu, game, user, boardClass, boardInt, caseNumber);
+        } else if (choice == 3 && havePotion) {
+            fight.havePotion(user, this, boardClass, game, fight, attackLevel, lifePoints, enemie, type, boardInt, caseNumber);
         } else {
             toolsMain.verificationChoiceNotWhile("displayChoicePlayerAttack", this, boardClass);
         }
     }
+
+    public void haveAlreadyMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber) {
+        toolsMain.clearLine();
+        System.out.println("Vous avez deja toute votre vie pleine !");
+        System.out.println("Vous reprenez le combat !");
+        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber);
+    }
+
+    public void haveMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber) {
+        toolsMain.clearLine();
+        System.out.println("Vous avez régénérer votre vie au max !");
+        System.out.println("Vous n'avez plus de potion !");
+        System.out.println("Vous reprenez le combat !");
+        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber);
+    }
+
+    public void haveRegenerationFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, int nbreRegen) {
+        toolsMain.clearLine();
+        System.out.println("Vous avez régénérer votre vie de " + nbreRegen + " !");
+        System.out.println("Vous n'avez plus de potion !");
+        System.out.println("Vous reprenez le combat !");
+        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber);
+    }
+
 
     public void displayAdminGetHeros(Database database, Connection connection) throws SQLException {
         database.getHeroes(connection);
@@ -312,11 +342,6 @@ public class Menu extends Admin {
 
     public void displayFightPlayerAttack() {
         System.out.println("Vous avez attaqué l'ennemi !" + Colors.RESET);
-        toolsMain.clearLine();
-    }
-
-    public void displayFightEnemyAttack() {
-        System.out.println("L'ennemie vous attaque !" + Colors.RESET);
         toolsMain.clearLine();
     }
 

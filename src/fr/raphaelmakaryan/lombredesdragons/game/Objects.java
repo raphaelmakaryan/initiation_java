@@ -82,6 +82,8 @@ public class Objects {
                 int newLevelDefense = this.isPotion.getLevelDefense();
                 if (newLevelDefense > levelDefense) {
                     return false;
+                } else if (newLevelDefense == levelDefense) {
+                    return true;
                 }
                 return true;
             }
@@ -94,12 +96,16 @@ public class Objects {
                     int newLevelAttack = this.isSpell.getLevelAttack();
                     if (newLevelAttack > levelAttack) {
                         return false;
+                    } else if (newLevelAttack == levelAttack) {
+                        return true;
                     }
                 } else if (this.isWeapon != null) {
                     int levelAttack = playerOffensiveEquipment.getLevelAttack();
                     int newLevelAttack = this.isWeapon.getLevelAttack();
                     if (newLevelAttack > levelAttack) {
                         return false;
+                    } else if (newLevelAttack == levelAttack) {
+                        return true;
                     }
                 }
             }

@@ -6,6 +6,7 @@ public abstract class Character {
     protected String type;
     protected String name;
     protected int lifePoints;
+    protected int lifeDefault;
     protected int attackLevel;
     protected OffensiveEquipment offensiveEquipment;
     protected DefensiveEquipment defensiveEquipment;
@@ -15,6 +16,7 @@ public abstract class Character {
         this.name = name;
         this.type = this.getClass().getSimpleName();
         this.lifePoints = lifePoints;
+        this.lifeDefault = lifePoints;
         this.attackLevel = attackLevel;
         this.offensiveEquipment = offensiveEquipment;
         this.defensiveEquipment = defensiveEquipment;
@@ -66,6 +68,10 @@ public abstract class Character {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getLifeDefault() {
+        return lifeDefault;
     }
 
     // Methode pour afficher les informations du personnage

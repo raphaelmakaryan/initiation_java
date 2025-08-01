@@ -1,8 +1,7 @@
 package fr.raphaelmakaryan.lombredesdragons.game;
 
-import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
+import fr.raphaelmakaryan.lombredesdragons.configurations.*;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
-import fr.raphaelmakaryan.lombredesdragons.configurations.Enemie;
 import fr.raphaelmakaryan.lombredesdragons.verifications.EndGame;
 
 public class Fight {
@@ -10,8 +9,9 @@ public class Fight {
     public void playerAttack(User user, Menu menu, Enemie enemie, Board boardClass, Game game, int[] boardInt, int caseNumber) {
         Dice dice = new Dice();
         Character character = user.getCharacterPlayer();
-        int attackLevel = character.getAttackLevel();
-        int[][] newAttackLevel = dice.dice20(attackLevel);
+        int attackBase = character.getAttackLevel();
+        int attackWithObject = verificationHaveOffensive(attackBase, character);
+        int[][] newAttackLevel = dice.dice20(attackWithObject);
         int lifePoints = enemie.getLifePoints();
         menu.displayChoicePlayerAttack(boardClass, user, game, this, newAttackLevel, lifePoints, enemie, "player", menu, boardInt, caseNumber);
     }
@@ -77,6 +77,50 @@ public class Fight {
         } else {
             System.out.println("L'ennemi vous a infligé " + degat + " points de dégâts !");
         }
+    }
+
+    public int verificationHaveOffensive(int attackBase, Character character) {
+        OffensiveEquipment offensivePlayer = character.getOffensiveEquipment();
+        if (offensivePlayer != null) {
+            int valueAttackObject = offensivePlayer.getLevelAttack();
+            return attackBase + valueAttackObject;
+        }
+        return attackBase;
+    }
+
+    public boolean verificationHaveDefensive(User user) {
+        Character character = user.getCharacterPlayer();
+        DefensiveEquipment defensiveEquipment = character.getDefensiveEquipment();
+        if (defensiveEquipment != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public void havePotion(User user, Menu menu, Board borderClass, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, int[] boardInt, int caseNumber) {
+        Character character = user.getCharacterPlayer();
+        DefensiveEquipment defensiveEquipment = character.getDefensiveEquipment();
+        if (defensiveEquipment != null) {
+            int valuePotion = defensiveEquipment.getLevelDefense();
+            int health = character.getLifePoints();
+            int calcul = health + valuePotion;
+            int defaultHealth = character.getLifeDefault();
+            if (health == defaultHealth) {
+                menu.haveAlreadyMaxHealthFight(borderClass, user, game, this, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber);
+            } else if (calcul > defaultHealth) {
+                character.setLifePoints(defaultHealth);
+                deletePotion(character);
+                menu.haveMaxHealthFight(borderClass, user, game, this, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber);
+            } else {
+                character.setLifePoints(calcul);
+                deletePotion(character);
+                menu.haveRegenerationFight(borderClass, user, game, this, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, calcul);
+            }
+        }
+    }
+
+    public void deletePotion(Character character) {
+        character.setDefensiveEquipment(null);
     }
 
 }
