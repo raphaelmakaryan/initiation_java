@@ -44,7 +44,6 @@ public class Cell {
         if (verificationCase == 20 || verificationCase == 21 || verificationCase == 22) {
             // ENEMY
             Enemies enemies = new Enemies();
-
             enemies.haveEnemies(menu, boardClass, user, game, boardInt, caseNumber);
         }
     }
@@ -53,8 +52,7 @@ public class Cell {
         if (verificationCase >= 300) {
             // BOX
             Box box = new Box();
-            boardClass.setNewCellPlayer(boardInt, caseNumber);
-            box.haveBox(menu, boardClass, user, game);
+            box.haveBox(menu, boardClass, user, game, boardInt, caseNumber);
         }
     }
 

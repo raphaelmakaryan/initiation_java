@@ -7,11 +7,11 @@ public abstract class Character {
     protected String name;
     protected int lifePoints;
     protected int attackLevel;
-    protected String offensiveEquipment;
-    protected String defensiveEquipment;
+    protected OffensiveEquipment offensiveEquipment;
+    protected DefensiveEquipment defensiveEquipment;
 
     // constructor
-    public Character(String name, int lifePoints, int attackLevel, String offensiveEquipment, String defensiveEquipment) {
+    public Character(String name, int lifePoints, int attackLevel, OffensiveEquipment offensiveEquipment, DefensiveEquipment defensiveEquipment) {
         this.name = name;
         this.type = this.getClass().getSimpleName();
         this.lifePoints = lifePoints;
@@ -48,19 +48,19 @@ public abstract class Character {
         this.attackLevel = attackLevel;
     }
 
-    public String getOffensiveEquipment() {
+    public OffensiveEquipment getOffensiveEquipment() {
         return offensiveEquipment;
     }
 
-    public void setOffensiveEquipment(String offensiveEquipment) {
+    public void setOffensiveEquipment(OffensiveEquipment offensiveEquipment) {
         this.offensiveEquipment = offensiveEquipment;
     }
 
-    public String getDefensiveEquipment() {
+    public DefensiveEquipment getDefensiveEquipment() {
         return defensiveEquipment;
     }
 
-    public void setDefensiveEquipment(String defensiveEquipment) {
+    public void setDefensiveEquipment(DefensiveEquipment defensiveEquipment) {
         this.defensiveEquipment = defensiveEquipment;
     }
 

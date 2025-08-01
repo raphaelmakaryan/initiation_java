@@ -17,6 +17,7 @@ import java.util.Scanner;
 public class Menu extends Admin {
     Tools toolsMain = new Tools();
     Scanner clavier = new Scanner(System.in);
+    Objects objects = new Objects();
 
 
     // Menu a la creation du personnage
@@ -165,7 +166,7 @@ public class Menu extends Admin {
         }
     }
 
-    public void boxCell(Board boardClass, User user, Game game) {
+    public void boxCell(Board boardClass, User user, Game game, int[] boardInt, int caseNumber) {
         int choiceUser;
         int choice;
         toolsMain.clearLine();
@@ -178,11 +179,33 @@ public class Menu extends Admin {
         choice = itIsInt(String.valueOf(choiceUser), false);
         toolsMain.clearLine();
         if (choice == 1) {
-            toolsMain.maintenance("commande");
+            objects.openBox(boardClass, user, boardInt, caseNumber, this, game);
         } else if (choice == 2) {
             choiceGameProgress(boardClass, user, game);
         } else {
             toolsMain.verificationChoiceNotWhile("boxCell", this, (Object) null);
+        }
+    }
+
+    public void displayObjectOpenBox(String type, Board boardClass, User user, Game game) {
+        int choiceUser;
+        int choice;
+        toolsMain.clearLine();
+        System.out.println("Dans le coffre, il contenais " + Colors.BOX_GREEN + type + " !" + Colors.RESET);
+        System.out.println("Que voulez-vous faire maintenant ?");
+        System.out.println("1. Le prendre");
+        System.out.println("2. Le laisser");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        toolsMain.clearLine();
+        if (choice == 1) {
+            Character character = user.getCharacterPlayer();
+            //objects.openBox();
+        } else if (choice == 2) {
+            choiceGameProgress(boardClass, user, game);
+        } else {
+            toolsMain.verificationChoiceNotWhile("displayObjectOpenBox", this, (Object) null);
         }
     }
 

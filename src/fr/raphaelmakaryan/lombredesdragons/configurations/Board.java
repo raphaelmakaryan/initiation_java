@@ -25,7 +25,7 @@ public class Board extends Admin {
             valueBoard = caseEnd;
         }
         board = new int[valueBoard];
-        setRandomCellBoard(ennemisCell, rand, enemyValue);
+        //setRandomCellBoard(ennemisCell, rand, enemyValue);
         setRandomCellBoard(boxCell, rand, boxValue);
         board[caseStart] = 1;
         board[board.length - 1] = 4;
