@@ -4,30 +4,34 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Enemie;
 import fr.raphaelmakaryan.lombredesdragons.verifications.EndGame;
-import fr.raphaelmakaryan.lombredesdragons.verifications.Enemies;
 
 public class Fight {
 
     public void playerAttack(User user, Menu menu, Enemie enemie, Board boardClass, Game game, int[] boardInt, int caseNumber) {
+        Dice dice = new Dice();
         Character character = user.getCharacterPlayer();
         int attackLevel = character.getAttackLevel();
+        int[][] newAttackLevel = dice.dice20(attackLevel);
         int lifePoints = enemie.getLifePoints();
-        menu.displayFightPlayerAttack();
-        verifiedPerson(attackLevel, lifePoints, enemie, "player", user, menu, game, boardClass, boardInt, caseNumber);
+        menu.displayChoicePlayerAttack(boardClass, user, game, this, newAttackLevel, lifePoints, enemie, "player", menu, boardInt, caseNumber);
     }
 
     public void enemyAttack(User user, Menu menu, Enemie enemie, Board boardClass, Game game, int[] boardInt, int caseNumber) {
+        Dice dice = new Dice();
         Character character = user.getCharacterPlayer();
         int attackLevel = enemie.getAttackLevel();
+        int[][] newAttackLevel = dice.dice20(attackLevel);
         int lifePoints = character.getLifePoints();
-        menu.displayFightEnemyAttack();
+        menu.displayFightCritical(newAttackLevel, "enemy");
         verifiedPerson(attackLevel, lifePoints, enemie, "enemy", user, menu, game, boardClass, boardInt, caseNumber);
     }
 
     public void espace(Menu menu, Game game, User user, Board boardClass, int[] boardInt, int caseNumber) {
-        menu.displayEscape();
+        Dice dice = new Dice();
+        int escape = dice.dice6();
+        menu.displayEscape(escape);
         boardClass.setNewCellPlayer(boardInt, caseNumber);
-        game.playTurn(boardClass, user, game);
+        menu.choiceGameProgress(boardClass, user, game);
     }
 
     public void verifiedPerson(int attacker, int receiving, Enemie enemie, String type, User user, Menu menu, Game game, Board boardClass, int[] boardInt, int caseNumber) {
@@ -47,12 +51,12 @@ public class Fight {
             enemie.setLifePoints(difference);
         } else {
             character.setLifePoints(difference);
-            espace(menu, game, user, boardClass, boardInt, caseNumber);
+            progressesFight(menu, boardClass, enemie, user, game, boardInt, caseNumber);
+            //espace(menu, game, user, boardClass, boardInt, caseNumber);
         }
     }
 
     public void progressesFight(Menu menu, Board boardClass, Enemie enemies, User user, Game game, int[] boardInt, int caseNumber) {
-        menu.displayEnemyFight(enemies);
         playerAttack(user, menu, enemies, boardClass, game, boardInt, caseNumber);
         enemyAttack(user, menu, enemies, boardClass, game, boardInt, caseNumber);
     }
@@ -63,7 +67,7 @@ public class Fight {
             EndGame.endGame("dead", menu);
         } else {
             System.out.println("L'ennemi est mort !");
-            game.playTurn(boardClass, user, game);
+            menu.choiceGameProgress(boardClass, user, game);
         }
     }
 

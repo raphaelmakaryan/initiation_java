@@ -4,8 +4,10 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.exceptions.OutOfBoardE
 import fr.raphaelmakaryan.lombredesdragons.game.Game;
 import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 import fr.raphaelmakaryan.lombredesdragons.game.User;
+import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 import fr.raphaelmakaryan.lombredesdragons.verifications.Cell;
 
+import javax.tools.Tool;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -27,6 +29,9 @@ public class Board extends Admin {
         setRandomCellBoard(boxCell, rand, boxValue);
         board[caseStart] = 1;
         board[board.length - 1] = 4;
+        if (debugBoardCellInt) {
+            Tools.displayAArrayint(board);
+        }
     }
 
     public int getCurrentCasePlayers() {

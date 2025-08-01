@@ -144,6 +144,7 @@ public class Menu extends Admin {
 
     public void enemiesCell(Board boardClass, Menu menu, User user, Game game, int[] boardInt, int caseNumber) {
         Enemies enemy = new Enemies();
+        Fight fight = new Fight();
         int choiceUser;
         int choice;
         toolsMain.clearLine();
@@ -158,8 +159,7 @@ public class Menu extends Admin {
         if (choice == 1) {
             enemy.chooseFight(menu, boardClass, user, game, boardInt, caseNumber);
         } else if (choice == 2) {
-            boardClass.setNewCellPlayer(boardInt, caseNumber);
-            choiceGameProgress(boardClass, user, game);
+            fight.espace(menu, game, user, boardClass, boardInt, caseNumber);
         } else {
             toolsMain.verificationChoiceNotWhile("enemiesCell", this, (Object) null);
         }
@@ -216,8 +216,47 @@ public class Menu extends Admin {
     public void displayEnemyFight(Enemie enemies) {
         toolsMain.clearLine();
         System.out.println(Colors.ENEMY_RED + "Vous etes en train de vous battre contre un " + enemies.getName() + " !" + Colors.RESET);
-        System.out.println("Vous l'attaquez en premier !");
         toolsMain.clearLine();
+    }
+
+
+    public void displayFightCritical(int[][] attackLevel, String type) {
+        if (type == "player") {
+            if (attackLevel[0][1] == 1) {
+                System.out.println("Vous avez fait un " + Colors.DICE_MAGENTA + "echec critique" + Colors.RESET + " !");
+            } else if (attackLevel[0][1] == 20) {
+                System.out.println("Vous avez fait un " + Colors.DICE_MAGENTA + "critique" + Colors.RESET + " !");
+            }
+        } else {
+            if (attackLevel[0][1] == 1) {
+                System.out.println("L'ennemi a fait un " + Colors.DICE_MAGENTA + "echec critique" + Colors.RESET + " !");
+            } else if (attackLevel[0][1] == 20) {
+                System.out.println("L'ennemi a fait un " + Colors.DICE_MAGENTA + "critique" + Colors.RESET + " !");
+            }
+        }
+    }
+
+    public void displayChoicePlayerAttack(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber) {
+        int choiceUser;
+        int choice;
+
+        System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
+        System.out.println("1. Attaquer l'ennemi");
+        System.out.println("2. Fuir l'ennemi");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        toolsMain.clearLine();
+
+        if (choice == 1) {
+            displayFightCritical(attackLevel, "player");
+            displayFightPlayerAttack();
+            fight.verifiedPerson(attackLevel[0][0], lifePoints, enemie, "player", user, menu, game, boardClass, boardInt, caseNumber);
+        } else if (choice == 2) {
+            fight.espace(menu, game, user, boardClass, boardInt, caseNumber);
+        } else {
+            toolsMain.verificationChoiceNotWhile("displayChoicePlayerAttack", this, boardClass);
+        }
     }
 
     public void displayAdminGetHeros(Database database, Connection connection) throws SQLException {
@@ -240,8 +279,10 @@ public class Menu extends Admin {
         System.out.println("Merci d'avoir joué. À bientôt !");
     }
 
-    public void displayEscape() {
-        System.out.println("L'ennemi a fui !");
+    public void displayEscape(int escape) {
+        System.out.println("Vous avez réussi à fuir l'ennemi !");
+        System.out.println("Par contre, vous avez lancé le déE pour savoir combien de cases vous devez reculez.");
+        System.out.println("Vous reculez de " + Colors.DICE_MAGENTA + escape + Colors.RESET + " cases.");
         System.out.println("Vous pouvez continuer votre chemin.");
         toolsMain.clearLine();
     }

@@ -70,7 +70,7 @@ public class Game extends Admin {
     // Méthode pour gérer la progression du jeu
     public void playTurn(Board board, User user, Game game) {
         Dice dice = new Dice();
-        int diceValue = dice.diceRoll();
+        int diceValue = dice.dice6();
         board.movePlayer(diceValue, board, menuGame, user, game);
     }
 }

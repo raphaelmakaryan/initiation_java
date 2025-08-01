@@ -21,6 +21,7 @@ public class Enemies extends Admin {
     public void chooseFight(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber) {
         Fight fight = new Fight();
         createEnemy(boardClass);
+        menu.displayEnemyFight(this.enemiesPlayer);
         fight.progressesFight(menu, boardClass, this.enemiesPlayer, user, game, boardInt, caseNumber);
     }
 
@@ -30,7 +31,7 @@ public class Enemies extends Admin {
         if (debugEnemiesCell) {
             System.out.println("DEBUG : ID de la case sur ou est le joueur : " + cellPlayer);
         }
-        int calculatedCell = 20 - cellPlayer;
+        int calculatedCell = cellPlayer - 20;
         if (calculatedCell == 0) {
             enemiesPlayer = new Wizard();
         } else if (calculatedCell == 1) {

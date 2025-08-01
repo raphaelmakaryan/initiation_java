@@ -7,6 +7,7 @@ public abstract class Admin {
     public int valueDebugBoard = 10;
     public boolean debugBoardDisplay = false;
     public boolean debugBoardIndexCell = false;
+    public boolean debugBoardCellInt = false;
 
     public boolean debugDice = false;
     public int valueDebugDice = 1;
