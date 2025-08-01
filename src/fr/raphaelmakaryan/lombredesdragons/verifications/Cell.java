@@ -64,5 +64,4 @@ public class Cell {
             menu.choiceGameProgress(boardClass, user, game);
         }
     }
-
 }
