@@ -25,6 +25,10 @@ public abstract class OffensiveEquipment {
         return levelAttack;
     }
 
+    public void setLevelAttack(int levelAttack) {
+        this.levelAttack = levelAttack;
+    }
+
     @Override
     public String toString() {
         return "OffensiveEquipment{" +
@@ -33,9 +37,4 @@ public abstract class OffensiveEquipment {
                 ", idObject=" + idObject +
                 '}';
     }
-
-    public void setLevelAttack(int levelAttack) {
-        this.levelAttack = levelAttack;
-    }
-
 }

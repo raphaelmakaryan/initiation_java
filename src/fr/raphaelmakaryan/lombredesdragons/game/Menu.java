@@ -183,16 +183,15 @@ public class Menu extends Admin {
         } else if (choice == 2) {
             choiceGameProgress(boardClass, user, game);
         } else {
-            toolsMain.verificationChoiceNotWhile("boxCell", this, (Object) null);
+            toolsMain.verificationChoiceNotWhile("boxCell", this, boardClass, user, game, boardInt, caseNumber);
         }
     }
 
-    public void displayObjectOpenBox(String type, Board boardClass, User user, Game game) {
+    public void displayObjectOpenBox(Board boardClass, User user, Game game, Objects objects, String[][][] allData) {
         int choiceUser;
         int choice;
         toolsMain.clearLine();
-        System.out.println("Dans le coffre, il contenais " + Colors.BOX_GREEN + type + " !" + Colors.RESET);
-        System.out.println("Que voulez-vous faire maintenant ?");
+        System.out.println("Vous pouvez le prendre ! Que voulez-vous faire maintenant ?");
         System.out.println("1. Le prendre");
         System.out.println("2. Le laisser");
         System.out.println("Veuillez entrer le numéro de votre choix !");
@@ -200,13 +199,39 @@ public class Menu extends Admin {
         choice = itIsInt(String.valueOf(choiceUser), false);
         toolsMain.clearLine();
         if (choice == 1) {
-            Character character = user.getCharacterPlayer();
-            //objects.openBox();
+            objects.verificationGiveObjectToPlayer(user, allData, this, boardClass, game);
         } else if (choice == 2) {
             choiceGameProgress(boardClass, user, game);
         } else {
             toolsMain.verificationChoiceNotWhile("displayObjectOpenBox", this, (Object) null);
         }
+    }
+
+    public void displayCantGetObjectOpenBox(Board boardClass, User user, Game game) {
+        toolsMain.clearLine();
+        System.out.println("Malheuresement, vous ne pouvez pas prendre cet objet.");
+        System.out.println("Cet objet n'est pas disponible pour votre classe.");
+        System.out.println("Vous fermez donc la boîte et vous reprenez vos routes.");
+        choiceGameProgress(boardClass, user, game);
+    }
+
+    public void displayObjectOnBox(String objet) {
+        toolsMain.clearLine();
+        System.out.println("Dans le coffre, il contenais " + Colors.BOX_GREEN + objet + " !" + Colors.RESET);
+    }
+
+    public void displayObjectAddToPlayer(Board boardClass, User user, Game game, String objet) {
+        toolsMain.clearLine();
+        System.out.println("Vous avez pris " + Colors.BOX_GREEN + objet + " !" + Colors.RESET);
+        System.out.println("Vous continuez votre aventure.");
+        choiceGameProgress(boardClass, user, game);
+    }
+
+    public void displayObjectCantAddToPlayer(Board boardClass, User user, Game game, String objet) {
+        toolsMain.clearLine();
+        System.out.println("Vous ne pouvez pas prendre cet objet, vous avez deja un objet et qui est supérieur a cet objet.");
+        System.out.println("Vous continuez votre aventure.");
+        choiceGameProgress(boardClass, user, game);
     }
 
     public void displayInformationCharacter(User user) {
@@ -241,7 +266,6 @@ public class Menu extends Admin {
         System.out.println(Colors.ENEMY_RED + "Vous etes en train de vous battre contre un " + enemies.getName() + " !" + Colors.RESET);
         toolsMain.clearLine();
     }
-
 
     public void displayFightCritical(int[][] attackLevel, String type) {
         if (type == "player") {

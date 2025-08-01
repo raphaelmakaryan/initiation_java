@@ -20,6 +20,14 @@ public abstract class DefensiveEquipment {
         this.name = name;
     }
 
+    public int getLevelDefense() {
+        return levelDefense;
+    }
+
+    public void setLevelDefense(int levelDefense) {
+        this.levelDefense = levelDefense;
+    }
+
     @Override
     public String toString() {
         return "DefensiveEquipment{" +

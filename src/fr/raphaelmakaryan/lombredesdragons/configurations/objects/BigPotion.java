@@ -4,6 +4,6 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Potion;
 
 public class BigPotion extends Potion {
     public BigPotion() {
-        super("Big Potion", 2, 01);
+        super("Big Potion", 5, 01);
     }
 }
