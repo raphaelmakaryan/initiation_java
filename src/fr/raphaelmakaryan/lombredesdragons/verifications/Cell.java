@@ -27,7 +27,7 @@ public class Cell {
     }
 
     public void outOfBoard(int caseNumber, Board boardClass, int[] boardInt, Menu menu, User user, Game game) throws OutOfBoardException {
-        if (caseNumber >= 63) {
+        if (caseNumber >= 64) {
             boardClass.outOfBoard(caseNumber, boardClass, boardInt);
             menu.choiceGameProgress(boardClass, user, game);
             throw new OutOfBoardException("Position hors du plateau !");
@@ -60,7 +60,7 @@ public class Cell {
         if (verificationCase == 0) {
             // NOTHING
             System.out.println(Colors.NOTHING_BLUE + "Il n'y a rien ici !\n" + Colors.RESET);
-            boardClass.setNewCellPlayer(boardInt, caseNumber);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, true);
             menu.choiceGameProgress(boardClass, user, game);
         }
     }

@@ -47,7 +47,6 @@ public class Database extends Admin {
                 System.out.println("Une anomalie est survenue lors de la récuperation des personnages dans la base de données.");
             }
         }
-        System.out.println("La base de donnée n'est pas activée.");
     }
 
     public void createHero(Connection connection, User user, Database database) throws SQLException {
@@ -72,7 +71,6 @@ public class Database extends Admin {
                 System.out.println("N'en prenez pas compte, vous pouvez continuer à jouer sans sauvegarder votre personnage.");
             }
         }
-        System.out.println("La base de donnée n'est pas activée.");
     }
 
     public void editHero(Connection connection, String oldName, String newName, User user) throws SQLException {
@@ -88,7 +86,6 @@ public class Database extends Admin {
                 System.out.println("Anomalie lors de l'execution de la requête");
             }
         }
-        System.out.println("La base de donnée n'est pas activée.");
     }
 
     public void changeLifePoints(Connection connection, Character character) throws SQLException {
@@ -114,6 +111,5 @@ public class Database extends Admin {
                 System.out.println("N'en prenez pas compte, vous pouvez continuer à jouer sans sauvegarder votre plateau de jeu.");
             }
         }
-        System.out.println("La base de donnée n'est pas activée.");
     }
 }

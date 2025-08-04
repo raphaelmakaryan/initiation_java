@@ -4,7 +4,6 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.Admin;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Colors;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Database;
-import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 
 import java.sql.Connection;
 import java.sql.SQLException;

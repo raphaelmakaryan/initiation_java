@@ -8,11 +8,13 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Potion;
 import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Spell;
 import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Weapon;
 import fr.raphaelmakaryan.lombredesdragons.configurations.objects.*;
+import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 
 public class Objects {
     public Weapon isWeapon;
     public Spell isSpell;
     public Potion isPotion;
+    Tools tools = new Tools();
 
     public void openBox(Board boardClass, User user, int[] boardInt, int caseNumber, Menu menu, Game game) {
         Character character = user.getCharacterPlayer();
@@ -20,11 +22,13 @@ public class Objects {
         String[][][] whatType = whatObject(cellPlayer);
         menu.displayObjectOnBox(whatType[0][0][0]);
         boolean canHave = verificationIfCanUse(whatType, character);
+        tools.setTimeout(1);
         if (canHave) {
-            boardClass.setNewCellPlayer(boardInt, caseNumber);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, true);
             displayToPlayer(menu, whatType, boardClass, user, game);
         }
-        boardClass.setNewCellPlayer(boardInt, caseNumber);
+        tools.setTimeout(1);
+        boardClass.setNewCellPlayer(boardInt, caseNumber, true);
         menu.displayCantGetObjectOpenBox(boardClass, user, game);
     }
 
@@ -71,7 +75,6 @@ public class Objects {
         }
         return false;
     }
-
 
     public boolean haveAlreadyAObject(User user, String[][][] object, Menu menu, Board boardClass, Game game) {
         Character character = user.getCharacterPlayer();

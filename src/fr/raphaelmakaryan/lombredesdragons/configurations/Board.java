@@ -6,11 +6,13 @@ import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 import fr.raphaelmakaryan.lombredesdragons.game.User;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 import fr.raphaelmakaryan.lombredesdragons.verifications.Cell;
+
 import java.util.Random;
 
 public class Board extends Admin {
     private int currentCasePlayers = 0;
     private int[] board;
+    Tools tools = new Tools();
 
 
     public Board() {
@@ -50,6 +52,7 @@ public class Board extends Admin {
      */
     public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game) {
         Cell cellInstance = new Cell();
+        tools.setTimeout(1);
         System.out.println("Vous avez lancé le dé et obtenu : " + Colors.DICE_MAGENTA + steps + Colors.RESET + " !");
         int[] boardInt = boardClass.getBoard();
         int newPosition = currentCasePlayers + steps;
@@ -79,7 +82,7 @@ public class Board extends Admin {
     public void outOfBoard(int positionNow, Board boardClass, int[] boardInt) {
         int calculReturnGame;
         int difference;
-        if (positionNow >= 63) {
+        if (positionNow >= 64) {
             difference = (positionNow - 63);
             calculReturnGame = 63 - difference;
             boardInt[currentCasePlayers] = 0;
@@ -134,11 +137,13 @@ public class Board extends Admin {
      * @param boardInt
      * @param newPosition
      */
-    public void setNewCellPlayer(int[] boardInt, int newPosition) {
+    public void setNewCellPlayer(int[] boardInt, int newPosition, boolean displayMessage) {
         setNewCurrentCasePlayers(newPosition);
         boardInt[newPosition] = 1;
         setNewBoard(boardInt);
-        System.out.println("Vous êtes maintenant à la case " + Colors.CELL_BRIGHTMAGENTA + newPosition + Colors.RESET + ".");
+        if (displayMessage) {
+            System.out.println("Vous êtes maintenant à la case " + Colors.CELL_BRIGHTMAGENTA + newPosition + Colors.RESET + ".");
+        }
     }
 
     public void setRandomCellBoard(int[] cell, Random random, int[] valueBox) {
