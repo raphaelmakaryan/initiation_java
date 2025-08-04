@@ -62,8 +62,7 @@ public class Fight {
      * @param caseNumber
      */
     public void espace(Menu menu, Game game, User user, Board boardClass, int[] boardInt, int caseNumber, Connection connection, Database database) {
-        Dice dice = new Dice();
-        int escape = dice.dice6();
+        int escape = 2;
         menu.displayEscape(escape);
         boardClass.setNewCellPlayer(boardInt, caseNumber - escape, true, connection, database, user);
         menu.choiceGameProgress(boardClass, user, game, connection, database);
