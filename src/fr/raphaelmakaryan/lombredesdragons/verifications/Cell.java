@@ -115,7 +115,7 @@ public class Cell {
         if (verificationCase == 0) {
             // NOTHING
             System.out.println(Colors.NOTHING_BLUE + "Il n'y a rien ici !\n" + Colors.RESET);
-            boardClass.setNewCellPlayer(boardInt, caseNumber, true);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, true, connection, database, user);
             menu.choiceGameProgress(boardClass, user, game, connection, database);
         }
     }

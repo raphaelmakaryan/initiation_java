@@ -199,7 +199,7 @@ public class Menu extends Admin {
         int choice;
         toolsMain.setTimeout(1);
         toolsMain.clearLine();
-        System.out.println(Colors.ENEMY_RED + "Vous etes tomber sur un ennemi !" + Colors.RESET);
+        System.out.println(Colors.ENEMY_RED + "Vous êtes tomber sur un ennemi !" + Colors.RESET);
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. Se battre contre l'ennemi");
         System.out.println("2. Fuir l'ennemi");

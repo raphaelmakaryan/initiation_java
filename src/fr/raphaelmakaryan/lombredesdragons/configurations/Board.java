@@ -155,10 +155,11 @@ public class Board extends Admin {
      * @param boardInt
      * @param newPosition
      */
-    public void setNewCellPlayer(int[] boardInt, int newPosition, boolean displayMessage) {
+    public void setNewCellPlayer(int[] boardInt, int newPosition, boolean displayMessage, Connection connection, Database database, User user) {
         setNewCurrentCasePlayers(newPosition);
         boardInt[newPosition] = 1;
         setNewBoard(boardInt);
+        database.updateBoard(connection, boardInt, user);
         if (displayMessage) {
             System.out.println("Vous êtes maintenant à la case " + Colors.CELL_BRIGHTMAGENTA + newPosition + Colors.RESET + ".");
         }

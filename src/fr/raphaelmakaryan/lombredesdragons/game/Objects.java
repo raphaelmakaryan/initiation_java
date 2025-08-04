@@ -34,11 +34,11 @@ public class Objects {
         boolean canHave = verificationIfCanUse(whatType, character);
         tools.setTimeout(1);
         if (canHave) {
-            boardClass.setNewCellPlayer(boardInt, caseNumber, true);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, true, connection, database, user);
             displayToPlayer(menu, whatType, boardClass, user, game, connection, database);
         }
         tools.setTimeout(1);
-        boardClass.setNewCellPlayer(boardInt, caseNumber, true);
+        boardClass.setNewCellPlayer(boardInt, caseNumber, true, connection, database, user);
         menu.displayCantGetObjectOpenBox(boardClass, user, game, connection, database);
     }
 

@@ -65,7 +65,7 @@ public class Fight {
         Dice dice = new Dice();
         int escape = dice.dice6();
         menu.displayEscape(escape);
-        boardClass.setNewCellPlayer(boardInt, caseNumber, true);
+        boardClass.setNewCellPlayer(boardInt, caseNumber, true, connection, database, user);
         menu.choiceGameProgress(boardClass, user, game, connection, database);
     }
 

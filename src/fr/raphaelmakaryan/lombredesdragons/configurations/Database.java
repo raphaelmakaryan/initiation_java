@@ -163,6 +163,21 @@ public class Database extends Admin {
         }
     }
 
+    public void updateBoard(Connection connection, int[] boardInt, User user) {
+        if (usingDatabase) {
+            int id = user.getIDPlayerDatabase();
+            String query = "UPDATE `Board` SET `Board`=? WHERE `idCharacter`= ?";
+            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+                pstmt.setString(1, Arrays.toString(boardInt));
+                pstmt.setInt(2, id);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println("Une anomalie est survenue lors de la mise a jour du plateau de jeu dans la base de données.");
+                System.out.println("N'en prenez pas compte, vous pouvez continuer à jouer sans sauvegarder votre plateau de jeu.");
+            }
+        }
+    }
+
     public void addDefensiveEquipment(Connection connection, User user, DefensiveEquipment defensiveEquipment) {
         if (usingDatabase) {
             Character character = user.getCharacterPlayer();
