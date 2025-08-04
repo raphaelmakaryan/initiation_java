@@ -53,7 +53,7 @@ public class Board extends Admin {
      */
     public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game) {
         Cell cellInstance = new Cell();
-        System.out.println("Vous avez lancé le dé et obtenu : " + Colors.DICE_MAGENTA + steps + Colors.RESET + " !");
+        System.out.println("You rolled the die and got : " + Colors.DICE_MAGENTA + steps + Colors.RESET + " !");
         int[] boardInt = boardClass.getBoard();
         int newPosition = currentCasePlayers + steps;
         boardInt[currentCasePlayers] = 0;

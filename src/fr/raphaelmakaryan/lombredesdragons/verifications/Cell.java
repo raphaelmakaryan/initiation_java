@@ -18,8 +18,8 @@ public class Cell {
      * @throws OutOfBoardException
      */
     public void verifyCase(int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game) throws OutOfBoardException {
-        int verificationCase = boardInt[caseNumber];
         outOfBoard(caseNumber, boardClass, boardInt, menu, user, game);
+        int verificationCase = boardInt[caseNumber];
         endGame(menu, verificationCase);
         enemyCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game);
         boxCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game);

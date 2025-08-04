@@ -4,6 +4,7 @@ package fr.raphaelmakaryan.lombredesdragons.tools;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Colors;
 import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
 public class Tools {
@@ -109,7 +110,7 @@ public class Tools {
         try {
             clearLine();
             System.out.println("Veuillez choisir un choix valide !");
-            if (args.length == 0) {
+            if (args.length == 0 || args[0] == null) {
                 java.lang.reflect.Method method = menu.getClass().getMethod(function);
                 method.invoke(menu);
             } else {
@@ -122,4 +123,31 @@ public class Tools {
             System.err.println("Erreur lors de l'appel de la fonction " + function + " : " + e.getMessage());
         }
     }
+
+    public void verificationChoiceNotWhilev2(String function, Menu menu, Object... args) {
+        try {
+            clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+
+            Class<?>[] paramTypes = Arrays.stream(args)
+                    .map(arg -> {
+                        if (arg instanceof Integer) return int.class;
+                        else if (arg instanceof Boolean) return boolean.class;
+                        else if (arg instanceof Double) return double.class;
+                        else if (arg instanceof Float) return float.class;
+                        else if (arg instanceof Long) return long.class;
+                        else return arg.getClass();
+                    })
+                    .toArray(Class[]::new);
+
+            Method method = menu.getClass().getMethod(function, paramTypes);
+            method.invoke(menu, args);
+
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'appel de la fonction " + function + " : " + e.getMessage());
+            e.printStackTrace(); // utile pour le debug
+        }
+    }
+
+
 }

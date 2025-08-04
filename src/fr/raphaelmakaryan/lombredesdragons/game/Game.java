@@ -49,9 +49,10 @@ public class Game extends Admin {
      */
     // Après la création du joueur, on lance le systeme du jeu
     public void afterCreationPlayer(Menu menu, User user, Database database, Connection connection, Game game) throws SQLException {
-        Tools tools = new Tools();
-        boolean startGame = menu.afterCreationPlayerMenu(user, menu, database, connection);
-        tools.verificationChoiceWhile(startGame, true, menu, "afterCreationPlayerMenu");
+        menu.afterCreationPlayerMenu(user, menu, database, connection,  game);
+    }
+
+    public void playerWantPlay(Connection connection, Database database, Game game) throws SQLException {
         Board board = new Board();
         database.addBoard(connection, board, user);
         startGame(board, user, game);

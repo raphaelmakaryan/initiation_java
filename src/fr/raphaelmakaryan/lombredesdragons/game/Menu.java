@@ -51,7 +51,7 @@ public class Menu extends Admin {
     }
 
     // Choix apres la creation du personnage
-    public boolean afterCreationPlayerMenu(User user, Menu menu, Database database, Connection connection) throws SQLException {
+    public void afterCreationPlayerMenu(User user, Menu menu, Database database, Connection connection, Game game) throws SQLException {
         int choiceUser;
         int choice;
 
@@ -67,24 +67,26 @@ public class Menu extends Admin {
         choiceUser = clavier.nextInt();
         choice = itIsInt(String.valueOf(choiceUser), false);
         if (choice == 1) {
-            return true;
+            game.playerWantPlay(connection, database, game);
         } else if (choice == 2) {
             displayInformationCharacter(user);
             toolsMain.clearLine();
-            menu.afterCreationPlayerMenu(user, menu, database, connection);
+            afterCreationPlayerMenu(user, menu, database, connection, game);
         } else if (choice == 3) {
             displayModifyInformationCharacter(user, database, connection);
             toolsMain.clearLine();
-            menu.afterCreationPlayerMenu(user, menu, database, connection);
+            afterCreationPlayerMenu(user, menu, database, connection, game);
         } else if (choice == 4) {
             endGame("exit", this);
-            return false;
         } else if (choice == 5 && debugViewHeroMenu) {
             displayAdminGetHeros(database, connection);
             toolsMain.clearLine();
-            menu.afterCreationPlayerMenu(user, menu, database, connection);
+            afterCreationPlayerMenu(user, menu, database, connection, game);
+        } else {
+            toolsMain.clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+            afterCreationPlayerMenu(user, menu, database, connection, game);
         }
-        return false;
     }
 
     /**
@@ -115,7 +117,9 @@ public class Menu extends Admin {
         } else if (choice == 3) {
             endGame("exit", this);
         } else {
-            toolsMain.verificationChoiceNotWhile("choiceGameProgress", this, boardClass, user, game);
+            toolsMain.clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+            choiceGameProgress(boardClass, user, game);
         }
     }
 
@@ -162,7 +166,9 @@ public class Menu extends Admin {
         } else if (choice == 2) {
             fight.espace(menu, game, user, boardClass, boardInt, caseNumber);
         } else {
-            toolsMain.verificationChoiceNotWhile("enemiesCell", this, (Object) null);
+            toolsMain.clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+            enemiesCell(boardClass, menu, user, game, boardInt, caseNumber);
         }
     }
 
@@ -183,7 +189,9 @@ public class Menu extends Admin {
         } else if (choice == 2) {
             choiceGameProgress(boardClass, user, game);
         } else {
-            toolsMain.verificationChoiceNotWhile("boxCell", this, boardClass, user, game, boardInt, caseNumber);
+            toolsMain.clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+            boxCell(boardClass, user, game, boardInt, caseNumber);
         }
     }
 
@@ -203,7 +211,9 @@ public class Menu extends Admin {
         } else if (choice == 2) {
             choiceGameProgress(boardClass, user, game);
         } else {
-            toolsMain.verificationChoiceNotWhile("displayObjectOpenBox", this, (Object) null);
+            toolsMain.clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+            displayObjectOpenBox(boardClass, user, game, objects, allData);
         }
     }
 
@@ -334,7 +344,6 @@ public class Menu extends Admin {
         System.out.println("Vous reprenez le combat !");
         displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber);
     }
-
 
     public void displayAdminGetHeros(Database database, Connection connection) throws SQLException {
         database.getHeroes(connection);
