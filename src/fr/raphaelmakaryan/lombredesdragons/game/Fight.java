@@ -52,7 +52,6 @@ public class Fight {
         } else {
             character.setLifePoints(difference);
             progressesFight(menu, boardClass, enemie, user, game, boardInt, caseNumber);
-            //espace(menu, game, user, boardClass, boardInt, caseNumber);
         }
     }
 

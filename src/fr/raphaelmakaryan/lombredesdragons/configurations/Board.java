@@ -6,9 +6,6 @@ import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 import fr.raphaelmakaryan.lombredesdragons.game.User;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 import fr.raphaelmakaryan.lombredesdragons.verifications.Cell;
-
-import javax.tools.Tool;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Board extends Admin {
@@ -53,7 +50,7 @@ public class Board extends Admin {
      */
     public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game) {
         Cell cellInstance = new Cell();
-        System.out.println("You rolled the die and got : " + Colors.DICE_MAGENTA + steps + Colors.RESET + " !");
+        System.out.println("Vous avez lancé le dé et obtenu : " + Colors.DICE_MAGENTA + steps + Colors.RESET + " !");
         int[] boardInt = boardClass.getBoard();
         int newPosition = currentCasePlayers + steps;
         boardInt[currentCasePlayers] = 0;
@@ -89,7 +86,7 @@ public class Board extends Admin {
             boardClass.setNewCurrentCasePlayers(calculReturnGame);
             boardInt[calculReturnGame] = 1;
             boardClass.setNewBoard(boardInt);
-            System.out.println("Vous avez essayez de sortir du plateau de jeu ! Vous avez été renvoyé à la case " + calculReturnGame + ".");
+            System.out.println("Vous avez essayé de sortir du plateau de jeu ! Vous avez été renvoyé à la case " + calculReturnGame + ".");
         }
     }
 

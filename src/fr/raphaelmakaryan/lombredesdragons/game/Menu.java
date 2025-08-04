@@ -27,24 +27,33 @@ public class Menu extends Admin {
         String type;
         boolean verifType;
         String name;
-
+        toolsMain.clearLine();
         System.out.println(Colors.RESET + "Quel type de personnage souhaitez-vous créer ? (Magicien / Guerrier)");
         typeUser = clavier.next();
-        type = itIsString(typeUser, true);
-        verifType = Boolean.parseBoolean(String.valueOf(isACharacter(type)));
-        if (verifType) {
-            user.setTypeChoice(type);
+        type = itIsString(typeUser, false);
+        if (type instanceof String && type != "") {
+            verifType = Boolean.parseBoolean(String.valueOf(isACharacter(type)));
+            if (verifType) {
+                user.setTypeChoice(type);
+                System.out.println("Proposez-lui un petit nom !");
+                nameUser = clavier.next();
+                name = itIsString(nameUser, false);
+                if (name instanceof String && name != "") {
+                    user.setName(name);
+                    toolsMain.clearLine();
+                }
+            } else {
+                toolsMain.clearLine();
+                startMenu(user);
+            }
+        } else {
+            startMenu(user);
         }
-
-        System.out.println("Proposez lui un petit nom !");
-        nameUser = clavier.next();
-        name = itIsString(nameUser, true);
-        user.setName(name);
-        toolsMain.clearLine();
     }
 
     // Menu a la validation du creation du personnage
     public void creationPlayerMenu(User user, Connection connection, Database database) throws SQLException {
+        toolsMain.setTimeout(2);
         user.createCharacter(user, connection, database);
         System.out.println(Colors.START_WHITE + "Votre personnage a été créé avec succès !" + Colors.RESET);
         toolsMain.clearLine();
@@ -176,7 +185,7 @@ public class Menu extends Admin {
         int choiceUser;
         int choice;
         toolsMain.clearLine();
-        System.out.println(Colors.BOX_GREEN + "Vous etes tomber sur une boîte !" + Colors.RESET);
+        System.out.println(Colors.BOX_GREEN + "Vous êtes tombé sur une boîte !" + Colors.RESET);
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. L'ouvrir");
         System.out.println("2. Laisser la boîte");
@@ -219,15 +228,15 @@ public class Menu extends Admin {
 
     public void displayCantGetObjectOpenBox(Board boardClass, User user, Game game) {
         toolsMain.clearLine();
-        System.out.println("Malheuresement, vous ne pouvez pas prendre cet objet.");
+        System.out.println("Malheureusement, vous ne pouvez pas prendre cet objet.");
         System.out.println("Cet objet n'est pas disponible pour votre classe.");
-        System.out.println("Vous fermez donc la boîte et vous reprenez vos routes.");
+        System.out.println("Vous fermez donc la boîte et vous reprenez votre route.");
         choiceGameProgress(boardClass, user, game);
     }
 
     public void displayObjectOnBox(String objet) {
         toolsMain.clearLine();
-        System.out.println("Dans le coffre, il contenais " + Colors.BOX_GREEN + objet + " !" + Colors.RESET);
+        System.out.println("Dans le coffre, il contenait " + Colors.BOX_GREEN + objet + " !" + Colors.RESET);
     }
 
     public void displayObjectAddToPlayer(Board boardClass, User user, Game game, String objet) {
@@ -239,7 +248,7 @@ public class Menu extends Admin {
 
     public void displayObjectCantAddToPlayer(Board boardClass, User user, Game game, String objet) {
         toolsMain.clearLine();
-        System.out.println("Vous ne pouvez pas prendre cet objet, vous avez deja un objet et/ou qui est supérieur a cet objet.");
+        System.out.println("Vous ne pouvez pas prendre cet objet, vous avez déjà un objet et/ou qui est supérieur à cet objet.");
         System.out.println("Vous continuez votre aventure.");
         choiceGameProgress(boardClass, user, game);
     }
@@ -262,7 +271,7 @@ public class Menu extends Admin {
         String newName;
         Character character = user.getCharacterPlayer();
         String oldName = character.getName();
-        System.out.println("Donnez lui son nouveau nom :");
+        System.out.println("Donnez-lui son nouveau nom :");
         nameUserChoice = clavier.next();
         newName = itIsString(nameUserChoice, true);
         user.setName(newName);
@@ -273,20 +282,20 @@ public class Menu extends Admin {
 
     public void displayEnemyFight(Enemie enemies) {
         toolsMain.clearLine();
-        System.out.println(Colors.ENEMY_RED + "Vous etes en train de vous battre contre un " + enemies.getName() + " !" + Colors.RESET);
+        System.out.println(Colors.ENEMY_RED + "Vous êtes en train de vous battre contre un " + enemies.getName() + " !" + Colors.RESET);
         toolsMain.clearLine();
     }
 
     public void displayFightCritical(int[][] attackLevel, String type) {
         if (type == "player") {
             if (attackLevel[0][1] == 1) {
-                System.out.println("Vous avez fait un " + Colors.DICE_MAGENTA + "echec critique" + Colors.RESET + " !");
+                System.out.println("Vous avez fait un " + Colors.DICE_MAGENTA + "échec critique" + Colors.RESET + " !");
             } else if (attackLevel[0][1] == 20) {
                 System.out.println("Vous avez fait un " + Colors.DICE_MAGENTA + "critique" + Colors.RESET + " !");
             }
         } else {
             if (attackLevel[0][1] == 1) {
-                System.out.println("L'ennemi a fait un " + Colors.DICE_MAGENTA + "echec critique" + Colors.RESET + " !");
+                System.out.println("L'ennemi a fait un " + Colors.DICE_MAGENTA + "échec critique" + Colors.RESET + " !");
             } else if (attackLevel[0][1] == 20) {
                 System.out.println("L'ennemi a fait un " + Colors.DICE_MAGENTA + "critique" + Colors.RESET + " !");
             }

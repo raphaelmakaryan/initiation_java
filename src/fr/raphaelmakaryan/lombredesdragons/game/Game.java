@@ -4,8 +4,6 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.Admin;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Colors;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Database;
-import fr.raphaelmakaryan.lombredesdragons.game.Menu;
-import fr.raphaelmakaryan.lombredesdragons.game.User;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 
 import java.sql.Connection;
@@ -16,7 +14,10 @@ public class Game extends Admin {
     User user = new User();
 
     // Méthode principale pour la creation du joueur
-    public void preStart(Connection connection, Database database, Game game) throws SQLException {
+    public void preStart(Game game) throws SQLException {
+        Database database = new Database();
+        Connection connection = database.connectDatabase();
+        System.out.printf(Colors.RUNGAME_CYAN + " Lancement du jeu : L'Ombre des Dragons !\n" + Colors.RESET);
         start(menuGame, user);
         creationPlayer(menuGame, user, connection, database);
         afterCreationPlayer(menuGame, user, database, connection, game);
@@ -49,7 +50,7 @@ public class Game extends Admin {
      */
     // Après la création du joueur, on lance le systeme du jeu
     public void afterCreationPlayer(Menu menu, User user, Database database, Connection connection, Game game) throws SQLException {
-        menu.afterCreationPlayerMenu(user, menu, database, connection,  game);
+        menu.afterCreationPlayerMenu(user, menu, database, connection, game);
     }
 
     public void playerWantPlay(Connection connection, Database database, Game game) throws SQLException {

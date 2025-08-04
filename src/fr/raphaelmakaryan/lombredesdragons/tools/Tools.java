@@ -1,13 +1,15 @@
 package fr.raphaelmakaryan.lombredesdragons.tools;
 
-
 import fr.raphaelmakaryan.lombredesdragons.configurations.Colors;
 import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Tools {
+
     public static int itIsInt(String s, boolean fatal) {
         try {
             return Integer.parseInt(s);
@@ -29,7 +31,7 @@ public class Tools {
                 System.err.print("Vous avez entré un nombre alors qu'un texte était attendu ! Fin du processus.");
                 System.exit(1);
             } else {
-                System.err.print("Vous avez entré un nombre alors qu'un texte était attendu ! Veuillez réessayer.");
+                System.err.print("Vous avez entré un nombre alors qu'un texte était attendu ! Veuillez recommencer.");
             }
         } catch (NumberFormatException e) {
             return s;
@@ -44,8 +46,7 @@ public class Tools {
             case "guerrier":
                 return true;
             default:
-                System.err.print("Le type de personnage que vous avez entré n'est pas valide ! Fin du processus.");
-                System.exit(1);
+                System.err.print("Le type de personnage que vous avez entré n'est pas valide ! Veuillez recommencer !");
         }
         return false;
     }
@@ -114,9 +115,7 @@ public class Tools {
                 java.lang.reflect.Method method = menu.getClass().getMethod(function);
                 method.invoke(menu);
             } else {
-                java.lang.reflect.Method method = menu.getClass().getMethod(function, Arrays.stream(args)
-                        .map(Object::getClass)
-                        .toArray(Class[]::new));
+                java.lang.reflect.Method method = menu.getClass().getMethod(function, Arrays.stream(args).map(Object::getClass).toArray(Class[]::new));
                 method.invoke(menu, args);
             }
         } catch (Exception e) {
@@ -129,16 +128,14 @@ public class Tools {
             clearLine();
             System.out.println("Veuillez choisir un choix valide !");
 
-            Class<?>[] paramTypes = Arrays.stream(args)
-                    .map(arg -> {
-                        if (arg instanceof Integer) return int.class;
-                        else if (arg instanceof Boolean) return boolean.class;
-                        else if (arg instanceof Double) return double.class;
-                        else if (arg instanceof Float) return float.class;
-                        else if (arg instanceof Long) return long.class;
-                        else return arg.getClass();
-                    })
-                    .toArray(Class[]::new);
+            Class<?>[] paramTypes = Arrays.stream(args).map(arg -> {
+                if (arg instanceof Integer) return int.class;
+                else if (arg instanceof Boolean) return boolean.class;
+                else if (arg instanceof Double) return double.class;
+                else if (arg instanceof Float) return float.class;
+                else if (arg instanceof Long) return long.class;
+                else return arg.getClass();
+            }).toArray(Class[]::new);
 
             Method method = menu.getClass().getMethod(function, paramTypes);
             method.invoke(menu, args);
@@ -149,5 +146,11 @@ public class Tools {
         }
     }
 
-
+    public void setTimeout(int timeout) {
+        try {
+            Thread.sleep(timeout * 1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 }
