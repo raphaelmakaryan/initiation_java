@@ -1,5 +1,6 @@
 package fr.raphaelmakaryan.lombredesdragons.game;
 
+import fr.raphaelmakaryan.lombredesdragons.Main;
 import fr.raphaelmakaryan.lombredesdragons.configurations.*;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
@@ -12,6 +13,7 @@ import fr.raphaelmakaryan.lombredesdragons.verifications.EndGame;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu extends Admin {
@@ -20,41 +22,71 @@ public class Menu extends Admin {
     Objects objects = new Objects();
 
 
-    // Menu a la creation du personnage
+    /**
+     * Menu of game presentation
+     *
+     * @param user
+     */
     public void startMenu(User user) {
         String typeUser;
         String nameUser;
         String type;
         boolean verifType;
         String name;
-
+        toolsMain.clearLine();
         System.out.println(Colors.RESET + "Quel type de personnage souhaitez-vous créer ? (Magicien / Guerrier)");
         typeUser = clavier.next();
-        type = itIsString(typeUser, true);
-        verifType = Boolean.parseBoolean(String.valueOf(isACharacter(type)));
-        if (verifType) {
-            user.setTypeChoice(type);
+        type = itIsString(typeUser, false);
+        if (type instanceof String && type != "") {
+            verifType = Boolean.parseBoolean(String.valueOf(isACharacter(type)));
+            if (verifType) {
+                user.setTypeChoice(type);
+                System.out.println("Proposez-lui un petit nom !");
+                nameUser = clavier.next();
+                name = itIsString(nameUser, false);
+                if (name instanceof String && name != "") {
+                    user.setName(name);
+                    toolsMain.clearLine();
+                }
+            } else {
+                toolsMain.clearLine();
+                startMenu(user);
+            }
+        } else {
+            startMenu(user);
         }
-
-        System.out.println("Proposez lui un petit nom !");
-        nameUser = clavier.next();
-        name = itIsString(nameUser, true);
-        user.setName(name);
-        toolsMain.clearLine();
     }
 
-    // Menu a la validation du creation du personnage
+    /**
+     * Validation menu for creating the player
+     *
+     * @param user
+     * @param connection
+     * @param database
+     * @throws SQLException
+     */
     public void creationPlayerMenu(User user, Connection connection, Database database) throws SQLException {
+        toolsMain.setTimeout(2);
         user.createCharacter(user, connection, database);
         System.out.println(Colors.START_WHITE + "Votre personnage a été créé avec succès !" + Colors.RESET);
         toolsMain.clearLine();
     }
 
-    // Choix apres la creation du personnage
-    public boolean afterCreationPlayerMenu(User user, Menu menu, Database database, Connection connection) throws SQLException {
+
+    /**
+     * Player choice menu after the creation of the player
+     *
+     * @param user
+     * @param menu
+     * @param database
+     * @param connection
+     * @param game
+     * @throws SQLException
+     */
+    public void afterCreationPlayerMenu(User user, Menu menu, Database database, Connection connection, Game game) throws SQLException {
         int choiceUser;
         int choice;
-
+        toolsMain.setTimeout(2);
         System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
         System.out.println("1. Démarrer une nouvelle partie");
         System.out.println("2. Afficher toutes les infos de votre personnage");
@@ -67,33 +99,41 @@ public class Menu extends Admin {
         choiceUser = clavier.nextInt();
         choice = itIsInt(String.valueOf(choiceUser), false);
         if (choice == 1) {
-            return true;
+            toolsMain.setTimeout(1);
+            game.playerWantPlay(connection, database, game);
         } else if (choice == 2) {
+            toolsMain.setTimeout(2);
             displayInformationCharacter(user);
             toolsMain.clearLine();
-            menu.afterCreationPlayerMenu(user, menu, database, connection);
+            afterCreationPlayerMenu(user, menu, database, connection, game);
         } else if (choice == 3) {
+            toolsMain.setTimeout(2);
             displayModifyInformationCharacter(user, database, connection);
             toolsMain.clearLine();
-            menu.afterCreationPlayerMenu(user, menu, database, connection);
+            afterCreationPlayerMenu(user, menu, database, connection, game);
         } else if (choice == 4) {
             endGame("exit", this);
-            return false;
         } else if (choice == 5 && debugViewHeroMenu) {
+            toolsMain.setTimeout(2);
             displayAdminGetHeros(database, connection);
             toolsMain.clearLine();
-            menu.afterCreationPlayerMenu(user, menu, database, connection);
+            afterCreationPlayerMenu(user, menu, database, connection, game);
+        } else {
+            toolsMain.setTimeout(2);
+            toolsMain.clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+            afterCreationPlayerMenu(user, menu, database, connection, game);
         }
-        return false;
     }
 
     /**
-     * Method to manage user choices during game progress
+     * Menu of choice for the general player of the entire game
      *
      * @param boardClass
+     * @param user
+     * @param game
      */
-    // Choix pendant la progression du jeu
-    public void choiceGameProgress(Board boardClass, User user, Game game) {
+    public void choiceGameProgress(Board boardClass, User user, Game game, Connection connection, Database database) {
         int choiceUser;
         int choice;
 
@@ -107,22 +147,23 @@ public class Menu extends Admin {
         toolsMain.clearLine();
 
         if (choice == 1) {
-            game.playTurn(boardClass, user, game);
+            game.playTurn(boardClass, user, game, connection, database);
         } else if (choice == 2) {
             boardClass.displayBoard();
             toolsMain.clearLine();
-            choiceGameProgress(boardClass, user, game);
+            choiceGameProgress(boardClass, user, game, connection, database);
         } else if (choice == 3) {
             endGame("exit", this);
         } else {
-            toolsMain.verificationChoiceNotWhile("choiceGameProgress", this, boardClass, user, game);
+            toolsMain.clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+            choiceGameProgress(boardClass, user, game, connection, database);
         }
     }
 
     /**
-     * Method to handle user selection at the end of the game
+     * End of the game menu if the player reaches the last slot
      */
-    // Choix a la fin du jeu si le joueur est aller au bout du plateau
     public void endGameCase() {
         int choiceUser;
         int choice;
@@ -137,59 +178,101 @@ public class Menu extends Admin {
         if (choice == 1) {
             EndGame.endGame("exit", this);
         } else if (choice == 2) {
-            System.out.println("Recommençons une nouvelle partie !");
+            try {
+                Main.main(new String[]{"retour"});
+            } catch (SQLException e) {
+            }
         } else {
             toolsMain.verificationChoiceNotWhile("endGameCase", this, (Object) null);
         }
     }
 
-    public void enemiesCell(Board boardClass, Menu menu, User user, Game game, int[] boardInt, int caseNumber) {
+    /**
+     * Menu where the player is in a cell of an enemy
+     *
+     * @param boardClass
+     * @param menu
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     */
+    public void enemiesCell(Board boardClass, Menu menu, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
         Enemies enemy = new Enemies();
         Fight fight = new Fight();
         int choiceUser;
         int choice;
+        toolsMain.setTimeout(1);
         toolsMain.clearLine();
-        System.out.println(Colors.ENEMY_RED + "Vous etes tomber sur un ennemi !" + Colors.RESET);
+        System.out.println(Colors.ENEMY_RED + "Vous êtes tomber sur un ennemi !" + Colors.RESET);
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. Se battre contre l'ennemi");
         System.out.println("2. Fuir l'ennemi");
         System.out.println("Veuillez entrer le numéro de votre choix !");
         choiceUser = clavier.nextInt();
         choice = itIsInt(String.valueOf(choiceUser), false);
-        toolsMain.clearLine();
         if (choice == 1) {
-            enemy.chooseFight(menu, boardClass, user, game, boardInt, caseNumber);
+            toolsMain.setTimeout(1);
+            enemy.chooseFight(menu, boardClass, user, game, boardInt, caseNumber, connection, database);
         } else if (choice == 2) {
-            fight.espace(menu, game, user, boardClass, boardInt, caseNumber);
+            toolsMain.setTimeout(2);
+            fight.espace(menu, game, user, boardClass, boardInt, caseNumber, connection, database);
         } else {
-            toolsMain.verificationChoiceNotWhile("enemiesCell", this, (Object) null);
+            toolsMain.setTimeout(1);
+            toolsMain.clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+            enemiesCell(boardClass, menu, user, game, boardInt, caseNumber, connection, database);
         }
     }
 
-    public void boxCell(Board boardClass, User user, Game game, int[] boardInt, int caseNumber) {
+    /**
+     * Menu where the player is in a cell a box
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     */
+    public void boxCell(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
         int choiceUser;
         int choice;
+        toolsMain.setTimeout(1);
         toolsMain.clearLine();
-        System.out.println(Colors.BOX_GREEN + "Vous etes tomber sur une boîte !" + Colors.RESET);
+        System.out.println(Colors.BOX_GREEN + "Vous êtes tombé sur une boîte !" + Colors.RESET);
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. L'ouvrir");
         System.out.println("2. Laisser la boîte");
         System.out.println("Veuillez entrer le numéro de votre choix !");
         choiceUser = clavier.nextInt();
         choice = itIsInt(String.valueOf(choiceUser), false);
-        toolsMain.clearLine();
         if (choice == 1) {
-            objects.openBox(boardClass, user, boardInt, caseNumber, this, game);
+            toolsMain.setTimeout(1);
+            objects.openBox(boardClass, user, boardInt, caseNumber, this, game, connection, database);
         } else if (choice == 2) {
-            choiceGameProgress(boardClass, user, game);
+            toolsMain.setTimeout(1);
+            choiceGameProgress(boardClass, user, game, connection, database);
         } else {
-            toolsMain.verificationChoiceNotWhile("boxCell", this, boardClass, user, game, boardInt, caseNumber);
+            toolsMain.clearLine();
+            toolsMain.setTimeout(1);
+            System.out.println("Veuillez choisir un choix valide !");
+            boxCell(boardClass, user, game, boardInt, caseNumber, connection, database);
         }
     }
 
-    public void displayObjectOpenBox(Board boardClass, User user, Game game, Objects objects, String[][][] allData) {
+    /**
+     * Menu or if the object can be taken
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param objects
+     * @param allData
+     */
+    public void displayObjectOpenBox(Board boardClass, User user, Game game, Objects objects, String[][][] allData, Connection connection, Database database) {
         int choiceUser;
         int choice;
+        toolsMain.setTimeout(1);
         toolsMain.clearLine();
         System.out.println("Vous pouvez le prendre ! Que voulez-vous faire maintenant ?");
         System.out.println("1. Le prendre");
@@ -197,43 +280,87 @@ public class Menu extends Admin {
         System.out.println("Veuillez entrer le numéro de votre choix !");
         choiceUser = clavier.nextInt();
         choice = itIsInt(String.valueOf(choiceUser), false);
-        toolsMain.clearLine();
         if (choice == 1) {
-            objects.verificationGiveObjectToPlayer(user, allData, this, boardClass, game);
+            toolsMain.setTimeout(1);
+            objects.verificationGiveObjectToPlayer(user, allData, this, boardClass, game, connection, database);
         } else if (choice == 2) {
-            choiceGameProgress(boardClass, user, game);
+            toolsMain.setTimeout(1);
+            choiceGameProgress(boardClass, user, game, connection, database);
         } else {
-            toolsMain.verificationChoiceNotWhile("displayObjectOpenBox", this, (Object) null);
+            toolsMain.setTimeout(1);
+            toolsMain.clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+            displayObjectOpenBox(boardClass, user, game, objects, allData, connection, database);
         }
     }
 
-    public void displayCantGetObjectOpenBox(Board boardClass, User user, Game game) {
+    /**
+     * Menu or the object cannot be taken
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     */
+    public void displayCantGetObjectOpenBox(Board boardClass, User user, Game game, Connection connection, Database database) {
         toolsMain.clearLine();
-        System.out.println("Malheuresement, vous ne pouvez pas prendre cet objet.");
+        toolsMain.setTimeout(1);
+        System.out.println("Malheureusement, vous ne pouvez pas prendre cet objet.");
         System.out.println("Cet objet n'est pas disponible pour votre classe.");
-        System.out.println("Vous fermez donc la boîte et vous reprenez vos routes.");
-        choiceGameProgress(boardClass, user, game);
+        System.out.println("Vous fermez donc la boîte et vous reprenez votre route.");
+        toolsMain.setTimeout(1);
+        choiceGameProgress(boardClass, user, game, connection, database);
     }
 
+    /**
+     * Object display menu
+     *
+     * @param objet
+     */
     public void displayObjectOnBox(String objet) {
         toolsMain.clearLine();
-        System.out.println("Dans le coffre, il contenais " + Colors.BOX_GREEN + objet + " !" + Colors.RESET);
+        toolsMain.setTimeout(1);
+        System.out.println("Dans le coffre, il contenait " + Colors.BOX_GREEN + objet + " !" + Colors.RESET);
     }
 
-    public void displayObjectAddToPlayer(Board boardClass, User user, Game game, String objet) {
+    /**
+     * Menu where the player took the object
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param objet
+     */
+    public void displayObjectAddToPlayer(Board boardClass, User user, Game game, String objet, Connection connection, Database database) {
         toolsMain.clearLine();
+        toolsMain.setTimeout(1);
         System.out.println("Vous avez pris " + Colors.BOX_GREEN + objet + " !" + Colors.RESET);
         System.out.println("Vous continuez votre aventure.");
-        choiceGameProgress(boardClass, user, game);
+        toolsMain.setTimeout(1);
+        choiceGameProgress(boardClass, user, game, connection, database);
     }
 
-    public void displayObjectCantAddToPlayer(Board boardClass, User user, Game game, String objet) {
+    /**
+     * Menu where the player cannot take an object equal to or lower than what he already has in his inventory
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param objet
+     */
+    public void displayObjectCantAddToPlayer(Board boardClass, User user, Game game, String objet, Connection connection, Database database) {
+        toolsMain.setTimeout(1);
         toolsMain.clearLine();
-        System.out.println("Vous ne pouvez pas prendre cet objet, vous avez deja un objet et/ou qui est supérieur a cet objet.");
+        System.out.println("Vous ne pouvez pas prendre cet objet, vous avez déjà un objet et/ou qui est supérieur à cet objet.");
         System.out.println("Vous continuez votre aventure.");
-        choiceGameProgress(boardClass, user, game);
+        toolsMain.setTimeout(1);
+        choiceGameProgress(boardClass, user, game, connection, database);
     }
 
+    /**
+     * Menu where the player chooses to display their information in the presence
+     *
+     * @param user
+     */
     public void displayInformationCharacter(User user) {
         Character character = user.getCharacterPlayer();
         toolsMain.clearLine();
@@ -247,12 +374,20 @@ public class Menu extends Admin {
         toolsMain.clearLine();
     }
 
+    /**
+     * Menu where the player wants to change their name in the prestart
+     *
+     * @param user
+     * @param database
+     * @param connection
+     * @throws SQLException
+     */
     public void displayModifyInformationCharacter(User user, Database database, Connection connection) throws SQLException {
         String nameUserChoice;
         String newName;
         Character character = user.getCharacterPlayer();
         String oldName = character.getName();
-        System.out.println("Donnez lui son nouveau nom :");
+        System.out.println("Donnez-lui son nouveau nom :");
         nameUserChoice = clavier.next();
         newName = itIsString(nameUserChoice, true);
         user.setName(newName);
@@ -261,33 +396,61 @@ public class Menu extends Admin {
         toolsMain.clearLine();
     }
 
+    /**
+     * Menu or the enemy at which the player wishes to beat is displayed
+     *
+     * @param enemies
+     */
     public void displayEnemyFight(Enemie enemies) {
+        toolsMain.setTimeout(1);
         toolsMain.clearLine();
-        System.out.println(Colors.ENEMY_RED + "Vous etes en train de vous battre contre un " + enemies.getName() + " !" + Colors.RESET);
+        System.out.println(Colors.ENEMY_RED + "Vous êtes en train de vous battre contre un " + enemies.getName() + " !" + Colors.RESET);
         toolsMain.clearLine();
     }
 
+    /**
+     * Critical attack display menu
+     *
+     * @param attackLevel
+     * @param type
+     */
     public void displayFightCritical(int[][] attackLevel, String type) {
+        toolsMain.setTimeout(1);
         if (type == "player") {
             if (attackLevel[0][1] == 1) {
-                System.out.println("Vous avez fait un " + Colors.DICE_MAGENTA + "echec critique" + Colors.RESET + " !");
+                System.out.println("Vous avez fait un " + Colors.DICE_MAGENTA + "échec critique" + Colors.RESET + " !");
             } else if (attackLevel[0][1] == 20) {
                 System.out.println("Vous avez fait un " + Colors.DICE_MAGENTA + "critique" + Colors.RESET + " !");
             }
         } else {
             if (attackLevel[0][1] == 1) {
-                System.out.println("L'ennemi a fait un " + Colors.DICE_MAGENTA + "echec critique" + Colors.RESET + " !");
+                System.out.println("L'ennemi a fait un " + Colors.DICE_MAGENTA + "échec critique" + Colors.RESET + " !");
             } else if (attackLevel[0][1] == 20) {
                 System.out.println("L'ennemi a fait un " + Colors.DICE_MAGENTA + "critique" + Colors.RESET + " !");
             }
         }
     }
 
-    public void displayChoicePlayerAttack(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber) {
+    /**
+     * Menu or the player choose action has a fight
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param fight
+     * @param attackLevel
+     * @param lifePoints
+     * @param enemie
+     * @param type
+     * @param menu
+     * @param boardInt
+     * @param caseNumber
+     */
+    public void displayChoicePlayerAttack(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database) {
         int choiceUser;
         int choice;
         boolean havePotion = fight.verificationHaveDefensive(user);
-
+        toolsMain.setTimeout(1);
         System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
         System.out.println("1. Attaquer l'ennemi");
         System.out.println("2. Fuir l'ennemi");
@@ -297,66 +460,135 @@ public class Menu extends Admin {
         System.out.println("Veuillez entrer le numéro de votre choix !");
         choiceUser = clavier.nextInt();
         choice = itIsInt(String.valueOf(choiceUser), false);
-        toolsMain.clearLine();
-
         if (choice == 1) {
             displayFightCritical(attackLevel, "player");
             displayFightPlayerAttack();
-            fight.verifiedPerson(attackLevel[0][0], lifePoints, enemie, "player", user, menu, game, boardClass, boardInt, caseNumber);
+            fight.verifiedPerson(attackLevel[0][0], lifePoints, enemie, "player", user, menu, game, boardClass, boardInt, caseNumber, connection, database);
         } else if (choice == 2) {
-            fight.espace(menu, game, user, boardClass, boardInt, caseNumber);
+            fight.espace(menu, game, user, boardClass, boardInt, caseNumber, connection, database);
         } else if (choice == 3 && havePotion) {
-            fight.havePotion(user, this, boardClass, game, fight, attackLevel, lifePoints, enemie, type, boardInt, caseNumber);
+            fight.havePotion(user, this, boardClass, game, attackLevel, lifePoints, enemie, type, boardInt, caseNumber, connection, database);
         } else {
-            toolsMain.verificationChoiceNotWhile("displayChoicePlayerAttack", this, boardClass);
+            toolsMain.setTimeout(1);
+            toolsMain.clearLine();
+            System.out.println("Veuillez choisir un choix valide !");
+            displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, this, boardInt, caseNumber, connection, database);
         }
     }
 
-    public void haveAlreadyMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber) {
+    /**
+     * Menu where the player has life already full
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param fight
+     * @param attackLevel
+     * @param lifePoints
+     * @param enemie
+     * @param type
+     * @param menu
+     * @param boardInt
+     * @param caseNumber
+     */
+    public void haveAlreadyMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database) {
+        toolsMain.setTimeout(1);
         toolsMain.clearLine();
         System.out.println("Vous avez deja toute votre vie pleine !");
         System.out.println("Vous reprenez le combat !");
-        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber);
+        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database);
     }
 
-    public void haveMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber) {
+    /**
+     * Menu where the player has full life
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param fight
+     * @param attackLevel
+     * @param lifePoints
+     * @param enemie
+     * @param type
+     * @param menu
+     * @param boardInt
+     * @param caseNumber
+     */
+    public void haveMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database) {
+        toolsMain.setTimeout(1);
         toolsMain.clearLine();
         System.out.println("Vous avez régénérer votre vie au max !");
         System.out.println("Vous n'avez plus de potion !");
         System.out.println("Vous reprenez le combat !");
-        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber);
+        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database);
     }
 
-    public void haveRegenerationFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, int nbreRegen) {
+    /**
+     * Menu where the player has regenerated
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param fight
+     * @param attackLevel
+     * @param lifePoints
+     * @param enemie
+     * @param type
+     * @param menu
+     * @param boardInt
+     * @param caseNumber
+     * @param nbreRegen
+     */
+    public void haveRegenerationFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, int nbreRegen, Connection connection, Database database) {
+        toolsMain.setTimeout(1);
         toolsMain.clearLine();
         System.out.println("Vous avez régénérer votre vie de " + nbreRegen + " !");
         System.out.println("Vous n'avez plus de potion !");
         System.out.println("Vous reprenez le combat !");
-        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber);
+        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database);
     }
 
-
+    /**
+     * Admin menu to display all the heroes of the database
+     *
+     * @param database
+     * @param connection
+     * @throws SQLException
+     */
     public void displayAdminGetHeros(Database database, Connection connection) throws SQLException {
         database.getHeroes(connection);
     }
 
+    /**
+     * Menu displaying the beginning of the fight
+     */
     public void displayFightPlayerAttack() {
         System.out.println("Vous avez attaqué l'ennemi !" + Colors.RESET);
         toolsMain.clearLine();
     }
 
+    /**
+     * End of the game menu if the player died in a fight
+     */
     public void endGameDead() {
+        toolsMain.setTimeout(1);
         System.out.println("GAME OVER !");
         System.out.println("Vous avez été vaincu par l'ennemi.");
         System.out.println("Merci d'avoir joué. À bientôt !");
     }
 
+    /**
+     * Escape menu
+     *
+     * @param escape
+     */
     public void displayEscape(int escape) {
+        toolsMain.setTimeout(1);
         System.out.println("Vous avez réussi à fuir l'ennemi !");
-        System.out.println("Par contre, vous avez lancé le déE pour savoir combien de cases vous devez reculez.");
+        System.out.println("Par contre, vous avez lancé le dé pour savoir combien de cases vous devez reculer.");
         System.out.println("Vous reculez de " + Colors.DICE_MAGENTA + escape + Colors.RESET + " cases.");
         System.out.println("Vous pouvez continuer votre chemin.");
+        toolsMain.setTimeout(2);
         toolsMain.clearLine();
     }
-
 }

@@ -29,6 +29,10 @@ public abstract class OffensiveEquipment {
         this.levelAttack = levelAttack;
     }
 
+    public int getIdObject() {
+        return idObject;
+    }
+
     @Override
     public String toString() {
         return "OffensiveEquipment{" +

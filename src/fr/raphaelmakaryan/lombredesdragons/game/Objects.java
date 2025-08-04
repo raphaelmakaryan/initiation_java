@@ -1,33 +1,53 @@
 package fr.raphaelmakaryan.lombredesdragons.game;
 
-import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
+import fr.raphaelmakaryan.lombredesdragons.configurations.*;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
-import fr.raphaelmakaryan.lombredesdragons.configurations.DefensiveEquipment;
-import fr.raphaelmakaryan.lombredesdragons.configurations.OffensiveEquipment;
 import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Potion;
 import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Spell;
 import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Weapon;
 import fr.raphaelmakaryan.lombredesdragons.configurations.objects.*;
+import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
+
+import java.sql.Connection;
 
 public class Objects {
     public Weapon isWeapon;
     public Spell isSpell;
     public Potion isPotion;
+    Tools tools = new Tools();
 
-    public void openBox(Board boardClass, User user, int[] boardInt, int caseNumber, Menu menu, Game game) {
+    /**
+     * Opening of a box by the player
+     *
+     * @param boardClass
+     * @param user
+     * @param boardInt
+     * @param caseNumber
+     * @param menu
+     * @param game
+     */
+    public void openBox(Board boardClass, User user, int[] boardInt, int caseNumber, Menu menu, Game game, Connection connection, Database database) {
         Character character = user.getCharacterPlayer();
         int cellPlayer = boardClass.getBoard()[caseNumber];
         String[][][] whatType = whatObject(cellPlayer);
         menu.displayObjectOnBox(whatType[0][0][0]);
         boolean canHave = verificationIfCanUse(whatType, character);
+        tools.setTimeout(1);
         if (canHave) {
-            boardClass.setNewCellPlayer(boardInt, caseNumber);
-            displayToPlayer(menu, whatType, boardClass, user, game);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
+            displayToPlayer(menu, whatType, boardClass, user, game, connection, database);
         }
-        boardClass.setNewCellPlayer(boardInt, caseNumber);
-        menu.displayCantGetObjectOpenBox(boardClass, user, game);
+        tools.setTimeout(1);
+        boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
+        menu.displayCantGetObjectOpenBox(boardClass, user, game, connection, database);
     }
 
+    /**
+     * Verification via the box’s case and its ID to determine which object
+     *
+     * @param idObject
+     * @return
+     */
     public String[][][] whatObject(int idObject) {
         int objet = idObject - 300;
         String[][][] response;
@@ -61,10 +81,26 @@ public class Objects {
         }
     }
 
-    public void displayToPlayer(Menu menu, String[][][] allData, Board boardClass, User user, Game game) {
-        menu.displayObjectOpenBox(boardClass, user, game, this, allData);
+    /**
+     * Display to player
+     *
+     * @param menu
+     * @param allData
+     * @param boardClass
+     * @param user
+     * @param game
+     */
+    public void displayToPlayer(Menu menu, String[][][] allData, Board boardClass, User user, Game game, Connection connection, Database database) {
+        menu.displayObjectOpenBox(boardClass, user, game, this, allData, connection, database);
     }
 
+    /**
+     * Verification if the player can take it according to their class
+     *
+     * @param object
+     * @param character
+     * @return
+     */
     public boolean verificationIfCanUse(String[][][] object, Character character) {
         if (character.getType().equals(object[1][0][0]) || object[1][0][0].equals("ALL")) {
             return true;
@@ -72,7 +108,16 @@ public class Objects {
         return false;
     }
 
-
+    /**
+     * Verification if the player already has an item in their inventory and returns whether or not they can take it
+     *
+     * @param user
+     * @param object
+     * @param menu
+     * @param boardClass
+     * @param game
+     * @return
+     */
     public boolean haveAlreadyAObject(User user, String[][][] object, Menu menu, Board boardClass, Game game) {
         Character character = user.getCharacterPlayer();
         if (object[2][0][0].equals("DefensiveEquipment")) {
@@ -114,26 +159,44 @@ public class Objects {
         return true;
     }
 
-    public void verificationGiveObjectToPlayer(User user, String[][][] object, Menu menu, Board boardClass, Game game) {
+    /**
+     * Verification if possible to give it to the player
+     *
+     * @param user
+     * @param object
+     * @param menu
+     * @param boardClass
+     * @param game
+     */
+    public void verificationGiveObjectToPlayer(User user, String[][][] object, Menu menu, Board boardClass, Game game, Connection connection, Database database) {
         Character character = user.getCharacterPlayer();
         boolean playerHaveAlready = haveAlreadyAObject(user, object, menu, boardClass, game);
         if (!playerHaveAlready) {
-            addObjectToPlayer(object, character, menu);
-            menu.displayObjectAddToPlayer(boardClass, user, game, object[0][0][0]);
+            addObjectToPlayer(object, character, connection, database, user);
+            menu.displayObjectAddToPlayer(boardClass, user, game, object[0][0][0], connection, database);
         }
-        menu.displayObjectCantAddToPlayer(boardClass, user, game, object[0][0][0]);
+        menu.displayObjectCantAddToPlayer(boardClass, user, game, object[0][0][0], connection, database);
     }
 
-    public void addObjectToPlayer(String[][][] object, Character character, Menu menu) {
+    /**
+     * Add the object to the player
+     *
+     * @param object
+     * @param character
+     */
+    public void addObjectToPlayer(String[][][] object, Character character, Connection connection, Database database, User user) {
         if (object[2][0][0].equals("DefensiveEquipment")) {
             character.setDefensiveEquipment(this.isPotion);
+            database.addDefensiveEquipment(connection, user, this.isPotion);
         } else if (object[2][0][0].equals("OffensiveEquipment")) {
             if (this.isSpell != null) {
                 character.setOffensiveEquipment(this.isSpell);
+                database.addOffensiveEquipment(connection, user, this.isSpell);
             } else if (this.isWeapon != null) {
                 character.setOffensiveEquipment(this.isWeapon);
+                database.addOffensiveEquipment(connection, user, this.isWeapon);
             }
+
         }
     }
-
 }

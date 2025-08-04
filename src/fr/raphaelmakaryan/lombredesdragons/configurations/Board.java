@@ -7,15 +7,17 @@ import fr.raphaelmakaryan.lombredesdragons.game.User;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 import fr.raphaelmakaryan.lombredesdragons.verifications.Cell;
 
-import javax.tools.Tool;
-import java.util.Arrays;
+import java.sql.Connection;
 import java.util.Random;
 
 public class Board extends Admin {
     private int currentCasePlayers = 0;
     private int[] board;
+    Tools tools = new Tools();
 
-
+    /**
+     * Creation of the game board
+     */
     public Board() {
         int valueBoard;
         Random rand = new Random();
@@ -34,25 +36,41 @@ public class Board extends Admin {
         }
     }
 
+    /**
+     * Returns the index of the player’s box exactly
+     *
+     * @return intCurrentCasePlayers
+     */
     public int getCurrentCasePlayers() {
         return currentCasePlayers;
     }
 
+    /**
+     * Update the index of the current player’s box
+     */
     public void setNewCurrentCasePlayers(int newCurrentCasePlayers) {
         this.currentCasePlayers = newCurrentCasePlayers;
     }
 
+    /**
+     * Return the entire game board
+     *
+     * @return int[]Board
+     */
     public int[] getBoard() {
         return board;
     }
 
     /**
+     * Make the player move in the game board
+     *
      * @param steps
      * @param boardClass
      * @param menu
      */
-    public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game) {
+    public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database) {
         Cell cellInstance = new Cell();
+        tools.setTimeout(1);
         System.out.println("Vous avez lancé le dé et obtenu : " + Colors.DICE_MAGENTA + steps + Colors.RESET + " !");
         int[] boardInt = boardClass.getBoard();
         int newPosition = currentCasePlayers + steps;
@@ -64,10 +82,10 @@ public class Board extends Admin {
         if (debugBoardIndexCell) {
             int indexDebug = boardClass.getCurrentCasePlayers();
             int valueDebug = boardInt[indexDebug];
-            System.out.println("Le joueur est actuellement à la case " + indexDebug + " | La case a comme valeur : " + valueDebug);
+            System.out.println("Le joueur est actuellement à la case " + (indexDebug +1) + " | La case a comme valeur : " + valueDebug);
         }
         try {
-            cellInstance.verifyCase(newPosition, boardInt, boardClass, menu, user, game);
+            cellInstance.verifyCase(newPosition, boardInt, boardClass, menu, user, game, connection, database);
         } catch (OutOfBoardException ignored) {
         }
     }
@@ -82,17 +100,20 @@ public class Board extends Admin {
     public void outOfBoard(int positionNow, Board boardClass, int[] boardInt) {
         int calculReturnGame;
         int difference;
-        if (positionNow >= 63) {
+        if (positionNow >= 64) {
             difference = (positionNow - 63);
             calculReturnGame = 63 - difference;
             boardInt[currentCasePlayers] = 0;
             boardClass.setNewCurrentCasePlayers(calculReturnGame);
             boardInt[calculReturnGame] = 1;
             boardClass.setNewBoard(boardInt);
-            System.out.println("Vous avez essayez de sortir du plateau de jeu ! Vous avez été renvoyé à la case " + calculReturnGame + ".");
+            System.out.println("Vous avez essayé de sortir du plateau de jeu ! Vous avez été renvoyé à la case " + calculReturnGame + ".");
         }
     }
 
+    /**
+     * Display in the console at the player’s request when choosing an action the game board
+     */
     public void displayBoard() {
         int[] board = getBoard();
         String[] boardStr = new String[board.length];
@@ -137,13 +158,26 @@ public class Board extends Admin {
      * @param boardInt
      * @param newPosition
      */
-    public void setNewCellPlayer(int[] boardInt, int newPosition) {
+    public void setNewCellPlayer(int[] boardInt, int newPosition, boolean displayMessage, Connection connection, Database database, User user) {
+        if (newPosition <= 0) {
+            newPosition = 0;
+        }
         setNewCurrentCasePlayers(newPosition);
         boardInt[newPosition] = 1;
         setNewBoard(boardInt);
-        System.out.println("Vous êtes maintenant à la case " + Colors.CELL_BRIGHTMAGENTA + newPosition + Colors.RESET + ".");
+        database.updateBoard(connection, boardInt, user);
+        if (displayMessage) {
+            System.out.println("Vous êtes maintenant à la case " + Colors.CELL_BRIGHTMAGENTA + newPosition + Colors.RESET + ".");
+        }
     }
 
+    /**
+     * Adds enemies and random objects to the game board in fixed positions
+     *
+     * @param cell
+     * @param random
+     * @param valueBox
+     */
     public void setRandomCellBoard(int[] cell, Random random, int[] valueBox) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < cell.length; j++) {

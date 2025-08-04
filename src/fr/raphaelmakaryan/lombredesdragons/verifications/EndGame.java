@@ -20,7 +20,8 @@ public class EndGame {
             menu.endGameDead();
             System.exit(0);
         } else {
-            System.out.println("Commande non reconnue. Veuillez réessayer.");
+            System.out.println("Fin demandé non existante. Fin du processus");
+            System.exit(0);
         }
     }
 }

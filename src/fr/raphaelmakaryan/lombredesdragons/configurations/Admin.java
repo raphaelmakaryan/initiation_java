@@ -12,7 +12,7 @@ public abstract class Admin {
     public boolean debugDice = false;
     public int valueDebugDice = 1;
 
-    public boolean usingDatabase = false;
+    public boolean usingDatabase = true;
 
     public boolean debugEnemiesCell = false;
 

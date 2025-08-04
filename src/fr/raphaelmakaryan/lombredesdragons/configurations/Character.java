@@ -11,7 +11,14 @@ public abstract class Character {
     protected OffensiveEquipment offensiveEquipment;
     protected DefensiveEquipment defensiveEquipment;
 
-    // constructor
+    /**
+     * Character Constructordifference
+     * @param name
+     * @param lifePoints
+     * @param attackLevel
+     * @param offensiveEquipment
+     * @param defensiveEquipment
+     */
     public Character(String name, int lifePoints, int attackLevel, OffensiveEquipment offensiveEquipment, DefensiveEquipment defensiveEquipment) {
         this.name = name;
         this.type = this.getClass().getSimpleName();
