@@ -1,11 +1,14 @@
 package fr.raphaelmakaryan.lombredesdragons.game;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.Admin;
-import fr.raphaelmakaryan.lombredesdragons.configurations.Colors;
 
 import java.util.Random;
 
 public class Dice extends Admin {
+    /**
+     * Dice 6 faces
+     * @return
+     */
     public int dice6() {
         Random rand = new Random();
         if (debugDice) {
@@ -14,18 +17,23 @@ public class Dice extends Admin {
         return rand.nextInt(1, 6);
     }
 
-    public int[][] dice20(int attaquant) {
+    /**
+     * Dice 20 faces
+     * @param attacking
+     * @return
+     */
+    public int[][] dice20(int attacking) {
         Random rand = new Random();
         int value = rand.nextInt(1, 20);
         int[][] attackAndDice;
         if (value == 20) {
-            attackAndDice = new int[][]{{attaquant + 2, value}};
+            attackAndDice = new int[][]{{attacking + 2, value}};
             return attackAndDice;
         } else if (value == 1) {
             attackAndDice = new int[][]{{0, value}};
             return attackAndDice;
         } else {
-            attackAndDice = new int[][]{{attaquant, value}};
+            attackAndDice = new int[][]{{attacking, value}};
             return attackAndDice;
         }
     }

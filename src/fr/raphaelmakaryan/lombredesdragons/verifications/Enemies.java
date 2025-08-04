@@ -14,10 +14,28 @@ import fr.raphaelmakaryan.lombredesdragons.game.User;
 public class Enemies extends Admin {
     private Enemie enemiesPlayer;
 
+    /**
+     * Player is on an enemy cell
+     * @param menu
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     */
     public void haveEnemies(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber) {
         menu.enemiesCell(boardClass, menu, user, game, boardInt, caseNumber);
     }
 
+    /**
+     * Player wishes this beat
+     * @param menu
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     */
     public void chooseFight(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber) {
         Fight fight = new Fight();
         createEnemy(boardClass);
@@ -25,6 +43,10 @@ public class Enemies extends Admin {
         fight.progressesFight(menu, boardClass, this.enemiesPlayer, user, game, boardInt, caseNumber);
     }
 
+    /**
+     * Creation of the enemy according to the case index and the enemy’s id
+     * @param board
+     */
     public void createEnemy(Board board) {
         int indexPlayer = board.getCurrentCasePlayers() + 1;
         int cellPlayer = board.getBoard()[indexPlayer];

@@ -12,7 +12,11 @@ public class Game extends Admin {
     Menu menuGame = new Menu();
     User user = new User();
 
-    // Méthode principale pour la creation du joueur
+    /**
+     * Logic of after game launch
+     * @param game
+     * @throws SQLException
+     */
     public void preStart(Game game) throws SQLException {
         Database database = new Database();
         Connection connection = database.connectDatabase();
@@ -23,35 +27,46 @@ public class Game extends Admin {
     }
 
     /**
-     * Constructor of the Game class
-     * Initializes the menu and the user
+     * Game launch logic
+     * @param menu
+     * @param user
      */
-    // Lancement du jeu
     public void start(Menu menu, User user) {
         menu.startMenu(user);
     }
 
     /**
-     * Method to start the game
-     *
-     * @param menu The menu to create the player
-     * @param user The user
+     * The player creates their character
+     * @param menu
+     * @param user
+     * @param connection
+     * @param database
+     * @throws SQLException
      */
-    // Création du joueur
     public void creationPlayer(Menu menu, User user, Connection connection, Database database) throws SQLException {
         menu.creationPlayerMenu(user, connection, database);
     }
 
     /**
      * Method to launch the game after creating the player
-     *
-     * @param menu The menu to launch the game
+     * @param menu
+     * @param user
+     * @param database
+     * @param connection
+     * @param game
+     * @throws SQLException
      */
-    // Après la création du joueur, on lance le systeme du jeu
     public void afterCreationPlayer(Menu menu, User user, Database database, Connection connection, Game game) throws SQLException {
         menu.afterCreationPlayerMenu(user, menu, database, connection, game);
     }
 
+    /**
+     * Actual launch of the game after the player has decided to start the adventure
+     * @param connection
+     * @param database
+     * @param game
+     * @throws SQLException
+     */
     public void playerWantPlay(Connection connection, Database database, Game game) throws SQLException {
         Board board = new Board();
         database.addBoard(connection, board, user);
@@ -59,16 +74,21 @@ public class Game extends Admin {
     }
 
     /**
-     * Method to start the game
-     *
-     * @param board The game board
+     * Real launch of the game
+     * @param board
+     * @param user
+     * @param game
      */
-    // Démarrage du jeu
     public void startGame(Board board, User user, Game game) {
         playTurn(board, user, game);
     }
 
-    // Méthode pour gérer la progression du jeu
+    /**
+     * Logic of the game
+     * @param board
+     * @param user
+     * @param game
+     */
     public void playTurn(Board board, User user, Game game) {
         Dice dice = new Dice();
         int diceValue = dice.dice6();

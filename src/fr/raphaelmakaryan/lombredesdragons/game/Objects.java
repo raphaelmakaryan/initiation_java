@@ -16,6 +16,15 @@ public class Objects {
     public Potion isPotion;
     Tools tools = new Tools();
 
+    /**
+     * Opening of a box by the player
+     * @param boardClass
+     * @param user
+     * @param boardInt
+     * @param caseNumber
+     * @param menu
+     * @param game
+     */
     public void openBox(Board boardClass, User user, int[] boardInt, int caseNumber, Menu menu, Game game) {
         Character character = user.getCharacterPlayer();
         int cellPlayer = boardClass.getBoard()[caseNumber];
@@ -32,6 +41,11 @@ public class Objects {
         menu.displayCantGetObjectOpenBox(boardClass, user, game);
     }
 
+    /**
+     * Verification via the box’s case and its ID to determine which object
+     * @param idObject
+     * @return
+     */
     public String[][][] whatObject(int idObject) {
         int objet = idObject - 300;
         String[][][] response;
@@ -65,10 +79,24 @@ public class Objects {
         }
     }
 
+    /**
+     * Display to player
+     * @param menu
+     * @param allData
+     * @param boardClass
+     * @param user
+     * @param game
+     */
     public void displayToPlayer(Menu menu, String[][][] allData, Board boardClass, User user, Game game) {
         menu.displayObjectOpenBox(boardClass, user, game, this, allData);
     }
 
+    /**
+     * Verification if the player can take it according to their class
+     * @param object
+     * @param character
+     * @return
+     */
     public boolean verificationIfCanUse(String[][][] object, Character character) {
         if (character.getType().equals(object[1][0][0]) || object[1][0][0].equals("ALL")) {
             return true;
@@ -76,6 +104,15 @@ public class Objects {
         return false;
     }
 
+    /**
+     * Verification if the player already has an item in their inventory and returns whether or not they can take it
+     * @param user
+     * @param object
+     * @param menu
+     * @param boardClass
+     * @param game
+     * @return
+     */
     public boolean haveAlreadyAObject(User user, String[][][] object, Menu menu, Board boardClass, Game game) {
         Character character = user.getCharacterPlayer();
         if (object[2][0][0].equals("DefensiveEquipment")) {
@@ -117,6 +154,14 @@ public class Objects {
         return true;
     }
 
+    /**
+     * Verification if possible to give it to the player
+     * @param user
+     * @param object
+     * @param menu
+     * @param boardClass
+     * @param game
+     */
     public void verificationGiveObjectToPlayer(User user, String[][][] object, Menu menu, Board boardClass, Game game) {
         Character character = user.getCharacterPlayer();
         boolean playerHaveAlready = haveAlreadyAObject(user, object, menu, boardClass, game);
@@ -127,6 +172,12 @@ public class Objects {
         menu.displayObjectCantAddToPlayer(boardClass, user, game, object[0][0][0]);
     }
 
+    /**
+     * Add the object to the player
+     * @param object
+     * @param character
+     * @param menu
+     */
     public void addObjectToPlayer(String[][][] object, Character character, Menu menu) {
         if (object[2][0][0].equals("DefensiveEquipment")) {
             character.setDefensiveEquipment(this.isPotion);
@@ -138,5 +189,4 @@ public class Objects {
             }
         }
     }
-
 }

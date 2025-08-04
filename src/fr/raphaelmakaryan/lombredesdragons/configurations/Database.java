@@ -7,6 +7,11 @@ import java.util.Arrays;
 
 public class Database extends Admin {
 
+    /**
+     * Connection to the database
+     * @return
+     * @throws SQLException
+     */
     public Connection connectDatabase() throws SQLException {
         if (usingDatabase) {
             try {
@@ -21,6 +26,11 @@ public class Database extends Admin {
         return null;
     }
 
+    /**
+     * Find all the database heroes for the admin
+     * @param connection
+     * @throws SQLException
+     */
     public void getHeroes(Connection connection) throws SQLException {
         if (usingDatabase) {
             try {
@@ -49,6 +59,13 @@ public class Database extends Admin {
         }
     }
 
+    /**
+     * Create a hero in the database
+     * @param connection
+     * @param user
+     * @param database
+     * @throws SQLException
+     */
     public void createHero(Connection connection, User user, Database database) throws SQLException {
         if (usingDatabase) {
             String query = "INSERT INTO `Character` (`Type`, `Name`, `LifePoints`, `Strength`, `OffensiveEquipment`, `DefensiveEquipment`) VALUES (?, ?, ?, ?, NULL, NULL)";
@@ -73,6 +90,14 @@ public class Database extends Admin {
         }
     }
 
+    /**
+     * Edit a hero in the database
+     * @param connection
+     * @param oldName
+     * @param newName
+     * @param user
+     * @throws SQLException
+     */
     public void editHero(Connection connection, String oldName, String newName, User user) throws SQLException {
         if (usingDatabase) {
             String query = "UPDATE `Character` SET `Name` = ? WHERE ID = ? AND `Name` = ?";
@@ -88,6 +113,12 @@ public class Database extends Admin {
         }
     }
 
+    /**
+     * Edit a life a hero in the database
+     * @param connection
+     * @param character
+     * @throws SQLException
+     */
     public void changeLifePoints(Connection connection, Character character) throws SQLException {
         /*
         String query = "UPDATE `Character` SET `lifePoints` = ? WHERE `name` = ?";
@@ -99,6 +130,13 @@ public class Database extends Admin {
         */
     }
 
+    /**
+     * Add a baord in the database
+     * @param connection
+     * @param boardClass
+     * @param user
+     * @throws SQLException
+     */
     public void addBoard(Connection connection, Board boardClass, User user) throws SQLException {
         if (usingDatabase) {
             String query = "INSERT INTO `Board` (`IDCharacter`, `Board`) VALUES (?, ?)";

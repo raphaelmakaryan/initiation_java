@@ -20,7 +20,11 @@ public class Menu extends Admin {
     Objects objects = new Objects();
 
 
-    // Menu a la creation du personnage
+    /**
+     * Menu of game presentation
+     *
+     * @param user
+     */
     public void startMenu(User user) {
         String typeUser;
         String nameUser;
@@ -51,7 +55,14 @@ public class Menu extends Admin {
         }
     }
 
-    // Menu a la validation du creation du personnage
+    /**
+     * Validation menu for creating the player
+     *
+     * @param user
+     * @param connection
+     * @param database
+     * @throws SQLException
+     */
     public void creationPlayerMenu(User user, Connection connection, Database database) throws SQLException {
         toolsMain.setTimeout(2);
         user.createCharacter(user, connection, database);
@@ -59,7 +70,17 @@ public class Menu extends Admin {
         toolsMain.clearLine();
     }
 
-    // Choix apres la creation du personnage
+
+    /**
+     * Player choice menu after the creation of the player
+     *
+     * @param user
+     * @param menu
+     * @param database
+     * @param connection
+     * @param game
+     * @throws SQLException
+     */
     public void afterCreationPlayerMenu(User user, Menu menu, Database database, Connection connection, Game game) throws SQLException {
         int choiceUser;
         int choice;
@@ -104,11 +125,12 @@ public class Menu extends Admin {
     }
 
     /**
-     * Method to manage user choices during game progress
+     * Menu of choice for the general player of the entire game
      *
      * @param boardClass
+     * @param user
+     * @param game
      */
-    // Choix pendant la progression du jeu
     public void choiceGameProgress(Board boardClass, User user, Game game) {
         int choiceUser;
         int choice;
@@ -138,9 +160,8 @@ public class Menu extends Admin {
     }
 
     /**
-     * Method to handle user selection at the end of the game
+     * End of the game menu if the player reaches the last slot
      */
-    // Choix a la fin du jeu si le joueur est aller au bout du plateau
     public void endGameCase() {
         int choiceUser;
         int choice;
@@ -161,6 +182,16 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu where the player is in a cell of an enemy
+     *
+     * @param boardClass
+     * @param menu
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     */
     public void enemiesCell(Board boardClass, Menu menu, User user, Game game, int[] boardInt, int caseNumber) {
         Enemies enemy = new Enemies();
         Fight fight = new Fight();
@@ -189,6 +220,15 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu where the player is in a cell a box
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     */
     public void boxCell(Board boardClass, User user, Game game, int[] boardInt, int caseNumber) {
         int choiceUser;
         int choice;
@@ -215,6 +255,15 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu or if the object can be taken
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param objects
+     * @param allData
+     */
     public void displayObjectOpenBox(Board boardClass, User user, Game game, Objects objects, String[][][] allData) {
         int choiceUser;
         int choice;
@@ -240,6 +289,13 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu or the object cannot be taken
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     */
     public void displayCantGetObjectOpenBox(Board boardClass, User user, Game game) {
         toolsMain.clearLine();
         toolsMain.setTimeout(1);
@@ -250,12 +306,25 @@ public class Menu extends Admin {
         choiceGameProgress(boardClass, user, game);
     }
 
+    /**
+     * Object display menu
+     *
+     * @param objet
+     */
     public void displayObjectOnBox(String objet) {
         toolsMain.clearLine();
         toolsMain.setTimeout(1);
         System.out.println("Dans le coffre, il contenait " + Colors.BOX_GREEN + objet + " !" + Colors.RESET);
     }
 
+    /**
+     * Menu where the player took the object
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param objet
+     */
     public void displayObjectAddToPlayer(Board boardClass, User user, Game game, String objet) {
         toolsMain.clearLine();
         toolsMain.setTimeout(1);
@@ -265,6 +334,14 @@ public class Menu extends Admin {
         choiceGameProgress(boardClass, user, game);
     }
 
+    /**
+     * Menu where the player cannot take an object equal to or lower than what he already has in his inventory
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param objet
+     */
     public void displayObjectCantAddToPlayer(Board boardClass, User user, Game game, String objet) {
         toolsMain.setTimeout(1);
         toolsMain.clearLine();
@@ -274,6 +351,11 @@ public class Menu extends Admin {
         choiceGameProgress(boardClass, user, game);
     }
 
+    /**
+     * Menu where the player chooses to display their information in the presence
+     *
+     * @param user
+     */
     public void displayInformationCharacter(User user) {
         Character character = user.getCharacterPlayer();
         toolsMain.clearLine();
@@ -287,6 +369,14 @@ public class Menu extends Admin {
         toolsMain.clearLine();
     }
 
+    /**
+     * Menu where the player wants to change their name in the prestart
+     *
+     * @param user
+     * @param database
+     * @param connection
+     * @throws SQLException
+     */
     public void displayModifyInformationCharacter(User user, Database database, Connection connection) throws SQLException {
         String nameUserChoice;
         String newName;
@@ -301,6 +391,11 @@ public class Menu extends Admin {
         toolsMain.clearLine();
     }
 
+    /**
+     * Menu or the enemy at which the player wishes to beat is displayed
+     *
+     * @param enemies
+     */
     public void displayEnemyFight(Enemie enemies) {
         toolsMain.setTimeout(1);
         toolsMain.clearLine();
@@ -308,6 +403,12 @@ public class Menu extends Admin {
         toolsMain.clearLine();
     }
 
+    /**
+     * Critical attack display menu
+     *
+     * @param attackLevel
+     * @param type
+     */
     public void displayFightCritical(int[][] attackLevel, String type) {
         toolsMain.setTimeout(1);
         if (type == "player") {
@@ -325,6 +426,21 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu or the player choose action has a fight
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param fight
+     * @param attackLevel
+     * @param lifePoints
+     * @param enemie
+     * @param type
+     * @param menu
+     * @param boardInt
+     * @param caseNumber
+     */
     public void displayChoicePlayerAttack(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber) {
         int choiceUser;
         int choice;
@@ -355,6 +471,21 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu where the player has life already full
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param fight
+     * @param attackLevel
+     * @param lifePoints
+     * @param enemie
+     * @param type
+     * @param menu
+     * @param boardInt
+     * @param caseNumber
+     */
     public void haveAlreadyMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber) {
         toolsMain.setTimeout(1);
         toolsMain.clearLine();
@@ -363,6 +494,21 @@ public class Menu extends Admin {
         displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber);
     }
 
+    /**
+     * Menu where the player has full life
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param fight
+     * @param attackLevel
+     * @param lifePoints
+     * @param enemie
+     * @param type
+     * @param menu
+     * @param boardInt
+     * @param caseNumber
+     */
     public void haveMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber) {
         toolsMain.setTimeout(1);
         toolsMain.clearLine();
@@ -372,6 +518,22 @@ public class Menu extends Admin {
         displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber);
     }
 
+    /**
+     * Menu where the player has regenerated
+     *
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param fight
+     * @param attackLevel
+     * @param lifePoints
+     * @param enemie
+     * @param type
+     * @param menu
+     * @param boardInt
+     * @param caseNumber
+     * @param nbreRegen
+     */
     public void haveRegenerationFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, int nbreRegen) {
         toolsMain.setTimeout(1);
         toolsMain.clearLine();
@@ -381,15 +543,28 @@ public class Menu extends Admin {
         displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber);
     }
 
+    /**
+     * Admin menu to display all the heroes of the database
+     *
+     * @param database
+     * @param connection
+     * @throws SQLException
+     */
     public void displayAdminGetHeros(Database database, Connection connection) throws SQLException {
         database.getHeroes(connection);
     }
 
+    /**
+     * Menu displaying the beginning of the fight
+     */
     public void displayFightPlayerAttack() {
         System.out.println("Vous avez attaqué l'ennemi !" + Colors.RESET);
         toolsMain.clearLine();
     }
 
+    /**
+     * End of the game menu if the player died in a fight
+     */
     public void endGameDead() {
         toolsMain.setTimeout(1);
         System.out.println("GAME OVER !");
@@ -397,6 +572,11 @@ public class Menu extends Admin {
         System.out.println("Merci d'avoir joué. À bientôt !");
     }
 
+    /**
+     * Escape menu
+     *
+     * @param escape
+     */
     public void displayEscape(int escape) {
         toolsMain.setTimeout(1);
         System.out.println("Vous avez réussi à fuir l'ennemi !");
@@ -406,5 +586,4 @@ public class Menu extends Admin {
         toolsMain.setTimeout(2);
         toolsMain.clearLine();
     }
-
 }

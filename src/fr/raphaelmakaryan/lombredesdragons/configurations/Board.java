@@ -14,7 +14,9 @@ public class Board extends Admin {
     private int[] board;
     Tools tools = new Tools();
 
-
+    /**
+     * Creation of the game board
+     */
     public Board() {
         int valueBoard;
         Random rand = new Random();
@@ -33,19 +35,31 @@ public class Board extends Admin {
         }
     }
 
+    /**
+     * Returns the index of the player’s box exactly
+     * @return intCurrentCasePlayers
+     */
     public int getCurrentCasePlayers() {
         return currentCasePlayers;
     }
 
+    /**
+     * Update the index of the current player’s box
+     */
     public void setNewCurrentCasePlayers(int newCurrentCasePlayers) {
         this.currentCasePlayers = newCurrentCasePlayers;
     }
 
+    /**
+     * Return the entire game board
+     * @return int[]Board
+     */
     public int[] getBoard() {
         return board;
     }
 
     /**
+     * Make the player move in the game board
      * @param steps
      * @param boardClass
      * @param menu
@@ -93,6 +107,9 @@ public class Board extends Admin {
         }
     }
 
+    /**
+     * Display in the console at the player’s request when choosing an action the game board
+     */
     public void displayBoard() {
         int[] board = getBoard();
         String[] boardStr = new String[board.length];
@@ -146,6 +163,12 @@ public class Board extends Admin {
         }
     }
 
+    /**
+     * Adds enemies and random objects to the game board in fixed positions
+     * @param cell
+     * @param random
+     * @param valueBox
+     */
     public void setRandomCellBoard(int[] cell, Random random, int[] valueBox) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < cell.length; j++) {

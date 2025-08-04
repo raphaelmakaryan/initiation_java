@@ -6,6 +6,16 @@ import fr.raphaelmakaryan.lombredesdragons.verifications.EndGame;
 
 public class Fight {
 
+    /**
+     * Combat logic for the player
+     * @param user
+     * @param menu
+     * @param enemie
+     * @param boardClass
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     */
     public void playerAttack(User user, Menu menu, Enemie enemie, Board boardClass, Game game, int[] boardInt, int caseNumber) {
         Dice dice = new Dice();
         Character character = user.getCharacterPlayer();
@@ -16,6 +26,16 @@ public class Fight {
         menu.displayChoicePlayerAttack(boardClass, user, game, this, newAttackLevel, lifePoints, enemie, "player", menu, boardInt, caseNumber);
     }
 
+    /**
+     * Combat logic for the enemy
+     * @param user
+     * @param menu
+     * @param enemie
+     * @param boardClass
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     */
     public void enemyAttack(User user, Menu menu, Enemie enemie, Board boardClass, Game game, int[] boardInt, int caseNumber) {
         Dice dice = new Dice();
         Character character = user.getCharacterPlayer();
@@ -26,6 +46,15 @@ public class Fight {
         verifiedPerson(attackLevel, lifePoints, enemie, "enemy", user, menu, game, boardClass, boardInt, caseNumber);
     }
 
+    /**
+     * Escape logic for the player
+     * @param menu
+     * @param game
+     * @param user
+     * @param boardClass
+     * @param boardInt
+     * @param caseNumber
+     */
     public void espace(Menu menu, Game game, User user, Board boardClass, int[] boardInt, int caseNumber) {
         Dice dice = new Dice();
         int escape = dice.dice6();
@@ -34,6 +63,19 @@ public class Fight {
         menu.choiceGameProgress(boardClass, user, game);
     }
 
+    /**
+     * Verification logic if the receiver is dead or still alive but modify his life points
+     * @param attacker
+     * @param receiving
+     * @param enemie
+     * @param type
+     * @param user
+     * @param menu
+     * @param game
+     * @param boardClass
+     * @param boardInt
+     * @param caseNumber
+     */
     public void verifiedPerson(int attacker, int receiving, Enemie enemie, String type, User user, Menu menu, Game game, Board boardClass, int[] boardInt, int caseNumber) {
         int difference = receiving - attacker;
         int damageDealt = Math.max(0, difference);
@@ -45,6 +87,18 @@ public class Fight {
         }
     }
 
+    /**
+     * Logic for modifying health points
+     * @param type
+     * @param enemie
+     * @param difference
+     * @param user
+     * @param menu
+     * @param game
+     * @param boardClass
+     * @param boardInt
+     * @param caseNumber
+     */
     public void modifyLifePoints(String type, Enemie enemie, int difference, User user, Menu menu, Game game, Board boardClass, int[] boardInt, int caseNumber) {
         Character character = user.getCharacterPlayer();
         if (type == "player") {
@@ -55,11 +109,29 @@ public class Fight {
         }
     }
 
+    /**
+     * Outcome of a fight
+     * @param menu
+     * @param boardClass
+     * @param enemies
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     */
     public void progressesFight(Menu menu, Board boardClass, Enemie enemies, User user, Game game, int[] boardInt, int caseNumber) {
         playerAttack(user, menu, enemies, boardClass, game, boardInt, caseNumber);
         enemyAttack(user, menu, enemies, boardClass, game, boardInt, caseNumber);
     }
 
+    /**
+     * Logic if the player or the enemy is dead
+     * @param type
+     * @param user
+     * @param menu
+     * @param game
+     * @param boardClass
+     */
     public void deadPerson(String type, User user, Menu menu, Game game, Board boardClass) {
         if (type.equals("enemy")) {
             // Appel de la fonction pour mettre a jour la base de donnée
@@ -70,6 +142,11 @@ public class Fight {
         }
     }
 
+    /**
+     * Display if the player an enemy attacks
+     * @param type
+     * @param degat
+     */
     public void displayAttack(String type, int degat) {
         if (type.equals("player")) {
             System.out.println("Vous avez infligé " + degat + " points de dégâts à l'ennemi !");
@@ -78,6 +155,12 @@ public class Fight {
         }
     }
 
+    /**
+     * Verification if the player has an offensive object
+     * @param attackBase
+     * @param character
+     * @return
+     */
     public int verificationHaveOffensive(int attackBase, Character character) {
         OffensiveEquipment offensivePlayer = character.getOffensiveEquipment();
         if (offensivePlayer != null) {
@@ -87,6 +170,11 @@ public class Fight {
         return attackBase;
     }
 
+    /**
+     * Verification if the player has an defensive object
+     * @param user
+     * @return
+     */
     public boolean verificationHaveDefensive(User user) {
         Character character = user.getCharacterPlayer();
         DefensiveEquipment defensiveEquipment = character.getDefensiveEquipment();
@@ -96,6 +184,20 @@ public class Fight {
         return false;
     }
 
+    /**
+     * Verification if the player have a potion
+     * @param user
+     * @param menu
+     * @param borderClass
+     * @param game
+     * @param fight
+     * @param attackLevel
+     * @param lifePoints
+     * @param enemie
+     * @param type
+     * @param boardInt
+     * @param caseNumber
+     */
     public void havePotion(User user, Menu menu, Board borderClass, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, int[] boardInt, int caseNumber) {
         Character character = user.getCharacterPlayer();
         DefensiveEquipment defensiveEquipment = character.getDefensiveEquipment();
@@ -118,6 +220,10 @@ public class Fight {
         }
     }
 
+    /**
+     * Delete potion after using
+     * @param character
+     */
     public void deletePotion(Character character) {
         character.setDefensiveEquipment(null);
     }

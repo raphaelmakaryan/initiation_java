@@ -6,6 +6,15 @@ import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 import fr.raphaelmakaryan.lombredesdragons.game.User;
 
 public class Box {
+    /**
+     * Verification function if it is a box
+     * @param menu
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     */
     public void haveBox(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber) {
         menu.boxCell(boardClass, user, game, boardInt, caseNumber);
     }

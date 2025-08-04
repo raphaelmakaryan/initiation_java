@@ -15,6 +15,8 @@ public class Cell {
      * @param boardInt
      * @param boardClass
      * @param menu
+     * @param user
+     * @param game
      * @throws OutOfBoardException
      */
     public void verifyCase(int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game) throws OutOfBoardException {
@@ -26,6 +28,17 @@ public class Cell {
         nothingCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game);
     }
 
+    /**
+     * Verification if the player leaves the board and modification of their position
+     *
+     * @param caseNumber
+     * @param boardClass
+     * @param boardInt
+     * @param menu
+     * @param user
+     * @param game
+     * @throws OutOfBoardException
+     */
     public void outOfBoard(int caseNumber, Board boardClass, int[] boardInt, Menu menu, User user, Game game) throws OutOfBoardException {
         if (caseNumber >= 64) {
             boardClass.outOfBoard(caseNumber, boardClass, boardInt);
@@ -34,12 +47,29 @@ public class Cell {
         }
     }
 
+    /**
+     * End of the game if he arrives at the end
+     *
+     * @param menu
+     * @param verificationCase
+     */
     public void endGame(Menu menu, int verificationCase) {
         if (verificationCase == 4) {
             EndGame.endGame("fin", menu);
         }
     }
 
+    /**
+     * Checking if the player is on an enemy cell
+     *
+     * @param verificationCase
+     * @param caseNumber
+     * @param boardInt
+     * @param boardClass
+     * @param menu
+     * @param user
+     * @param game
+     */
     public void enemyCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game) {
         if (verificationCase == 20 || verificationCase == 21 || verificationCase == 22) {
             // ENEMY
@@ -48,6 +78,17 @@ public class Cell {
         }
     }
 
+    /**
+     * Checking if the player is on an box cell
+     *
+     * @param verificationCase
+     * @param caseNumber
+     * @param boardInt
+     * @param boardClass
+     * @param menu
+     * @param user
+     * @param game
+     */
     public void boxCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game) {
         if (verificationCase >= 300) {
             // BOX
@@ -56,6 +97,17 @@ public class Cell {
         }
     }
 
+    /**
+     * Checking if the player is on an nothing cell
+     *
+     * @param verificationCase
+     * @param caseNumber
+     * @param boardInt
+     * @param boardClass
+     * @param menu
+     * @param user
+     * @param game
+     */
     public void nothingCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game) {
         if (verificationCase == 0) {
             // NOTHING
