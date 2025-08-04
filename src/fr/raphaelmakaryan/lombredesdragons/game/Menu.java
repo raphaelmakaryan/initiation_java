@@ -1,5 +1,6 @@
 package fr.raphaelmakaryan.lombredesdragons.game;
 
+import fr.raphaelmakaryan.lombredesdragons.Main;
 import fr.raphaelmakaryan.lombredesdragons.configurations.*;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
@@ -176,7 +177,10 @@ public class Menu extends Admin {
         if (choice == 1) {
             EndGame.endGame("exit", this);
         } else if (choice == 2) {
-            System.out.println("Recommençons une nouvelle partie !");
+            try {
+                Main.main(new String[]{"retour"});
+            } catch (SQLException e) {
+            }
         } else {
             toolsMain.verificationChoiceNotWhile("endGameCase", this, (Object) null);
         }

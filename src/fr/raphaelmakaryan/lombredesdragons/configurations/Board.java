@@ -38,6 +38,7 @@ public class Board extends Admin {
 
     /**
      * Returns the index of the player’s box exactly
+     *
      * @return intCurrentCasePlayers
      */
     public int getCurrentCasePlayers() {
@@ -53,6 +54,7 @@ public class Board extends Admin {
 
     /**
      * Return the entire game board
+     *
      * @return int[]Board
      */
     public int[] getBoard() {
@@ -61,6 +63,7 @@ public class Board extends Admin {
 
     /**
      * Make the player move in the game board
+     *
      * @param steps
      * @param boardClass
      * @param menu
@@ -79,7 +82,7 @@ public class Board extends Admin {
         if (debugBoardIndexCell) {
             int indexDebug = boardClass.getCurrentCasePlayers();
             int valueDebug = boardInt[indexDebug];
-            System.out.println("Le joueur est actuellement à la case " + indexDebug + " | La case a comme valeur : " + valueDebug);
+            System.out.println("Le joueur est actuellement à la case " + (indexDebug +1) + " | La case a comme valeur : " + valueDebug);
         }
         try {
             cellInstance.verifyCase(newPosition, boardInt, boardClass, menu, user, game, connection, database);
@@ -156,6 +159,9 @@ public class Board extends Admin {
      * @param newPosition
      */
     public void setNewCellPlayer(int[] boardInt, int newPosition, boolean displayMessage, Connection connection, Database database, User user) {
+        if (newPosition <= 0) {
+            newPosition = 0;
+        }
         setNewCurrentCasePlayers(newPosition);
         boardInt[newPosition] = 1;
         setNewBoard(boardInt);
@@ -167,6 +173,7 @@ public class Board extends Admin {
 
     /**
      * Adds enemies and random objects to the game board in fixed positions
+     *
      * @param cell
      * @param random
      * @param valueBox
