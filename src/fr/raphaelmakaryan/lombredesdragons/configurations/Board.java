@@ -7,6 +7,7 @@ import fr.raphaelmakaryan.lombredesdragons.game.User;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 import fr.raphaelmakaryan.lombredesdragons.verifications.Cell;
 
+import java.sql.Connection;
 import java.util.Random;
 
 public class Board extends Admin {
@@ -64,7 +65,7 @@ public class Board extends Admin {
      * @param boardClass
      * @param menu
      */
-    public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game) {
+    public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database) {
         Cell cellInstance = new Cell();
         tools.setTimeout(1);
         System.out.println("Vous avez lancé le dé et obtenu : " + Colors.DICE_MAGENTA + steps + Colors.RESET + " !");
@@ -81,7 +82,7 @@ public class Board extends Admin {
             System.out.println("Le joueur est actuellement à la case " + indexDebug + " | La case a comme valeur : " + valueDebug);
         }
         try {
-            cellInstance.verifyCase(newPosition, boardInt, boardClass, menu, user, game);
+            cellInstance.verifyCase(newPosition, boardInt, boardClass, menu, user, game, connection, database);
         } catch (OutOfBoardException ignored) {
         }
     }

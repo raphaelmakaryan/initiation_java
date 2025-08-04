@@ -9,6 +9,7 @@ public class Database extends Admin {
 
     /**
      * Connection to the database
+     *
      * @return
      * @throws SQLException
      */
@@ -28,6 +29,7 @@ public class Database extends Admin {
 
     /**
      * Find all the database heroes for the admin
+     *
      * @param connection
      * @throws SQLException
      */
@@ -61,6 +63,7 @@ public class Database extends Admin {
 
     /**
      * Create a hero in the database
+     *
      * @param connection
      * @param user
      * @param database
@@ -92,6 +95,7 @@ public class Database extends Admin {
 
     /**
      * Edit a hero in the database
+     *
      * @param connection
      * @param oldName
      * @param newName
@@ -99,6 +103,7 @@ public class Database extends Admin {
      * @throws SQLException
      */
     public void editHero(Connection connection, String oldName, String newName, User user) throws SQLException {
+        /*
         if (usingDatabase) {
             String query = "UPDATE `Character` SET `Name` = ? WHERE ID = ? AND `Name` = ?";
             try (PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -111,27 +116,36 @@ public class Database extends Admin {
                 System.out.println("Anomalie lors de l'execution de la requête");
             }
         }
-    }
-
-    /**
-     * Edit a life a hero in the database
-     * @param connection
-     * @param character
-     * @throws SQLException
-     */
-    public void changeLifePoints(Connection connection, Character character) throws SQLException {
-        /*
-        String query = "UPDATE `Character` SET `lifePoints` = ? WHERE `name` = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, lifePoints);
-            pstmt.setString(2, character.getName());
-            pstmt.executeUpdate();
-        }
         */
     }
 
     /**
+     * Edit a life a hero in the database
+     *
+     * @param connection
+     * @param user
+     * @throws SQLException
+     */
+    public void changeLifePoints(Connection connection, User user, int lifePoints) {
+        if (usingDatabase) {
+            Character character = user.getCharacterPlayer();
+            int ID = user.getIDPlayerDatabase();
+            String query = "UPDATE `Character` SET `lifePoints` = ? WHERE `name` = ? AND ID = ?";
+            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+                pstmt.setInt(1, lifePoints);
+                pstmt.setString(2, character.getName());
+                pstmt.setInt(3, ID);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println("Une anomalie est survenue lors de l'insertion du plateau de jeu dans la base de données.");
+                System.out.println("N'en prenez pas compte, vous pouvez continuer à jouer sans sauvegarder votre plateau de jeu.");
+            }
+        }
+    }
+
+    /**
      * Add a baord in the database
+     *
      * @param connection
      * @param boardClass
      * @param user

@@ -12,7 +12,7 @@ public abstract class Character {
     protected DefensiveEquipment defensiveEquipment;
 
     /**
-     * Character Constructor
+     * Character Constructordifference
      * @param name
      * @param lifePoints
      * @param attackLevel

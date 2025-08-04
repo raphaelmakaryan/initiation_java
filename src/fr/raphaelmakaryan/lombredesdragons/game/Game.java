@@ -14,6 +14,7 @@ public class Game extends Admin {
 
     /**
      * Logic of after game launch
+     *
      * @param game
      * @throws SQLException
      */
@@ -28,6 +29,7 @@ public class Game extends Admin {
 
     /**
      * Game launch logic
+     *
      * @param menu
      * @param user
      */
@@ -37,6 +39,7 @@ public class Game extends Admin {
 
     /**
      * The player creates their character
+     *
      * @param menu
      * @param user
      * @param connection
@@ -49,6 +52,7 @@ public class Game extends Admin {
 
     /**
      * Method to launch the game after creating the player
+     *
      * @param menu
      * @param user
      * @param database
@@ -62,6 +66,7 @@ public class Game extends Admin {
 
     /**
      * Actual launch of the game after the player has decided to start the adventure
+     *
      * @param connection
      * @param database
      * @param game
@@ -70,28 +75,30 @@ public class Game extends Admin {
     public void playerWantPlay(Connection connection, Database database, Game game) throws SQLException {
         Board board = new Board();
         database.addBoard(connection, board, user);
-        startGame(board, user, game);
+        startGame(board, user, game, connection, database);
     }
 
     /**
      * Real launch of the game
+     *
      * @param board
      * @param user
      * @param game
      */
-    public void startGame(Board board, User user, Game game) {
-        playTurn(board, user, game);
+    public void startGame(Board board, User user, Game game, Connection connection, Database database) {
+        playTurn(board, user, game, connection, database);
     }
 
     /**
      * Logic of the game
+     *
      * @param board
      * @param user
      * @param game
      */
-    public void playTurn(Board board, User user, Game game) {
+    public void playTurn(Board board, User user, Game game, Connection connection, Database database) {
         Dice dice = new Dice();
         int diceValue = dice.dice6();
-        board.movePlayer(diceValue, board, menuGame, user, game);
+        board.movePlayer(diceValue, board, menuGame, user, game, connection, database);
     }
 }

@@ -2,6 +2,7 @@ package fr.raphaelmakaryan.lombredesdragons.verifications;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.Admin;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
+import fr.raphaelmakaryan.lombredesdragons.configurations.Database;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Enemie;
 import fr.raphaelmakaryan.lombredesdragons.configurations.enemies.Dragon;
 import fr.raphaelmakaryan.lombredesdragons.configurations.enemies.Goblin;
@@ -11,11 +12,14 @@ import fr.raphaelmakaryan.lombredesdragons.game.Game;
 import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 import fr.raphaelmakaryan.lombredesdragons.game.User;
 
+import java.sql.Connection;
+
 public class Enemies extends Admin {
     private Enemie enemiesPlayer;
 
     /**
      * Player is on an enemy cell
+     *
      * @param menu
      * @param boardClass
      * @param user
@@ -23,12 +27,13 @@ public class Enemies extends Admin {
      * @param boardInt
      * @param caseNumber
      */
-    public void haveEnemies(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber) {
-        menu.enemiesCell(boardClass, menu, user, game, boardInt, caseNumber);
+    public void haveEnemies(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
+        menu.enemiesCell(boardClass, menu, user, game, boardInt, caseNumber, connection, database);
     }
 
     /**
      * Player wishes this beat
+     *
      * @param menu
      * @param boardClass
      * @param user
@@ -36,15 +41,16 @@ public class Enemies extends Admin {
      * @param boardInt
      * @param caseNumber
      */
-    public void chooseFight(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber) {
+    public void chooseFight(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
         Fight fight = new Fight();
         createEnemy(boardClass);
         menu.displayEnemyFight(this.enemiesPlayer);
-        fight.progressesFight(menu, boardClass, this.enemiesPlayer, user, game, boardInt, caseNumber);
+        fight.progressesFight(menu, boardClass, this.enemiesPlayer, user, game, boardInt, caseNumber, connection, database);
     }
 
     /**
      * Creation of the enemy according to the case index and the enemy’s id
+     *
      * @param board
      */
     public void createEnemy(Board board) {

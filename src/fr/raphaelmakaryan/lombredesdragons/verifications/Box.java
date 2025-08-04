@@ -1,9 +1,12 @@
 package fr.raphaelmakaryan.lombredesdragons.verifications;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
+import fr.raphaelmakaryan.lombredesdragons.configurations.Database;
 import fr.raphaelmakaryan.lombredesdragons.game.Game;
 import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 import fr.raphaelmakaryan.lombredesdragons.game.User;
+
+import java.sql.Connection;
 
 public class Box {
     /**
@@ -15,7 +18,7 @@ public class Box {
      * @param boardInt
      * @param caseNumber
      */
-    public void haveBox(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber) {
-        menu.boxCell(boardClass, user, game, boardInt, caseNumber);
+    public void haveBox(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
+        menu.boxCell(boardClass, user, game, boardInt, caseNumber, connection, database);
     }
 }
