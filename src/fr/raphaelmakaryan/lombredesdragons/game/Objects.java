@@ -172,7 +172,7 @@ public class Objects {
         Character character = user.getCharacterPlayer();
         boolean playerHaveAlready = haveAlreadyAObject(user, object, menu, boardClass, game);
         if (!playerHaveAlready) {
-            addObjectToPlayer(object, character);
+            addObjectToPlayer(object, character, connection, database, user);
             menu.displayObjectAddToPlayer(boardClass, user, game, object[0][0][0], connection, database);
         }
         menu.displayObjectCantAddToPlayer(boardClass, user, game, object[0][0][0], connection, database);
@@ -184,15 +184,19 @@ public class Objects {
      * @param object
      * @param character
      */
-    public void addObjectToPlayer(String[][][] object, Character character) {
+    public void addObjectToPlayer(String[][][] object, Character character, Connection connection, Database database, User user) {
         if (object[2][0][0].equals("DefensiveEquipment")) {
             character.setDefensiveEquipment(this.isPotion);
+            database.addDefensiveEquipment(connection, user, this.isPotion);
         } else if (object[2][0][0].equals("OffensiveEquipment")) {
             if (this.isSpell != null) {
                 character.setOffensiveEquipment(this.isSpell);
+                database.addOffensiveEquipment(connection, user, this.isSpell);
             } else if (this.isWeapon != null) {
                 character.setOffensiveEquipment(this.isWeapon);
+                database.addOffensiveEquipment(connection, user, this.isWeapon);
             }
+
         }
     }
 }

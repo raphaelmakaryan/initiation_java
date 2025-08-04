@@ -28,6 +28,10 @@ public abstract class DefensiveEquipment {
         this.levelDefense = levelDefense;
     }
 
+    public int getIdObject() {
+        return idObject;
+    }
+
     @Override
     public String toString() {
         return "DefensiveEquipment{" +
