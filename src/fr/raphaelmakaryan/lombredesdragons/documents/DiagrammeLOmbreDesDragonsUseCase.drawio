@@ -1,34 +1,248 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" version="28.0.7">
   <diagram name="Page-1" id="iKQFmBMTvf0XDaMt1fFK">
-    <mxGraphModel>
+    <mxGraphModel dx="1940" dy="1974" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="827" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="2" value="Alice" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
-          <mxGeometry width="150" height="304" as="geometry" />
+        <mxCell id="2" value="Joueurs" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" parent="1" vertex="1">
+          <mxGeometry x="301" width="150" height="1420" as="geometry" />
         </mxCell>
-        <mxCell id="3" value="John" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
-          <mxGeometry x="248" width="150" height="304" as="geometry" />
+        <mxCell id="3" value="L&#39;Ombre des Dragons" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" parent="1" vertex="1">
+          <mxGeometry x="549" width="150" height="1420" as="geometry" />
         </mxCell>
-        <mxCell id="4" value="Hello John, how are you?" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="2" target="3">
+        <mxCell id="4" value="Lancement du Script" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" parent="1" source="2" target="3" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="208" y="103" />
+              <mxPoint x="509" y="103" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="5" value="Great!" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="3" target="2">
+        <mxCell id="5" value="Type du personnage" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" parent="1" source="3" target="2" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="211" y="151" />
+              <mxPoint x="512" y="151" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="6" value="See you later!" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=classic;endSize=10;" edge="1" parent="1" source="2" target="3">
+        <mxCell id="6" value="magicien" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=classic;endSize=10;" parent="1" source="2" target="3" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="208" y="199" />
+              <mxPoint x="509" y="199" />
             </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-6" value="Nom du personnage" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="254.82" />
+            </Array>
+            <mxPoint x="625" y="254.82" as="sourcePoint" />
+            <mxPoint x="376" y="254.82" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-7" value="toto" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=horizontal;curved=0;rounded=0;endArrow=classic;endSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="302.82" />
+            </Array>
+            <mxPoint x="376" y="302.82" as="sourcePoint" />
+            <mxPoint x="625" y="302.82" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-8" value="Choix du prestart" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="360" />
+            </Array>
+            <mxPoint x="625" y="360" as="sourcePoint" />
+            <mxPoint x="376" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-9" value="demarrer une partie" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=classic;endSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="408" />
+            </Array>
+            <mxPoint x="376" y="408" as="sourcePoint" />
+            <mxPoint x="625" y="408" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-10" value="Choix du tour du joueur" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="470" />
+            </Array>
+            <mxPoint x="625" y="470" as="sourcePoint" />
+            <mxPoint x="376" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-11" value="Avancer" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=classic;endSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="518" />
+            </Array>
+            <mxPoint x="376" y="518" as="sourcePoint" />
+            <mxPoint x="625" y="518" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-12" value="tomber sur une boite" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="570" />
+            </Array>
+            <mxPoint x="625" y="570" as="sourcePoint" />
+            <mxPoint x="376" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-13" value="ouvrir" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=classic;endSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="618" />
+            </Array>
+            <mxPoint x="376" y="618" as="sourcePoint" />
+            <mxPoint x="625" y="618" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-14" value="Choix a l’obtension de l&#39;objet" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1">
+          <mxGeometry x="-0.0027" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="670" />
+            </Array>
+            <mxPoint x="625" y="670" as="sourcePoint" />
+            <mxPoint x="376" y="670" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-15" value="Prendre" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=classic;endSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="718" />
+            </Array>
+            <mxPoint x="376" y="718" as="sourcePoint" />
+            <mxPoint x="625" y="718" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-18" value="Choix du tour du joueur" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1">
+          <mxGeometry x="-0.0027" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="770" />
+            </Array>
+            <mxPoint x="625" y="770" as="sourcePoint" />
+            <mxPoint x="376" y="770" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-19" value="Avancer" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=classic;endSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="818" />
+            </Array>
+            <mxPoint x="376" y="818" as="sourcePoint" />
+            <mxPoint x="625" y="818" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-26" value="Tomber sur un ennemi, choix au joueur" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=horizontal;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="880" />
+            </Array>
+            <mxPoint x="625" y="880" as="sourcePoint" />
+            <mxPoint x="376" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-27" value="Se battre" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=classic;endSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="928" />
+            </Array>
+            <mxPoint x="376" y="928" as="sourcePoint" />
+            <mxPoint x="625" y="928" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-28" value="Choix du joueur dans le combat" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1">
+          <mxGeometry x="-0.0027" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="980" />
+            </Array>
+            <mxPoint x="625" y="980" as="sourcePoint" />
+            <mxPoint x="376" y="980" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-29" value="Fuite" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=classic;endSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="1028" />
+            </Array>
+            <mxPoint x="376" y="1028" as="sourcePoint" />
+            <mxPoint x="625" y="1028" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-30" value="Choix du tour du joueur" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1">
+          <mxGeometry x="-0.0027" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="1080" />
+            </Array>
+            <mxPoint x="625" y="1080" as="sourcePoint" />
+            <mxPoint x="376" y="1080" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-31" value="Avancer" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=classic;endSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="1128" />
+            </Array>
+            <mxPoint x="376" y="1128" as="sourcePoint" />
+            <mxPoint x="625" y="1128" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-33" value="Tombe sur une case vide, choix au joueur" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1">
+          <mxGeometry x="-0.0027" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="1192" />
+            </Array>
+            <mxPoint x="625" y="1192" as="sourcePoint" />
+            <mxPoint x="376" y="1192" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-34" value="Avancer" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=classic;endSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="1240" />
+            </Array>
+            <mxPoint x="376" y="1240" as="sourcePoint" />
+            <mxPoint x="625" y="1240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-35" value="Tombe sur la case de fin, choix du joueur" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1">
+          <mxGeometry x="-0.0027" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="1310" />
+            </Array>
+            <mxPoint x="625" y="1310" as="sourcePoint" />
+            <mxPoint x="376" y="1310" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-36" value="Fermer le jeu" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=classic;endSize=10;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="1358" />
+            </Array>
+            <mxPoint x="376" y="1358" as="sourcePoint" />
+            <mxPoint x="625" y="1358" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OZ8q-jVKNAK_pCY7zw9V-38" value="Arret du proccessus" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1">
+          <mxGeometry x="-0.0027" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="1420" />
+            </Array>
+            <mxPoint x="625" y="1420" as="sourcePoint" />
+            <mxPoint x="376" y="1420" as="targetPoint" />
+            <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
       </root>
