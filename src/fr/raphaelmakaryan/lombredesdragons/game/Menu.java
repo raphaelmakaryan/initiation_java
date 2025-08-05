@@ -464,6 +464,7 @@ public class Menu extends Admin {
             displayFightCritical(attackLevel, "player");
             displayFightPlayerAttack();
             fight.verifiedPerson(attackLevel[0][0], lifePoints, enemie, "player", user, menu, game, boardClass, boardInt, caseNumber, connection, database);
+            fight.verificationHaveThunderclap(user.getCharacterPlayer());
         } else if (choice == 2) {
             fight.espace(menu, game, user, boardClass, boardInt, caseNumber, connection, database);
         } else if (choice == 3 && havePotion) {

@@ -12,6 +12,9 @@ Listes des cases du jeu :
   301 => "Grande potion",
   310 => "Mage : eclair",
   311 => "Mage : boule de feu",
+  312 => "Mage : Invisibilité",
   320 => "Guerrier : Massue",
   321 => "Guerrier : Epee",
+  322 => "Guerrier : Arc",
+  330 => "Coup de tonnerre"
 4 => "Fin"

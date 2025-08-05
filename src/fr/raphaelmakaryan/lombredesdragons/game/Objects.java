@@ -10,7 +10,7 @@ import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 
 import java.sql.Connection;
 
-public class Objects {
+public class Objects extends Admin {
     public Weapon isWeapon;
     public Spell isSpell;
     public Potion isPotion;
@@ -51,6 +51,9 @@ public class Objects {
     public String[][][] whatObject(int idObject) {
         int objet = idObject - 300;
         String[][][] response;
+        if (debugForceBox != 0) {
+            objet = debugForceBox;
+        }
         if (objet == 0) {
             this.isPotion = new StandardPotion();
             response = new String[][][]{{new String[]{"Standard Potion"}}, {new String[]{"ALL"}}, {new String[]{"DefensiveEquipment"}}};
@@ -67,6 +70,10 @@ public class Objects {
             this.isSpell = new Fireball();
             response = new String[][][]{{new String[]{"Fireball"}}, {new String[]{"Wizard"}}, {new String[]{"OffensiveEquipment"}}};
             return response;
+        } else if (objet == 12) {
+            this.isWeapon = new Invisibility();
+            response = new String[][][]{{new String[]{"Invisibility"}}, {new String[]{"Wizard"}}, {new String[]{"OffensiveEquipment"}}};
+            return response;
         } else if (objet == 20) {
             this.isWeapon = new Mace();
             response = new String[][][]{{new String[]{"Mace"}}, {new String[]{"Warrior"}}, {new String[]{"OffensiveEquipment"}}};
@@ -74,6 +81,14 @@ public class Objects {
         } else if (objet == 21) {
             this.isWeapon = new Sword();
             response = new String[][][]{{new String[]{"Sword"}}, {new String[]{"Warrior"}}, {new String[]{"OffensiveEquipment"}}};
+            return response;
+        } else if (objet == 22) {
+            this.isWeapon = new Bow();
+            response = new String[][][]{{new String[]{"Bow"}}, {new String[]{"Warrior"}}, {new String[]{"OffensiveEquipment"}}};
+            return response;
+        } else if (objet == 30) {
+            this.isWeapon = new Thunderclap();
+            response = new String[][][]{{new String[]{"Thunderclap"}}, {new String[]{"ALL"}}, {new String[]{"OffensiveEquipment"}}};
             return response;
         } else {
             response = new String[][][]{{new String[]{"Unknown"}}, {new String[]{"ERROR"}}, {new String[]{"ERROR"}}};
