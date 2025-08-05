@@ -431,6 +431,17 @@ public class Menu extends Admin {
         }
     }
 
+
+    public void displayChoiceWeapon(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database) {
+        Character character = user.getCharacterPlayer();
+        OffensiveEquipment[][] inventory = character.getInventoryOffensiveEquipment();
+        if (inventory != null) {
+
+        } else {
+            displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, "player", menu, boardInt, caseNumber, connection, database);
+        }
+    }
+
     /**
      * Menu or the player choose action has a fight
      *

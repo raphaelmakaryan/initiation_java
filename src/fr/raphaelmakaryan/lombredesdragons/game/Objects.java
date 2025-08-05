@@ -2,6 +2,8 @@ package fr.raphaelmakaryan.lombredesdragons.game;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.*;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
+import fr.raphaelmakaryan.lombredesdragons.configurations.characters.Warrior;
+import fr.raphaelmakaryan.lombredesdragons.configurations.characters.Wizard;
 import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Potion;
 import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Spell;
 import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Weapon;
@@ -207,11 +209,35 @@ public class Objects extends Admin {
             if (this.isSpell != null) {
                 character.setOffensiveEquipment(this.isSpell);
                 database.addOffensiveEquipment(connection, user, this.isSpell);
+                addOffensiveToInventory(character, this.isSpell);
             } else if (this.isWeapon != null) {
                 character.setOffensiveEquipment(this.isWeapon);
                 database.addOffensiveEquipment(connection, user, this.isWeapon);
+                addOffensiveToInventory(character, this.isWeapon);
             }
 
+        }
+    }
+
+    public boolean addOffensiveToInventory(Character character, OffensiveEquipment item) {
+        OffensiveEquipment[][] inventory = character.getInventoryOffensiveEquipment();
+
+        boolean isMage = character instanceof Wizard;
+        boolean isWarrior = character instanceof Warrior;
+
+        // Vérifie le type d'objet vs personnage
+        if ((isMage && item instanceof Spell) || (isWarrior && item instanceof Weapon)) {
+            for (int i = 0; i < inventory[0].length; i++) {
+                if (inventory[0][i] == null) {
+                    inventory[0][i] = item;
+                    return true; // Ajout réussi
+                }
+            }
+            System.out.println("Inventaire plein ! Impossible d’ajouter l’objet.");
+            return false;
+        } else {
+            System.out.println("Cet objet ne correspond pas au type du personnage.");
+            return false;
         }
     }
 }

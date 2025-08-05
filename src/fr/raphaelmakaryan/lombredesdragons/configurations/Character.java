@@ -9,10 +9,12 @@ public abstract class Character {
     protected int lifeDefault;
     protected int attackLevel;
     protected OffensiveEquipment offensiveEquipment;
+    protected OffensiveEquipment[][] inventoryOffensiveEquipment;
     protected DefensiveEquipment defensiveEquipment;
 
     /**
      * Character Constructordifference
+     *
      * @param name
      * @param lifePoints
      * @param attackLevel
@@ -27,6 +29,7 @@ public abstract class Character {
         this.attackLevel = attackLevel;
         this.offensiveEquipment = offensiveEquipment;
         this.defensiveEquipment = defensiveEquipment;
+        this.inventoryOffensiveEquipment = new OffensiveEquipment[1][2];
     }
 
     public String getType() {
@@ -79,6 +82,14 @@ public abstract class Character {
 
     public int getLifeDefault() {
         return lifeDefault;
+    }
+
+    public OffensiveEquipment[][] getInventoryOffensiveEquipment() {
+        return inventoryOffensiveEquipment;
+    }
+
+    public void setInventoryOffensiveEquipment(OffensiveEquipment[][] inventoryOffensiveEquipment) {
+        this.inventoryOffensiveEquipment = inventoryOffensiveEquipment;
     }
 
     // Methode pour afficher les informations du personnage

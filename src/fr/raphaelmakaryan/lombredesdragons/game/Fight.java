@@ -26,6 +26,7 @@ public class Fight {
         int attackWithObject = verificationHaveOffensive(attackBase, character, enemie);
         int[][] newAttackLevel = dice.dice20(attackWithObject);
         int lifePoints = enemie.getLifePoints();
+        //menu.displayChoiceWeapon(boardClass, user, game, this, newAttackLevel, lifePoints, enemie, "player", menu, boardInt, caseNumber, connection, database);
         menu.displayChoicePlayerAttack(boardClass, user, game, this, newAttackLevel, lifePoints, enemie, "player", menu, boardInt, caseNumber, connection, database);
     }
 
@@ -274,9 +275,8 @@ public class Fight {
             return 5;
         } else if (name == "Thunderclap") {
             return attackDefault * 2;
-        } else {
-            return 0;
         }
+        return 0;
     }
 
     public void verificationHaveThunderclap(Character character) {
