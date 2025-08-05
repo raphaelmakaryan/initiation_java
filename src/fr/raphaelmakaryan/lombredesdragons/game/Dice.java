@@ -7,6 +7,7 @@ import java.util.Random;
 public class Dice extends Admin {
     /**
      * Dice 6 faces
+     *
      * @return
      */
     public int dice6() {
@@ -19,6 +20,7 @@ public class Dice extends Admin {
 
     /**
      * Dice 20 faces
+     *
      * @param attacking
      * @return
      */
@@ -26,6 +28,12 @@ public class Dice extends Admin {
         Random rand = new Random();
         int value = rand.nextInt(1, 20);
         int[][] attackAndDice;
+        if (debugDiceCriticalLoose) {
+            return new int[][]{{0, 1}};
+        }
+        if (debugDiceCriticalSuccess) {
+            return new int[][]{{attacking + 2, 20}};
+        }
         if (value == 20) {
             attackAndDice = new int[][]{{attacking + 2, value}};
             return attackAndDice;

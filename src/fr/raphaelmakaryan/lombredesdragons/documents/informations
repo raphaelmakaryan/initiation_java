@@ -5,11 +5,16 @@ Listes des cases du jeu :
   20 => "Wizard",
   21 => "Goblin",
   22 => "Dragon",
+  23 => "Orcs",
+  24 => "EvilSpirits",
 3 => "BOX",
   300 => "Potion standard",
   301 => "Grande potion",
   310 => "Mage : eclair",
   311 => "Mage : boule de feu",
+  312 => "Mage : Invisibilité",
   320 => "Guerrier : Massue",
   321 => "Guerrier : Epee",
+  322 => "Guerrier : Arc",
+  330 => "Coup de tonnerre"
 4 => "Fin"

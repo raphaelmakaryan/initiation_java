@@ -464,6 +464,7 @@ public class Menu extends Admin {
             displayFightCritical(attackLevel, "player");
             displayFightPlayerAttack();
             fight.verifiedPerson(attackLevel[0][0], lifePoints, enemie, "player", user, menu, game, boardClass, boardInt, caseNumber, connection, database);
+            fight.verificationHaveThunderclap(user.getCharacterPlayer());
         } else if (choice == 2) {
             fight.espace(menu, game, user, boardClass, boardInt, caseNumber, connection, database);
         } else if (choice == 3 && havePotion) {
@@ -588,6 +589,14 @@ public class Menu extends Admin {
         System.out.println("Par contre, vous avez lancé le dé pour savoir combien de cases vous devez reculer.");
         System.out.println("Vous reculez de " + Colors.DICE_MAGENTA + escape + Colors.RESET + " cases.");
         System.out.println("Vous pouvez continuer votre chemin.");
+        toolsMain.setTimeout(2);
+        toolsMain.clearLine();
+    }
+
+    public void playerCantAttackFight() {
+        toolsMain.setTimeout(1);
+        System.out.println("Vous ne pouvez pas vous battre contre cet ennemi !");
+        System.out.println("Vous partez et continuer votre chemin.");
         toolsMain.setTimeout(2);
         toolsMain.clearLine();
     }

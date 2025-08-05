@@ -5,7 +5,6 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
 import fr.raphaelmakaryan.lombredesdragons.verifications.EndGame;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class Fight {
 
@@ -24,7 +23,7 @@ public class Fight {
         Dice dice = new Dice();
         Character character = user.getCharacterPlayer();
         int attackBase = character.getAttackLevel();
-        int attackWithObject = verificationHaveOffensive(attackBase, character);
+        int attackWithObject = verificationHaveOffensive(attackBase, character, enemie);
         int[][] newAttackLevel = dice.dice20(attackWithObject);
         int lifePoints = enemie.getLifePoints();
         menu.displayChoicePlayerAttack(boardClass, user, game, this, newAttackLevel, lifePoints, enemie, "player", menu, boardInt, caseNumber, connection, database);
@@ -48,7 +47,7 @@ public class Fight {
         int[][] newAttackLevel = dice.dice20(attackLevel);
         int lifePoints = character.getLifePoints();
         menu.displayFightCritical(newAttackLevel, "enemy");
-        verifiedPerson(attackLevel, lifePoints, enemie, "enemy", user, menu, game, boardClass, boardInt, caseNumber, connection, database);
+        verifiedPerson(newAttackLevel[0][0], lifePoints, enemie, "enemy", user, menu, game, boardClass, boardInt, caseNumber, connection, database);
     }
 
     /**
@@ -62,8 +61,7 @@ public class Fight {
      * @param caseNumber
      */
     public void espace(Menu menu, Game game, User user, Board boardClass, int[] boardInt, int caseNumber, Connection connection, Database database) {
-        Dice dice = new Dice();
-        int escape = dice.dice6();
+        int escape = 2;
         menu.displayEscape(escape);
         boardClass.setNewCellPlayer(boardInt, caseNumber - escape, true, connection, database, user);
         menu.choiceGameProgress(boardClass, user, game, connection, database);
@@ -130,6 +128,11 @@ public class Fight {
      * @param caseNumber
      */
     public void progressesFight(Menu menu, Board boardClass, Enemie enemies, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
+        boolean canAttack = verificationPlayerCanAttack(user, enemies);
+        if (!canAttack) {
+            menu.playerCantAttackFight();
+            menu.choiceGameProgress(boardClass, user, game, connection, database);
+        }
         playerAttack(user, menu, enemies, boardClass, game, boardInt, caseNumber, connection, database);
         enemyAttack(user, menu, enemies, boardClass, game, boardInt, caseNumber, connection, database);
     }
@@ -145,7 +148,7 @@ public class Fight {
      */
     public void deadPerson(String type, User user, Menu menu, Game game, Board boardClass, Connection connection, Database database) {
         if (type.equals("enemy")) {
-            // Appel de la fonction pour mettre a jour la base de donnée
+            database.changeLifePoints(connection, user, 0);
             EndGame.endGame("dead", menu);
         } else {
             System.out.println("L'ennemi est mort !");
@@ -174,11 +177,17 @@ public class Fight {
      * @param character
      * @return
      */
-    public int verificationHaveOffensive(int attackBase, Character character) {
+    public int verificationHaveOffensive(int attackBase, Character character, Enemie enemie) {
         OffensiveEquipment offensivePlayer = character.getOffensiveEquipment();
+        String enemiRival = enemie.getName();
         if (offensivePlayer != null) {
-            int valueAttackObject = offensivePlayer.getLevelAttack();
-            return attackBase + valueAttackObject;
+            String weapon = offensivePlayer.getName();
+            int valueSpecialWeapon = haveWeaponSpecial(weapon, enemiRival, attackBase);
+            if (valueSpecialWeapon == 0) {
+                int valueAttackObject = offensivePlayer.getLevelAttack();
+                return attackBase + valueAttackObject;
+            }
+            return valueSpecialWeapon;
         }
         return attackBase;
     }
@@ -245,4 +254,38 @@ public class Fight {
         character.setDefensiveEquipment(null);
     }
 
+    public boolean verificationPlayerCanAttack(User user, Enemie enemie) {
+        Character character = user.getCharacterPlayer();
+        String typePlayer = character.getType();
+        String whoCanAttackEnemie = enemie.getWhoCanAttack();
+        return whoCanAttackEnemie.equals("ALL") || typePlayer.equals(whoCanAttackEnemie);
+    }
+
+    public int haveWeaponSpecial(String name, String enemie, int attackDefault) {
+        if (name == "Bow") {
+            if (enemie == "Dragon") {
+                return 6;
+            }
+            return 4;
+        } else if (name == "Invisibility") {
+            if (enemie == "Evil spirits") {
+                return 8;
+            }
+            return 5;
+        } else if (name == "Thunderclap") {
+            return attackDefault * 2;
+        } else {
+            return 0;
+        }
+    }
+
+    public void verificationHaveThunderclap(Character character) {
+        OffensiveEquipment weapon = character.getOffensiveEquipment();
+        if (weapon != null) {
+            String nameWeapon = weapon.getName();
+            if (nameWeapon == "Thunderclap") {
+                character.setOffensiveEquipment(null);
+            }
+        }
+    }
 }

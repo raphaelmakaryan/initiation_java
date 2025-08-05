@@ -74,7 +74,7 @@ public class Cell {
      * @param game
      */
     public void enemyCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database) {
-        if (verificationCase == 20 || verificationCase == 21 || verificationCase == 22) {
+        if (verificationCase == 20 || verificationCase == 21 || verificationCase == 22 || verificationCase == 23 || verificationCase == 24) {
             // ENEMY
             Enemies enemies = new Enemies();
             enemies.haveEnemies(menu, boardClass, user, game, boardInt, caseNumber, connection, database);
