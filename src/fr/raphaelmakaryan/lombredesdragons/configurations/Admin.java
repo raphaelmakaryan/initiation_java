@@ -6,7 +6,7 @@ public abstract class Admin {
     public boolean debugBoard = false;
     public int valueDebugBoard = 10;
     public boolean debugBoardDisplay = false;
-    public boolean debugBoardIndexCell = true;
+    public boolean debugBoardIndexCell = false;
     public boolean debugBoardCellInt = false;
 
     public boolean debugDice = false;
@@ -14,7 +14,7 @@ public abstract class Admin {
     public boolean debugDiceCriticalLoose = false;
     public boolean debugDiceCriticalSuccess = false;
 
-    public boolean usingDatabase = true;
+    public boolean usingDatabase = false;
 
     public boolean debugEnemiesCell = false;
 
@@ -26,5 +26,5 @@ public abstract class Admin {
     public int caseEnd = 64;
     public int caseStart = 0;
 
-    public int debugForceBox = 22;
+    public int debugForceBox = 0;
 }

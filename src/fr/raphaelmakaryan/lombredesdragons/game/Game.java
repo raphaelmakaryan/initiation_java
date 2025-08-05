@@ -72,8 +72,8 @@ public class Game extends Admin {
      * @param game
      * @throws SQLException
      */
-    public void playerWantPlay(Connection connection, Database database, Game game) throws SQLException {
-        Board board = new Board();
+    public void playerWantPlay(Connection connection, Database database, Game game, String difficulty) throws SQLException {
+        Board board = new Board(difficulty);
         database.addBoard(connection, board, user);
         startGame(board, user, game, connection, database);
     }

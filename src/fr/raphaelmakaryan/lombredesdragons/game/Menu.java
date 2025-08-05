@@ -100,7 +100,7 @@ public class Menu extends Admin {
         choice = itIsInt(String.valueOf(choiceUser), false);
         if (choice == 1) {
             toolsMain.setTimeout(1);
-            game.playerWantPlay(connection, database, game);
+            chooseDifficulty(game, connection, database);
         } else if (choice == 2) {
             toolsMain.setTimeout(2);
             displayInformationCharacter(user);
@@ -123,6 +123,34 @@ public class Menu extends Admin {
             toolsMain.clearLine();
             System.out.println("Veuillez choisir un choix valide !");
             afterCreationPlayerMenu(user, menu, database, connection, game);
+        }
+    }
+
+    public void chooseDifficulty(Game game, Connection connection, Database database) {
+        try {
+            int choiceUser;
+            int choice;
+            System.out.println(Colors.CHOICE_YELLOW + "Le niveau de difficulté ? " + Colors.RESET);
+            System.out.println("1. Facile");
+            System.out.println("2. Moyen");
+            System.out.println("3. Difficiel");
+            System.out.println("Veuillez entrer le numéro de votre choix !");
+            choiceUser = clavier.nextInt();
+            choice = itIsInt(String.valueOf(choiceUser), false);
+            toolsMain.clearLine();
+
+            if (choice == 1) {
+                game.playerWantPlay(connection, database, game, "easy");
+            } else if (choice == 2) {
+                game.playerWantPlay(connection, database, game, "medium");
+            } else if (choice == 3) {
+                game.playerWantPlay(connection, database, game, "hard");
+            } else {
+                toolsMain.clearLine();
+                System.out.println("Veuillez choisir un choix valide !");
+                chooseDifficulty(game, connection, database);
+            }
+        } catch (SQLException e) {
         }
     }
 
