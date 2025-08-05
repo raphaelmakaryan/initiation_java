@@ -18,7 +18,7 @@ public class Board extends Admin {
     /**
      * Creation of the game board
      */
-    public Board() {
+    public Board(String levelDifficulty) {
         int valueBoard;
         Random rand = new Random();
         if (debugBoard) {
@@ -27,8 +27,8 @@ public class Board extends Admin {
             valueBoard = caseEnd;
         }
         board = new int[valueBoard];
-        setRandomCellBoard(ennemisCell, rand, enemyValue);
-        setRandomCellBoard(boxCell, rand, boxValue);
+        setRandomCellBoard(ennemisCell, rand, enemyValue, "enemy", levelDifficulty);
+        setRandomCellBoard(boxCell, rand, boxValue, "box", levelDifficulty);
         board[caseStart] = 1;
         board[board.length - 1] = 4;
         if (debugBoardCellInt) {
@@ -180,9 +180,10 @@ public class Board extends Admin {
      * @param random
      * @param valueBox
      */
-    public void setRandomCellBoard(int[] cell, Random random, int[] valueBox) {
+    public void setRandomCellBoard(int[] cell, Random random, int[] valueBox, String type, String difficulty) {
+        int valueCell = chooseLevelDifficulty(cell, type, difficulty);
         for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < cell.length; j++) {
+            for (int j = 0; j < valueCell; j++) {
                 if (i == cell[j]) {
                     int index = random.nextInt((valueBox.length - valueBox.length), valueBox.length);
                     int value = valueBox[index];
@@ -191,5 +192,29 @@ public class Board extends Admin {
                 }
             }
         }
+    }
+
+    public int chooseLevelDifficulty(int[] cell, String type, String difficulty) {
+        int value = cell.length;
+        if (difficulty.equals("easy")) {
+            if (type.equals("enemy")) {
+                return value / 2;
+            } else if (type.equals("box")) {
+                return value;
+            }
+        } else if (difficulty.equals("medium")) {
+            if (type.equals("enemy")) {
+                return value;
+            } else if (type.equals("box")) {
+                return value;
+            }
+        } else if (difficulty.equals("hard")) {
+            if (type.equals("enemy")) {
+                return value;
+            } else if (type.equals("box")) {
+                return value / 2;
+            }
+        }
+        return value;
     }
 }
