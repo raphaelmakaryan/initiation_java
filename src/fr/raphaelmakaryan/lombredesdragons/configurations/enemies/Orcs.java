@@ -2,8 +2,8 @@ package fr.raphaelmakaryan.lombredesdragons.configurations.enemies;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.Enemie;
 
-public class Dragon extends Enemie {
-    public Dragon() {
-        super(2, "Dragon", 15, 4, "ALL");
+public class Orcs extends Enemie {
+    public Orcs() {
+        super(3, "Orcs", 10, 6, "Warrior");
     }
 }

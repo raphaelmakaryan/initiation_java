@@ -5,12 +5,18 @@ public class Enemie {
     protected int ID;
     protected int lifePoints;
     protected int attackLevel;
+    protected String whoCanAttack;
 
-    public Enemie(int ID, String name, int lifePoints, int attackLevel) {
+    public Enemie(int ID, String name, int lifePoints, int attackLevel, String whoCanAttack) {
         this.ID = ID;
         this.name = name;
         this.lifePoints = lifePoints;
         this.attackLevel = attackLevel;
+        this.whoCanAttack = whoCanAttack;
+    }
+
+    public String getWhoCanAttack() {
+        return whoCanAttack;
     }
 
     public int getLifePoints() {

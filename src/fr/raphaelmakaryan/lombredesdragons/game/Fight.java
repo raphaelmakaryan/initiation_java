@@ -5,7 +5,6 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
 import fr.raphaelmakaryan.lombredesdragons.verifications.EndGame;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class Fight {
 
@@ -48,7 +47,7 @@ public class Fight {
         int[][] newAttackLevel = dice.dice20(attackLevel);
         int lifePoints = character.getLifePoints();
         menu.displayFightCritical(newAttackLevel, "enemy");
-        verifiedPerson(attackLevel, lifePoints, enemie, "enemy", user, menu, game, boardClass, boardInt, caseNumber, connection, database);
+        verifiedPerson(newAttackLevel[0][0], lifePoints, enemie, "enemy", user, menu, game, boardClass, boardInt, caseNumber, connection, database);
     }
 
     /**
@@ -129,6 +128,11 @@ public class Fight {
      * @param caseNumber
      */
     public void progressesFight(Menu menu, Board boardClass, Enemie enemies, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
+        boolean canAttack = verificationPlayerCanAttack(user, enemies);
+        if (!canAttack) {
+            menu.playerCantAttackFight();
+            menu.choiceGameProgress(boardClass, user, game, connection, database);
+        }
         playerAttack(user, menu, enemies, boardClass, game, boardInt, caseNumber, connection, database);
         enemyAttack(user, menu, enemies, boardClass, game, boardInt, caseNumber, connection, database);
     }
@@ -242,6 +246,13 @@ public class Fight {
      */
     public void deletePotion(Character character) {
         character.setDefensiveEquipment(null);
+    }
+
+    public boolean verificationPlayerCanAttack(User user, Enemie enemie) {
+        Character character = user.getCharacterPlayer();
+        String typePlayer = character.getType();
+        String whoCanAttackEnemie = enemie.getWhoCanAttack();
+        return whoCanAttackEnemie.equals("ALL") || typePlayer.equals(whoCanAttackEnemie);
     }
 
 }

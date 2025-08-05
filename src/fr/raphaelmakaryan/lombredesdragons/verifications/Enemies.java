@@ -4,9 +4,7 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.Admin;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Database;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Enemie;
-import fr.raphaelmakaryan.lombredesdragons.configurations.enemies.Dragon;
-import fr.raphaelmakaryan.lombredesdragons.configurations.enemies.Goblin;
-import fr.raphaelmakaryan.lombredesdragons.configurations.enemies.Wizard;
+import fr.raphaelmakaryan.lombredesdragons.configurations.enemies.*;
 import fr.raphaelmakaryan.lombredesdragons.game.Fight;
 import fr.raphaelmakaryan.lombredesdragons.game.Game;
 import fr.raphaelmakaryan.lombredesdragons.game.Menu;
@@ -54,7 +52,7 @@ public class Enemies extends Admin {
      * @param board
      */
     public void createEnemy(Board board) {
-        int indexPlayer = board.getCurrentCasePlayers() + 1;
+        int indexPlayer = board.getCurrentCasePlayers();
         int cellPlayer = board.getBoard()[indexPlayer];
         if (debugEnemiesCell) {
             System.out.println("DEBUG : ID de la case sur ou est le joueur : " + cellPlayer);
@@ -64,8 +62,12 @@ public class Enemies extends Admin {
             enemiesPlayer = new Wizard();
         } else if (calculatedCell == 1) {
             enemiesPlayer = new Goblin();
-        } else {
+        } else if (calculatedCell == 2) {
             enemiesPlayer = new Dragon();
+        } else if (calculatedCell == 3) {
+            enemiesPlayer = new Orcs();
+        } else if (calculatedCell == 4) {
+            enemiesPlayer = new EvilSpirits();
         }
     }
 }

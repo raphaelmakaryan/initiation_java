@@ -4,6 +4,6 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.Enemie;
 
 public class Wizard extends Enemie {
     public Wizard() {
-        super(0, "Wizard", 9, 2);
+        super(0, "Wizard", 9, 2, "ALL");
     }
 }
