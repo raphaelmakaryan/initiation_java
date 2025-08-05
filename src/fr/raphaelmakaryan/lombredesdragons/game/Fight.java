@@ -229,12 +229,12 @@ public class Fight {
             int valuePotion = defensiveEquipment.getLevelDefense();
             int health = character.getLifePoints();
             int calcul = health + valuePotion;
-            int defaultHealth = character.getLifeDefault();
-            if (health == defaultHealth) {
+            int maxHealth = character.getMaxHealth();
+            if (health == maxHealth) {
                 menu.haveAlreadyMaxHealthFight(borderClass, user, game, this, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database, level);
-            } else if (calcul > defaultHealth) {
-                character.setLifePoints(defaultHealth);
-                database.changeLifePoints(connection, user, defaultHealth);
+            } else if (calcul > maxHealth) {
+                character.setLifePoints(maxHealth);
+                database.changeLifePoints(connection, user, maxHealth);
                 deletePotion(character);
                 menu.haveMaxHealthFight(borderClass, user, game, this, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database, level);
             } else {
