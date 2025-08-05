@@ -591,4 +591,12 @@ public class Menu extends Admin {
         toolsMain.setTimeout(2);
         toolsMain.clearLine();
     }
+
+    public void playerCantAttackFight() {
+        toolsMain.setTimeout(1);
+        System.out.println("Vous ne pouvez pas vous battre contre cet ennemi !");
+        System.out.println("Vous partez et continuer votre chemin.");
+        toolsMain.setTimeout(2);
+        toolsMain.clearLine();
+    }
 }

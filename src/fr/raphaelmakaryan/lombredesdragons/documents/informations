@@ -5,6 +5,8 @@ Listes des cases du jeu :
   20 => "Wizard",
   21 => "Goblin",
   22 => "Dragon",
+  23 => "Orcs",
+  24 => "EvilSpirits",
 3 => "BOX",
   300 => "Potion standard",
   301 => "Grande potion",

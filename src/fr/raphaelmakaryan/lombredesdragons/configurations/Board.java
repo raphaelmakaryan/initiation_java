@@ -70,11 +70,13 @@ public class Board extends Admin {
      */
     public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database) {
         Cell cellInstance = new Cell();
+        int oldPosition = currentCasePlayers;
         tools.setTimeout(1);
         System.out.println("Vous avez lancé le dé et obtenu : " + Colors.DICE_MAGENTA + steps + Colors.RESET + " !");
         int[] boardInt = boardClass.getBoard();
         int newPosition = currentCasePlayers + steps;
         boardInt[currentCasePlayers] = 0;
+        setNewCurrentCasePlayers(newPosition);
         setNewBoard(boardInt);
         if (debugBoardDisplay) {
             boardClass.displayBoard();
@@ -82,7 +84,7 @@ public class Board extends Admin {
         if (debugBoardIndexCell) {
             int indexDebug = boardClass.getCurrentCasePlayers();
             int valueDebug = boardInt[indexDebug];
-            System.out.println("Le joueur est actuellement à la case " + (indexDebug +1) + " | La case a comme valeur : " + valueDebug);
+            System.out.println("Le joueur est actuellement à l'index de la case " + (indexDebug) + " | La case a comme valeur : " + valueDebug + " | Il étais a la case : " + oldPosition + " pour un dé de " + steps);
         }
         try {
             cellInstance.verifyCase(newPosition, boardInt, boardClass, menu, user, game, connection, database);
@@ -125,7 +127,7 @@ public class Board extends Admin {
                 boardStr[i] = Colors.NOTHING_BLUE + "NT" + Colors.RESET;
             } else if (board[i] == 1) {
                 boardStr[i] = Colors.PLAYER_BRIYEL + "YOU" + Colors.RESET;
-            } else if (board[i] == 20 || board[i] == 21 || board[i] == 22) {
+            } else if (board[i] == 20 || board[i] == 21 || board[i] == 22 || board[i] == 23 || board[i] == 24) {
                 boardStr[i] = Colors.ENEMY_RED + "ENEMY" + Colors.RESET;
             } else if (board[i] >= 300) {
                 boardStr[i] = Colors.BOX_GREEN + "BOX" + Colors.RESET;
