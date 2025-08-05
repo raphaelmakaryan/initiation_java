@@ -2,6 +2,7 @@ package fr.raphaelmakaryan.lombredesdragons.configurations;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.exceptions.OutOfBoardException;
 import fr.raphaelmakaryan.lombredesdragons.game.Game;
+import fr.raphaelmakaryan.lombredesdragons.game.Level;
 import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 import fr.raphaelmakaryan.lombredesdragons.game.User;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
@@ -68,7 +69,7 @@ public class Board extends Admin {
      * @param boardClass
      * @param menu
      */
-    public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database) {
+    public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) {
         Cell cellInstance = new Cell();
         int oldPosition = currentCasePlayers;
         tools.setTimeout(1);
@@ -87,7 +88,7 @@ public class Board extends Admin {
             System.out.println("Le joueur est actuellement à l'index de la case " + (indexDebug) + " | La case a comme valeur : " + valueDebug + " | Il étais a la case : " + oldPosition + " pour un dé de " + steps);
         }
         try {
-            cellInstance.verifyCase(newPosition, boardInt, boardClass, menu, user, game, connection, database);
+            cellInstance.verifyCase(newPosition, boardInt, boardClass, menu, user, game, connection, database, level);
         } catch (OutOfBoardException ignored) {
         }
     }
@@ -160,7 +161,7 @@ public class Board extends Admin {
      * @param boardInt
      * @param newPosition
      */
-    public void setNewCellPlayer(int[] boardInt, int newPosition, boolean displayMessage, Connection connection, Database database, User user) {
+    public void setNewCellPlayer(int[] boardInt, int newPosition, boolean displayMessage, Connection connection, Database database, User user, Level level) {
         if (newPosition <= 0) {
             newPosition = 0;
         }

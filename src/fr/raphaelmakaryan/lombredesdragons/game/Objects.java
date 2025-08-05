@@ -26,7 +26,7 @@ public class Objects extends Admin {
      * @param menu
      * @param game
      */
-    public void openBox(Board boardClass, User user, int[] boardInt, int caseNumber, Menu menu, Game game, Connection connection, Database database) {
+    public void openBox(Board boardClass, User user, int[] boardInt, int caseNumber, Menu menu, Game game, Connection connection, Database database, Level level) {
         Character character = user.getCharacterPlayer();
         int cellPlayer = boardClass.getBoard()[caseNumber];
         String[][][] whatType = whatObject(cellPlayer);
@@ -34,12 +34,12 @@ public class Objects extends Admin {
         boolean canHave = verificationIfCanUse(whatType, character);
         tools.setTimeout(1);
         if (canHave) {
-            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
-            displayToPlayer(menu, whatType, boardClass, user, game, connection, database);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            displayToPlayer(menu, whatType, boardClass, user, game, connection, database, level);
         }
         tools.setTimeout(1);
-        boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
-        menu.displayCantGetObjectOpenBox(boardClass, user, game, connection, database);
+        boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+        menu.displayCantGetObjectOpenBox(boardClass, user, game, connection, database, level);
     }
 
     /**
@@ -105,8 +105,8 @@ public class Objects extends Admin {
      * @param user
      * @param game
      */
-    public void displayToPlayer(Menu menu, String[][][] allData, Board boardClass, User user, Game game, Connection connection, Database database) {
-        menu.displayObjectOpenBox(boardClass, user, game, this, allData, connection, database);
+    public void displayToPlayer(Menu menu, String[][][] allData, Board boardClass, User user, Game game, Connection connection, Database database, Level level) {
+        menu.displayObjectOpenBox(boardClass, user, game, this, allData, connection, database, level);
     }
 
     /**
@@ -183,14 +183,14 @@ public class Objects extends Admin {
      * @param boardClass
      * @param game
      */
-    public void verificationGiveObjectToPlayer(User user, String[][][] object, Menu menu, Board boardClass, Game game, Connection connection, Database database) {
+    public void verificationGiveObjectToPlayer(User user, String[][][] object, Menu menu, Board boardClass, Game game, Connection connection, Database database, Level level) {
         Character character = user.getCharacterPlayer();
         boolean playerHaveAlready = haveAlreadyAObject(user, object, menu, boardClass, game);
         if (!playerHaveAlready) {
             addObjectToPlayer(object, character, connection, database, user);
-            menu.displayObjectAddToPlayer(boardClass, user, game, object[0][0][0], connection, database);
+            menu.displayObjectAddToPlayer(boardClass, user, game, object[0][0][0], connection, database, level);
         }
-        menu.displayObjectCantAddToPlayer(boardClass, user, game, object[0][0][0], connection, database);
+        menu.displayObjectCantAddToPlayer(boardClass, user, game, object[0][0][0], connection, database, level);
     }
 
     /**

@@ -133,7 +133,7 @@ public class Menu extends Admin {
             System.out.println(Colors.CHOICE_YELLOW + "Le niveau de difficulté ? " + Colors.RESET);
             System.out.println("1. Facile");
             System.out.println("2. Moyen");
-            System.out.println("3. Difficiel");
+            System.out.println("3. Difficile");
             System.out.println("Veuillez entrer le numéro de votre choix !");
             choiceUser = clavier.nextInt();
             choice = itIsInt(String.valueOf(choiceUser), false);
@@ -161,7 +161,7 @@ public class Menu extends Admin {
      * @param user
      * @param game
      */
-    public void choiceGameProgress(Board boardClass, User user, Game game, Connection connection, Database database) {
+    public void choiceGameProgress(Board boardClass, User user, Game game, Connection connection, Database database, Level level) {
         int choiceUser;
         int choice;
 
@@ -175,17 +175,17 @@ public class Menu extends Admin {
         toolsMain.clearLine();
 
         if (choice == 1) {
-            game.playTurn(boardClass, user, game, connection, database);
+            game.playTurn(boardClass, user, game, connection, database, level);
         } else if (choice == 2) {
             boardClass.displayBoard();
             toolsMain.clearLine();
-            choiceGameProgress(boardClass, user, game, connection, database);
+            choiceGameProgress(boardClass, user, game, connection, database, level);
         } else if (choice == 3) {
             endGame("exit", this);
         } else {
             toolsMain.clearLine();
             System.out.println("Veuillez choisir un choix valide !");
-            choiceGameProgress(boardClass, user, game, connection, database);
+            choiceGameProgress(boardClass, user, game, connection, database, level);
         }
     }
 
@@ -225,7 +225,7 @@ public class Menu extends Admin {
      * @param boardInt
      * @param caseNumber
      */
-    public void enemiesCell(Board boardClass, Menu menu, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void enemiesCell(Board boardClass, Menu menu, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         Enemies enemy = new Enemies();
         Fight fight = new Fight();
         int choiceUser;
@@ -241,15 +241,15 @@ public class Menu extends Admin {
         choice = itIsInt(String.valueOf(choiceUser), false);
         if (choice == 1) {
             toolsMain.setTimeout(1);
-            enemy.chooseFight(menu, boardClass, user, game, boardInt, caseNumber, connection, database);
+            enemy.chooseFight(menu, boardClass, user, game, boardInt, caseNumber, connection, database, level);
         } else if (choice == 2) {
             toolsMain.setTimeout(2);
-            fight.espace(menu, game, user, boardClass, boardInt, caseNumber, connection, database);
+            fight.espace(menu, game, user, boardClass, boardInt, caseNumber, connection, database, level);
         } else {
             toolsMain.setTimeout(1);
             toolsMain.clearLine();
             System.out.println("Veuillez choisir un choix valide !");
-            enemiesCell(boardClass, menu, user, game, boardInt, caseNumber, connection, database);
+            enemiesCell(boardClass, menu, user, game, boardInt, caseNumber, connection, database, level);
         }
     }
 
@@ -262,7 +262,7 @@ public class Menu extends Admin {
      * @param boardInt
      * @param caseNumber
      */
-    public void boxCell(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void boxCell(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         int choiceUser;
         int choice;
         toolsMain.setTimeout(1);
@@ -276,15 +276,15 @@ public class Menu extends Admin {
         choice = itIsInt(String.valueOf(choiceUser), false);
         if (choice == 1) {
             toolsMain.setTimeout(1);
-            objects.openBox(boardClass, user, boardInt, caseNumber, this, game, connection, database);
+            objects.openBox(boardClass, user, boardInt, caseNumber, this, game, connection, database, level);
         } else if (choice == 2) {
             toolsMain.setTimeout(1);
-            choiceGameProgress(boardClass, user, game, connection, database);
+            choiceGameProgress(boardClass, user, game, connection, database, level);
         } else {
             toolsMain.clearLine();
             toolsMain.setTimeout(1);
             System.out.println("Veuillez choisir un choix valide !");
-            boxCell(boardClass, user, game, boardInt, caseNumber, connection, database);
+            boxCell(boardClass, user, game, boardInt, caseNumber, connection, database, level);
         }
     }
 
@@ -297,7 +297,7 @@ public class Menu extends Admin {
      * @param objects
      * @param allData
      */
-    public void displayObjectOpenBox(Board boardClass, User user, Game game, Objects objects, String[][][] allData, Connection connection, Database database) {
+    public void displayObjectOpenBox(Board boardClass, User user, Game game, Objects objects, String[][][] allData, Connection connection, Database database, Level level) {
         int choiceUser;
         int choice;
         toolsMain.setTimeout(1);
@@ -310,15 +310,15 @@ public class Menu extends Admin {
         choice = itIsInt(String.valueOf(choiceUser), false);
         if (choice == 1) {
             toolsMain.setTimeout(1);
-            objects.verificationGiveObjectToPlayer(user, allData, this, boardClass, game, connection, database);
+            objects.verificationGiveObjectToPlayer(user, allData, this, boardClass, game, connection, database, level);
         } else if (choice == 2) {
             toolsMain.setTimeout(1);
-            choiceGameProgress(boardClass, user, game, connection, database);
+            choiceGameProgress(boardClass, user, game, connection, database, level);
         } else {
             toolsMain.setTimeout(1);
             toolsMain.clearLine();
             System.out.println("Veuillez choisir un choix valide !");
-            displayObjectOpenBox(boardClass, user, game, objects, allData, connection, database);
+            displayObjectOpenBox(boardClass, user, game, objects, allData, connection, database, level);
         }
     }
 
@@ -329,14 +329,14 @@ public class Menu extends Admin {
      * @param user
      * @param game
      */
-    public void displayCantGetObjectOpenBox(Board boardClass, User user, Game game, Connection connection, Database database) {
+    public void displayCantGetObjectOpenBox(Board boardClass, User user, Game game, Connection connection, Database database, Level level) {
         toolsMain.clearLine();
         toolsMain.setTimeout(1);
         System.out.println("Malheureusement, vous ne pouvez pas prendre cet objet.");
         System.out.println("Cet objet n'est pas disponible pour votre classe.");
         System.out.println("Vous fermez donc la boîte et vous reprenez votre route.");
         toolsMain.setTimeout(1);
-        choiceGameProgress(boardClass, user, game, connection, database);
+        choiceGameProgress(boardClass, user, game, connection, database, level);
     }
 
     /**
@@ -358,13 +358,13 @@ public class Menu extends Admin {
      * @param game
      * @param objet
      */
-    public void displayObjectAddToPlayer(Board boardClass, User user, Game game, String objet, Connection connection, Database database) {
+    public void displayObjectAddToPlayer(Board boardClass, User user, Game game, String objet, Connection connection, Database database, Level level) {
         toolsMain.clearLine();
         toolsMain.setTimeout(1);
         System.out.println("Vous avez pris " + Colors.BOX_GREEN + objet + " !" + Colors.RESET);
         System.out.println("Vous continuez votre aventure.");
         toolsMain.setTimeout(1);
-        choiceGameProgress(boardClass, user, game, connection, database);
+        choiceGameProgress(boardClass, user, game, connection, database, level);
     }
 
     /**
@@ -375,13 +375,13 @@ public class Menu extends Admin {
      * @param game
      * @param objet
      */
-    public void displayObjectCantAddToPlayer(Board boardClass, User user, Game game, String objet, Connection connection, Database database) {
+    public void displayObjectCantAddToPlayer(Board boardClass, User user, Game game, String objet, Connection connection, Database database, Level level) {
         toolsMain.setTimeout(1);
         toolsMain.clearLine();
         System.out.println("Vous ne pouvez pas prendre cet objet, vous avez déjà un objet et/ou qui est supérieur à cet objet.");
         System.out.println("Vous continuez votre aventure.");
         toolsMain.setTimeout(1);
-        choiceGameProgress(boardClass, user, game, connection, database);
+        choiceGameProgress(boardClass, user, game, connection, database, level);
     }
 
     /**
@@ -474,7 +474,7 @@ public class Menu extends Admin {
      * @param boardInt
      * @param caseNumber
      */
-    public void displayChoicePlayerAttack(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void displayChoicePlayerAttack(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         int choiceUser;
         int choice;
         boolean havePotion = fight.verificationHaveDefensive(user);
@@ -491,17 +491,17 @@ public class Menu extends Admin {
         if (choice == 1) {
             displayFightCritical(attackLevel, "player");
             displayFightPlayerAttack();
-            fight.verifiedPerson(attackLevel[0][0], lifePoints, enemie, "player", user, menu, game, boardClass, boardInt, caseNumber, connection, database);
             fight.verificationHaveThunderclap(user.getCharacterPlayer());
+            fight.verifiedPerson(attackLevel[0][0], lifePoints, enemie, "player", user, menu, game, boardClass, boardInt, caseNumber, connection, database, level);
         } else if (choice == 2) {
-            fight.espace(menu, game, user, boardClass, boardInt, caseNumber, connection, database);
+            fight.espace(menu, game, user, boardClass, boardInt, caseNumber, connection, database, level);
         } else if (choice == 3 && havePotion) {
-            fight.havePotion(user, this, boardClass, game, attackLevel, lifePoints, enemie, type, boardInt, caseNumber, connection, database);
+            fight.havePotion(user, this, boardClass, game, attackLevel, lifePoints, enemie, type, boardInt, caseNumber, connection, database, level);
         } else {
             toolsMain.setTimeout(1);
             toolsMain.clearLine();
             System.out.println("Veuillez choisir un choix valide !");
-            displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, this, boardInt, caseNumber, connection, database);
+            displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, this, boardInt, caseNumber, connection, database, level);
         }
     }
 
@@ -520,12 +520,12 @@ public class Menu extends Admin {
      * @param boardInt
      * @param caseNumber
      */
-    public void haveAlreadyMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void haveAlreadyMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         toolsMain.setTimeout(1);
         toolsMain.clearLine();
         System.out.println("Vous avez deja toute votre vie pleine !");
         System.out.println("Vous reprenez le combat !");
-        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database);
+        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database, level);
     }
 
     /**
@@ -543,13 +543,13 @@ public class Menu extends Admin {
      * @param boardInt
      * @param caseNumber
      */
-    public void haveMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void haveMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         toolsMain.setTimeout(1);
         toolsMain.clearLine();
         System.out.println("Vous avez régénérer votre vie au max !");
         System.out.println("Vous n'avez plus de potion !");
         System.out.println("Vous reprenez le combat !");
-        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database);
+        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database, level);
     }
 
     /**
@@ -568,13 +568,13 @@ public class Menu extends Admin {
      * @param caseNumber
      * @param nbreRegen
      */
-    public void haveRegenerationFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, int nbreRegen, Connection connection, Database database) {
+    public void haveRegenerationFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, int nbreRegen, Connection connection, Database database, Level level) {
         toolsMain.setTimeout(1);
         toolsMain.clearLine();
         System.out.println("Vous avez régénérer votre vie de " + nbreRegen + " !");
         System.out.println("Vous n'avez plus de potion !");
         System.out.println("Vous reprenez le combat !");
-        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database);
+        displayChoicePlayerAttack(boardClass, user, game, fight, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database, level);
     }
 
     /**
@@ -614,7 +614,7 @@ public class Menu extends Admin {
     public void displayEscape(int escape) {
         toolsMain.setTimeout(1);
         System.out.println("Vous avez réussi à fuir l'ennemi !");
-        System.out.println("Par contre, vous avez lancé le dé pour savoir combien de cases vous devez reculer.");
+        //System.out.println("Par contre, vous avez lancé le dé pour savoir combien de cases vous devez reculer.");
         System.out.println("Vous reculez de " + Colors.DICE_MAGENTA + escape + Colors.RESET + " cases.");
         System.out.println("Vous pouvez continuer votre chemin.");
         toolsMain.setTimeout(2);

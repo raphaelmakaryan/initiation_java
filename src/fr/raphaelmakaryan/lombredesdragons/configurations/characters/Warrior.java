@@ -7,6 +7,6 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
  */
 public class Warrior extends Character {
     public Warrior(String name) {
-        super(name, 5, 5, null, null);
+        super(name, 5, 5, 5 , null, null);
     }
 }

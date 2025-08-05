@@ -5,10 +5,7 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Database;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Enemie;
 import fr.raphaelmakaryan.lombredesdragons.configurations.enemies.*;
-import fr.raphaelmakaryan.lombredesdragons.game.Fight;
-import fr.raphaelmakaryan.lombredesdragons.game.Game;
-import fr.raphaelmakaryan.lombredesdragons.game.Menu;
-import fr.raphaelmakaryan.lombredesdragons.game.User;
+import fr.raphaelmakaryan.lombredesdragons.game.*;
 
 import java.sql.Connection;
 
@@ -25,8 +22,8 @@ public class Enemies extends Admin {
      * @param boardInt
      * @param caseNumber
      */
-    public void haveEnemies(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
-        menu.enemiesCell(boardClass, menu, user, game, boardInt, caseNumber, connection, database);
+    public void haveEnemies(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
+        menu.enemiesCell(boardClass, menu, user, game, boardInt, caseNumber, connection, database, level);
     }
 
     /**
@@ -39,11 +36,11 @@ public class Enemies extends Admin {
      * @param boardInt
      * @param caseNumber
      */
-    public void chooseFight(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void chooseFight(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         Fight fight = new Fight();
         createEnemy(boardClass);
         menu.displayEnemyFight(this.enemiesPlayer);
-        fight.progressesFight(menu, boardClass, this.enemiesPlayer, user, game, boardInt, caseNumber, connection, database);
+        fight.progressesFight(menu, boardClass, this.enemiesPlayer, user, game, boardInt, caseNumber, connection, database, level);
     }
 
     /**
