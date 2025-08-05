@@ -19,14 +19,14 @@ public class Fight {
      * @param boardInt
      * @param caseNumber
      */
-    public void playerAttack(User user, Menu menu, Enemie enemie, Board boardClass, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void playerAttack(User user, Menu menu, Enemie enemie, Board boardClass, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         Dice dice = new Dice();
         Character character = user.getCharacterPlayer();
         int attackBase = character.getAttackLevel();
         int attackWithObject = verificationHaveOffensive(attackBase, character, enemie);
         int[][] newAttackLevel = dice.dice20(attackWithObject);
         int lifePoints = enemie.getLifePoints();
-        menu.displayChoicePlayerAttack(boardClass, user, game, this, newAttackLevel, lifePoints, enemie, "player", menu, boardInt, caseNumber, connection, database);
+        menu.displayChoicePlayerAttack(boardClass, user, game, this, newAttackLevel, lifePoints, enemie, "player", menu, boardInt, caseNumber, connection, database, level);
     }
 
     /**
@@ -40,14 +40,14 @@ public class Fight {
      * @param boardInt
      * @param caseNumber
      */
-    public void enemyAttack(User user, Menu menu, Enemie enemie, Board boardClass, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void enemyAttack(User user, Menu menu, Enemie enemie, Board boardClass, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         Dice dice = new Dice();
         Character character = user.getCharacterPlayer();
         int attackLevel = enemie.getAttackLevel();
         int[][] newAttackLevel = dice.dice20(attackLevel);
         int lifePoints = character.getLifePoints();
         menu.displayFightCritical(newAttackLevel, "enemy");
-        verifiedPerson(newAttackLevel[0][0], lifePoints, enemie, "enemy", user, menu, game, boardClass, boardInt, caseNumber, connection, database);
+        verifiedPerson(newAttackLevel[0][0], lifePoints, enemie, "enemy", user, menu, game, boardClass, boardInt, caseNumber, connection, database, level);
     }
 
     /**
@@ -60,11 +60,11 @@ public class Fight {
      * @param boardInt
      * @param caseNumber
      */
-    public void espace(Menu menu, Game game, User user, Board boardClass, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void espace(Menu menu, Game game, User user, Board boardClass, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         int escape = 2;
         menu.displayEscape(escape);
-        boardClass.setNewCellPlayer(boardInt, caseNumber - escape, true, connection, database, user);
-        menu.choiceGameProgress(boardClass, user, game, connection, database);
+        boardClass.setNewCellPlayer(boardInt, caseNumber - escape, true, connection, database, user, level);
+        menu.choiceGameProgress(boardClass, user, game, connection, database, level);
     }
 
     /**
@@ -81,14 +81,14 @@ public class Fight {
      * @param boardInt
      * @param caseNumber
      */
-    public void verifiedPerson(int attacker, int receiving, Enemie enemie, String type, User user, Menu menu, Game game, Board boardClass, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void verifiedPerson(int attacker, int receiving, Enemie enemie, String type, User user, Menu menu, Game game, Board boardClass, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         int difference = receiving - attacker;
         int damageDealt = Math.max(0, difference);
         displayAttack(type, attacker);
         if (damageDealt == 0) {
-            deadPerson(type, user, menu, game, boardClass, connection, database);
+            deadPerson(type, user, menu, game, boardClass, connection, database, level);
         } else {
-            modifyLifePoints(type, enemie, difference, user, menu, game, boardClass, boardInt, caseNumber, connection, database);
+            modifyLifePoints(type, enemie, difference, user, menu, game, boardClass, boardInt, caseNumber, connection, database, level);
         }
     }
 
@@ -105,14 +105,14 @@ public class Fight {
      * @param boardInt
      * @param caseNumber
      */
-    public void modifyLifePoints(String type, Enemie enemie, int difference, User user, Menu menu, Game game, Board boardClass, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void modifyLifePoints(String type, Enemie enemie, int difference, User user, Menu menu, Game game, Board boardClass, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         Character character = user.getCharacterPlayer();
         if (type == "player") {
             enemie.setLifePoints(difference);
         } else {
             character.setLifePoints(difference);
             database.changeLifePoints(connection, user, difference);
-            progressesFight(menu, boardClass, enemie, user, game, boardInt, caseNumber, connection, database);
+            progressesFight(menu, boardClass, enemie, user, game, boardInt, caseNumber, connection, database, level);
         }
     }
 
@@ -127,14 +127,14 @@ public class Fight {
      * @param boardInt
      * @param caseNumber
      */
-    public void progressesFight(Menu menu, Board boardClass, Enemie enemies, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void progressesFight(Menu menu, Board boardClass, Enemie enemies, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         boolean canAttack = verificationPlayerCanAttack(user, enemies);
         if (!canAttack) {
             menu.playerCantAttackFight();
-            menu.choiceGameProgress(boardClass, user, game, connection, database);
+            menu.choiceGameProgress(boardClass, user, game, connection, database, level);
         }
-        playerAttack(user, menu, enemies, boardClass, game, boardInt, caseNumber, connection, database);
-        enemyAttack(user, menu, enemies, boardClass, game, boardInt, caseNumber, connection, database);
+        playerAttack(user, menu, enemies, boardClass, game, boardInt, caseNumber, connection, database, level);
+        enemyAttack(user, menu, enemies, boardClass, game, boardInt, caseNumber, connection, database, level);
     }
 
     /**
@@ -146,13 +146,14 @@ public class Fight {
      * @param game
      * @param boardClass
      */
-    public void deadPerson(String type, User user, Menu menu, Game game, Board boardClass, Connection connection, Database database) {
+    public void deadPerson(String type, User user, Menu menu, Game game, Board boardClass, Connection connection, Database database, Level level) {
         if (type.equals("enemy")) {
             database.changeLifePoints(connection, user, 0);
             EndGame.endGame("dead", menu);
         } else {
             System.out.println("L'ennemi est mort !");
-            menu.choiceGameProgress(boardClass, user, game, connection, database);
+            level.addExp(user, menu);
+            menu.choiceGameProgress(boardClass, user, game, connection, database, level);
         }
     }
 
@@ -221,7 +222,7 @@ public class Fight {
      * @param boardInt
      * @param caseNumber
      */
-    public void havePotion(User user, Menu menu, Board borderClass, Game game, int[][] attackLevel, int lifePoints, Enemie enemie, String type, int[] boardInt, int caseNumber, Connection connection, Database database) {
+    public void havePotion(User user, Menu menu, Board borderClass, Game game, int[][] attackLevel, int lifePoints, Enemie enemie, String type, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         Character character = user.getCharacterPlayer();
         DefensiveEquipment defensiveEquipment = character.getDefensiveEquipment();
         if (defensiveEquipment != null) {
@@ -230,17 +231,17 @@ public class Fight {
             int calcul = health + valuePotion;
             int defaultHealth = character.getLifeDefault();
             if (health == defaultHealth) {
-                menu.haveAlreadyMaxHealthFight(borderClass, user, game, this, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database);
+                menu.haveAlreadyMaxHealthFight(borderClass, user, game, this, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database, level);
             } else if (calcul > defaultHealth) {
                 character.setLifePoints(defaultHealth);
                 database.changeLifePoints(connection, user, defaultHealth);
                 deletePotion(character);
-                menu.haveMaxHealthFight(borderClass, user, game, this, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database);
+                menu.haveMaxHealthFight(borderClass, user, game, this, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, connection, database, level);
             } else {
                 character.setLifePoints(calcul);
                 database.changeLifePoints(connection, user, calcul);
                 deletePotion(character);
-                menu.haveRegenerationFight(borderClass, user, game, this, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, calcul, connection, database);
+                menu.haveRegenerationFight(borderClass, user, game, this, attackLevel, lifePoints, enemie, type, menu, boardInt, caseNumber, calcul, connection, database, level);
             }
         }
     }

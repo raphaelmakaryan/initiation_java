@@ -74,8 +74,9 @@ public class Game extends Admin {
      */
     public void playerWantPlay(Connection connection, Database database, Game game, String difficulty) throws SQLException {
         Board board = new Board(difficulty);
+        Level level = new Level();
         database.addBoard(connection, board, user);
-        startGame(board, user, game, connection, database);
+        startGame(board, user, game, connection, database, level);
     }
 
     /**
@@ -85,8 +86,8 @@ public class Game extends Admin {
      * @param user
      * @param game
      */
-    public void startGame(Board board, User user, Game game, Connection connection, Database database) {
-        playTurn(board, user, game, connection, database);
+    public void startGame(Board board, User user, Game game, Connection connection, Database database, Level level) {
+        playTurn(board, user, game, connection, database, level);
     }
 
     /**
@@ -96,9 +97,9 @@ public class Game extends Admin {
      * @param user
      * @param game
      */
-    public void playTurn(Board board, User user, Game game, Connection connection, Database database) {
+    public void playTurn(Board board, User user, Game game, Connection connection, Database database, Level level) {
         Dice dice = new Dice();
         int diceValue = dice.dice6();
-        board.movePlayer(diceValue, board, menuGame, user, game, connection, database);
+        board.movePlayer(diceValue, board, menuGame, user, game, connection, database, level);
     }
 }
