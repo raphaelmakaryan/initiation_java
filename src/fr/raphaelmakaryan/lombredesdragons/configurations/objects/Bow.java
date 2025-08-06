@@ -4,6 +4,6 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Weapon;
 
 public class Bow extends Weapon {
     public Bow() {
-        super("Bow", 4, 22, 20);
+        super("Bow", 4, 22, 20, 6, 22);
     }
 }

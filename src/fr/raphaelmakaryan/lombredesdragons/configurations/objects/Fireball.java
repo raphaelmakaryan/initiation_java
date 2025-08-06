@@ -4,6 +4,6 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Spell;
 
 public class Fireball extends Spell {
     public Fireball() {
-        super("Fireball", 7, 11, 10);
+        super("Fireball", 7, 11, 10, 10, 12);
     }
 }

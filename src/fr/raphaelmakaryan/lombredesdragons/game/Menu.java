@@ -5,14 +5,10 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.*;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
 import fr.raphaelmakaryan.lombredesdragons.configurations.objects.*;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
-import fr.raphaelmakaryan.lombredesdragons.verifications.Enemies;
+import fr.raphaelmakaryan.lombredesdragons.verifications.*;
 
 import static fr.raphaelmakaryan.lombredesdragons.verifications.EndGame.endGame;
 import static fr.raphaelmakaryan.lombredesdragons.tools.Tools.*;
-
-import fr.raphaelmakaryan.lombredesdragons.verifications.EndGame;
-import fr.raphaelmakaryan.lombredesdragons.verifications.Hostel;
-import fr.raphaelmakaryan.lombredesdragons.verifications.Merchants;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -874,6 +870,65 @@ public class Menu extends Admin {
             toolsMain.setTimeout(1);
             System.out.println("Veuillez choisir un choix valide !");
             innkeeperAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, hostel);
+        }
+    }
+
+    public void cellBlacksmith(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Blacksmith blacksmith) {
+        int choiceUser;
+        int choice;
+        toolsMain.setTimeout(1);
+        toolsMain.clearLine();
+        System.out.println(Colors.MERCHANTS_BRICY + "Vous êtes tombé sur une forge !" + Colors.RESET);
+        System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
+        System.out.println("1. Rentrer");
+        System.out.println("2. Partir");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        if (choice == 1) {
+            toolsMain.setTimeout(1);
+            blacksmithAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, blacksmith);
+        } else if (choice == 2) {
+            toolsMain.setTimeout(1);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            choiceGameProgress(boardClass, user, game, connection, database, level);
+        } else {
+            toolsMain.clearLine();
+            toolsMain.setTimeout(1);
+            System.out.println("Veuillez choisir un choix valide !");
+            cellBlacksmith(boardClass, user, game, boardInt, caseNumber, connection, database, level, blacksmith);
+        }
+    }
+
+    public void blacksmithAsk(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Blacksmith blacksmith) {
+        int choiceUser;
+        int choice;
+        OffensiveEquipment offensiveEquipment = user.getCharacterPlayer().getOffensiveEquipment();
+        toolsMain.setTimeout(1);
+        toolsMain.clearLine();
+        System.out.println(Colors.MERCHANTS_BRICY + "Le forgeron vous demande : 'Voulez vous réparez votre arme ?'" + Colors.RESET);
+        System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
+        System.out.println("Vous avez " + user.getCharacterPlayer().getMoney());
+        if (offensiveEquipment != null && offensiveEquipment.getLifetimeDefault() < offensiveEquipment.getLifetimeDefault()) {
+            System.out.println("1. Réparer " + offensiveEquipment.getName() + " - Durée de vie : " + offensiveEquipment.getLifetime() + "/" + offensiveEquipment.getLifetimeDefault() + " - Prix : " + offensiveEquipment.getPriceRepair());
+        }
+        System.out.println("2. Partir");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        if (choice == 1 && offensiveEquipment != null) {
+            toolsMain.setTimeout(1);
+            blacksmith.playerChoseRepair(user, offensiveEquipment);
+            blacksmithAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, blacksmith);
+        } else if (choice == 2) {
+            toolsMain.setTimeout(1);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            choiceGameProgress(boardClass, user, game, connection, database, level);
+        } else {
+            toolsMain.clearLine();
+            toolsMain.setTimeout(1);
+            System.out.println("Veuillez choisir un choix valide !");
+            blacksmithAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, blacksmith);
         }
     }
 }

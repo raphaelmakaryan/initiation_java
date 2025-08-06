@@ -4,6 +4,6 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Weapon;
 
 public class Thunderclap extends Weapon {
     public Thunderclap() {
-        super("Thunderclap", 12, 30, 30);
+        super("Thunderclap", 12, 30, 30, 1, 1);
     }
 }
