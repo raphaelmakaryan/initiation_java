@@ -11,6 +11,7 @@ import static fr.raphaelmakaryan.lombredesdragons.verifications.EndGame.endGame;
 import static fr.raphaelmakaryan.lombredesdragons.tools.Tools.*;
 
 import fr.raphaelmakaryan.lombredesdragons.verifications.EndGame;
+import fr.raphaelmakaryan.lombredesdragons.verifications.Hostel;
 import fr.raphaelmakaryan.lombredesdragons.verifications.Merchants;
 
 import java.sql.Connection;
@@ -814,6 +815,62 @@ public class Menu extends Admin {
                 forArticle3[0][0] = "BUY";
                 forArticle3[1][0] = "0";
             }
+        }
+    }
+
+    public void cellHostel(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Hostel hostel) {
+        int choiceUser;
+        int choice;
+        toolsMain.setTimeout(1);
+        toolsMain.clearLine();
+        System.out.println(Colors.MERCHANTS_BRICY + "Vous êtes tombé sur une auberge !" + Colors.RESET);
+        System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
+        System.out.println("1. Rentrer");
+        System.out.println("2. Partir");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        if (choice == 1) {
+            toolsMain.setTimeout(1);
+            innkeeperAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, hostel);
+        } else if (choice == 2) {
+            toolsMain.setTimeout(1);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            choiceGameProgress(boardClass, user, game, connection, database, level);
+        } else {
+            toolsMain.clearLine();
+            toolsMain.setTimeout(1);
+            System.out.println("Veuillez choisir un choix valide !");
+            cellHostel(boardClass, user, game, boardInt, caseNumber, connection, database, level, hostel);
+        }
+    }
+
+    public void innkeeperAsk(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Hostel hostel) {
+        int choiceUser;
+        int choice;
+        toolsMain.setTimeout(1);
+        toolsMain.clearLine();
+        System.out.println(Colors.MERCHANTS_BRICY + "L'aubergiste vous demande : 'Voulez vous reposez ? Cela coute 10'" + Colors.RESET);
+        System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
+        System.out.println("Vous avez " + user.getCharacterPlayer().getMoney());
+        System.out.println("1. Se reposer (restaure toute la vie)");
+        System.out.println("2. Partir");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        if (choice == 1) {
+            toolsMain.setTimeout(1);
+            hostel.playerChoseRest(user);
+            innkeeperAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, hostel);
+        } else if (choice == 2) {
+            toolsMain.setTimeout(1);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            choiceGameProgress(boardClass, user, game, connection, database, level);
+        } else {
+            toolsMain.clearLine();
+            toolsMain.setTimeout(1);
+            System.out.println("Veuillez choisir un choix valide !");
+            innkeeperAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, hostel);
         }
     }
 }

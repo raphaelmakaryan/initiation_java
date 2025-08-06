@@ -2,7 +2,7 @@ package fr.raphaelmakaryan.lombredesdragons.configurations;
 
 import java.util.ArrayList;
 
-public abstract class Character {
+public abstract class Character extends Admin {
     protected String type;
     protected String name;
     protected int level;
@@ -27,7 +27,11 @@ public abstract class Character {
     public Character(String name, int lifePoints, int attackLevel, int maxHealth, OffensiveEquipment offensiveEquipment, DefensiveEquipment defensiveEquipment) {
         this.name = name;
         this.type = this.getClass().getSimpleName();
-        this.lifePoints = lifePoints;
+        if (debugLifeHealth != 0) {
+            this.lifePoints = debugLifeHealth;
+        } else {
+            this.lifePoints = lifePoints;
+        }
         this.lifeDefault = lifePoints;
         this.attackLevel = attackLevel;
         this.maxHealth = maxHealth;
@@ -35,7 +39,11 @@ public abstract class Character {
         this.defensiveEquipment = defensiveEquipment;
         this.exp = 0;
         this.level = 0;
-        this.money = 0;
+        if (debugMoney != 0) {
+            this.money = debugMoney;
+        } else {
+            this.money = 0;
+        }
     }
 
     public String getType() {

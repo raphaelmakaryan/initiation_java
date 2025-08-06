@@ -14,13 +14,13 @@ public class Colors {
     public static final String CELL_BRIGHTMAGENTA = "\u001B[95m";
     public static final String PLAYER_BRIYEL = "\u001B[93m";
     public static final String MERCHANTS_BRICY = "\u001B[96m";
+    public static final String HOSTEL_BRIBLU = "\u001B[94m";
     /*
       Bright Text Colors:
       Bright Black: `\\u001B[90m`
       Bright Red: `\\u001B[91m`
       Bright Green: `\\u001B[92m`
       Bright Yellow: `\\u001B[93m`
-      Bright Blue: `\\u001B[94m`
 
       Background Colors:
       Black: `\\u001B[40m`

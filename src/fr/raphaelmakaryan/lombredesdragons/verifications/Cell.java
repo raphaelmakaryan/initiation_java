@@ -31,6 +31,7 @@ public class Cell extends Admin {
         enemyCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
         boxCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
         merchantsCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
+        hostelCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
         nothingCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
     }
 
@@ -128,6 +129,14 @@ public class Cell extends Admin {
             // Merchants
             Merchants merchants = new Merchants();
             merchants.haveMerchants(menu, boardClass, user, game, boardInt, caseNumber, connection, database, level);
+        }
+    }
+
+    public void hostelCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) {
+        if (verificationCase == 5) {
+            // Hostel
+            Hostel hostel = new Hostel();
+            hostel.haveHostel(menu, boardClass, user, game, boardInt, caseNumber, connection, database, level);
         }
     }
 }
