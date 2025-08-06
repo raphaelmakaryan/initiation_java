@@ -7,7 +7,7 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.DefensiveEquipment;
  * Potions are a type of defensive equipments that can be used to enhance a character's defense.
  */
 public class Potion extends DefensiveEquipment {
-    public Potion(String name, int levelDefense, int idObject) {
-        super(name, levelDefense, idObject);
+    public Potion(String name, int levelDefense, int idObject, int valuePrice) {
+        super(name, levelDefense, idObject, valuePrice);
     }
 }

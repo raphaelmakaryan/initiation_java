@@ -118,6 +118,10 @@ public abstract class Character {
         return money;
     }
 
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
     public void setLifeDefault(int lifeDefault) {
         this.lifeDefault = lifeDefault;
     }

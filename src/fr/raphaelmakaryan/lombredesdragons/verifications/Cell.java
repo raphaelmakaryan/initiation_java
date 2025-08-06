@@ -1,5 +1,6 @@
 package fr.raphaelmakaryan.lombredesdragons.verifications;
 
+import fr.raphaelmakaryan.lombredesdragons.configurations.Admin;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Colors;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Board;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Database;
@@ -11,7 +12,7 @@ import fr.raphaelmakaryan.lombredesdragons.game.User;
 
 import java.sql.Connection;
 
-public class Cell {
+public class Cell extends Admin {
     /**
      * Checks if the square number is valid and updates the game board state.
      *
@@ -29,6 +30,7 @@ public class Cell {
         endGame(menu, verificationCase);
         enemyCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
         boxCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
+        merchantsCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
         nothingCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
     }
 
@@ -58,7 +60,7 @@ public class Cell {
      * @param verificationCase
      */
     public void endGame(Menu menu, int verificationCase) {
-        if (verificationCase == 4) {
+        if (verificationCase == valueCaseEnd) {
             EndGame.endGame("fin", menu);
         }
     }
@@ -118,6 +120,14 @@ public class Cell {
             System.out.println(Colors.NOTHING_BLUE + "Il n'y a rien ici !\n" + Colors.RESET);
             boardClass.setNewCellPlayer(boardInt, caseNumber, true, connection, database, user, level);
             menu.choiceGameProgress(boardClass, user, game, connection, database, level);
+        }
+    }
+
+    public void merchantsCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) {
+        if (verificationCase == 4) {
+            // Merchants
+            Merchants merchants = new Merchants();
+            merchants.haveMerchants(menu, boardClass, user, game, boardInt, caseNumber, connection, database, level);
         }
     }
 }

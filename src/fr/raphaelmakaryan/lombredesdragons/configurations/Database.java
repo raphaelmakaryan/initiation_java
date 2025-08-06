@@ -181,10 +181,21 @@ public class Database extends Admin {
     public void addDefensiveEquipment(Connection connection, User user, DefensiveEquipment defensiveEquipment) {
         if (usingDatabase) {
             Character character = user.getCharacterPlayer();
-            int ID = defensiveEquipment.getIdObject();
+            if (defensiveEquipment != null) {
+                int ID = defensiveEquipment.getIdObject();
+                String query = "UPDATE `Character` SET `DefensiveEquipment` = ? WHERE `name` = ? AND ID = ?";
+                try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+                    pstmt.setInt(1, ID);
+                    pstmt.setString(2, character.getName());
+                    pstmt.setInt(3, user.getIDPlayerDatabase());
+                    pstmt.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println("Une anomalie est survenue lors de l'insertion/mise a jour de l'ajout d'une arme de defense dans la base de données.");
+                }
+            }
             String query = "UPDATE `Character` SET `DefensiveEquipment` = ? WHERE `name` = ? AND ID = ?";
             try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-                pstmt.setInt(1, ID);
+                pstmt.setNull(1, 0);
                 pstmt.setString(2, character.getName());
                 pstmt.setInt(3, user.getIDPlayerDatabase());
                 pstmt.executeUpdate();
@@ -197,14 +208,25 @@ public class Database extends Admin {
     public void addOffensiveEquipment(Connection connection, User user, OffensiveEquipment offensiveEquipment) {
         if (usingDatabase) {
             Character character = user.getCharacterPlayer();
-            int ID = offensiveEquipment.getIdObject();
-            int attackPlayer = character.getAttackLevel();
-            int attackObject = offensiveEquipment.getLevelAttack();
-            int newAttackPlayer = attackPlayer + attackObject;
-            String query = "UPDATE `Character` SET `OffensiveEquipment` = ?, `Strength` = ? WHERE `name` = ? AND ID = ?";
+            if (offensiveEquipment != null) {
+                int ID = offensiveEquipment.getIdObject();
+                int attackPlayer = character.getAttackLevel();
+                int attackObject = offensiveEquipment.getLevelAttack();
+                int newAttackPlayer = attackPlayer + attackObject;
+                String query = "UPDATE `Character` SET `OffensiveEquipment` = ?, `Strength` = ? WHERE `name` = ? AND ID = ?";
+                try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+                    pstmt.setInt(1, ID);
+                    pstmt.setInt(2, newAttackPlayer);
+                    pstmt.setString(3, character.getName());
+                    pstmt.setInt(4, user.getIDPlayerDatabase());
+                    pstmt.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println("Une anomalie est survenue lors de l'insertion/mise a jour de l'ajout d'une arme d'attaque dans la base de données.");
+                }
+            }
+            String query = "UPDATE `Character` SET `OffensiveEquipment` = ? WHERE `name` = ? AND ID = ?";
             try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-                pstmt.setInt(1, ID);
-                pstmt.setInt(2, newAttackPlayer);
+                pstmt.setNull(1, 0);
                 pstmt.setString(3, character.getName());
                 pstmt.setInt(4, user.getIDPlayerDatabase());
                 pstmt.executeUpdate();

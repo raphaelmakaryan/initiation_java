@@ -13,6 +13,7 @@ public class Colors {
     public static final String DICE_MAGENTA = "\u001B[35m";
     public static final String CELL_BRIGHTMAGENTA = "\u001B[95m";
     public static final String PLAYER_BRIYEL = "\u001B[93m";
+    public static final String MERCHANTS_BRICY = "\u001B[96m";
     /*
       Bright Text Colors:
       Bright Black: `\\u001B[90m`
@@ -20,8 +21,6 @@ public class Colors {
       Bright Green: `\\u001B[92m`
       Bright Yellow: `\\u001B[93m`
       Bright Blue: `\\u001B[94m`
-      Bright Cyan: `\\u001B[96m`
-      Bright White: `\\u001B[97m`
 
       Background Colors:
       Black: `\\u001B[40m`

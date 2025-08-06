@@ -4,12 +4,14 @@ public abstract class DefensiveEquipment {
     protected String name;
     protected int levelDefense;
     protected int idObject;
+    protected int valuePrice;
 
     // Constructor
-    public DefensiveEquipment(String name, int levelDefense, int idObject) {
+    public DefensiveEquipment(String name, int levelDefense, int idObject, int valuePrice) {
         this.name = name;
         this.levelDefense = levelDefense;
         this.idObject = idObject;
+        this.valuePrice = valuePrice;
     }
 
     public String getName() {
@@ -30,6 +32,14 @@ public abstract class DefensiveEquipment {
 
     public int getIdObject() {
         return idObject;
+    }
+
+    public int getValuePrice() {
+        return valuePrice;
+    }
+
+    public void setValuePrice(int valuePrice) {
+        this.valuePrice = valuePrice;
     }
 
     @Override
