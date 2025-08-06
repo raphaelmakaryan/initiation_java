@@ -4,6 +4,6 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Potion;
 
 public class StandardPotion extends Potion {
     public StandardPotion() {
-        super("Standard Potion", 2, 00);
+        super("Standard Potion", 2, 00, 5);
     }
 }

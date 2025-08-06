@@ -3,6 +3,7 @@ package fr.raphaelmakaryan.lombredesdragons.game;
 import fr.raphaelmakaryan.lombredesdragons.Main;
 import fr.raphaelmakaryan.lombredesdragons.configurations.*;
 import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
+import fr.raphaelmakaryan.lombredesdragons.configurations.objects.*;
 import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 import fr.raphaelmakaryan.lombredesdragons.verifications.Enemies;
 
@@ -10,16 +11,20 @@ import static fr.raphaelmakaryan.lombredesdragons.verifications.EndGame.endGame;
 import static fr.raphaelmakaryan.lombredesdragons.tools.Tools.*;
 
 import fr.raphaelmakaryan.lombredesdragons.verifications.EndGame;
+import fr.raphaelmakaryan.lombredesdragons.verifications.Merchants;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu extends Admin {
     Tools toolsMain = new Tools();
     Scanner clavier = new Scanner(System.in);
     Objects objects = new Objects();
+
+    public String[][] forArticle1;
+    public String[][] forArticle2;
+    public String[][] forArticle3;
 
 
     /**
@@ -87,6 +92,7 @@ public class Menu extends Admin {
         int choiceUser;
         int choice;
         toolsMain.setTimeout(2);
+        toolsMain.clearLine();
         System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
         System.out.println("1. Démarrer une nouvelle partie");
         System.out.println("2. Afficher toutes les infos de votre personnage");
@@ -130,6 +136,7 @@ public class Menu extends Admin {
         try {
             int choiceUser;
             int choice;
+            toolsMain.clearLine();
             System.out.println(Colors.CHOICE_YELLOW + "Le niveau de difficulté ? " + Colors.RESET);
             System.out.println("1. Facile");
             System.out.println("2. Moyen");
@@ -279,6 +286,7 @@ public class Menu extends Admin {
             objects.openBox(boardClass, user, boardInt, caseNumber, this, game, connection, database, level);
         } else if (choice == 2) {
             toolsMain.setTimeout(1);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
             choiceGameProgress(boardClass, user, game, connection, database, level);
         } else {
             toolsMain.clearLine();
@@ -335,6 +343,7 @@ public class Menu extends Admin {
         System.out.println("Malheureusement, vous ne pouvez pas prendre cet objet.");
         System.out.println("Cet objet n'est pas disponible pour votre classe.");
         System.out.println("Vous fermez donc la boîte et vous reprenez votre route.");
+        toolsMain.clearLine();
         toolsMain.setTimeout(1);
         choiceGameProgress(boardClass, user, game, connection, database, level);
     }
@@ -627,5 +636,184 @@ public class Menu extends Admin {
         System.out.println("Vous partez et continuer votre chemin.");
         toolsMain.setTimeout(2);
         toolsMain.clearLine();
+    }
+
+
+    public void boxMerchants(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Merchants merchants) {
+        int choiceUser;
+        int choice;
+        toolsMain.setTimeout(1);
+        toolsMain.clearLine();
+        System.out.println(Colors.MERCHANTS_BRICY + "Vous êtes tombé sur un marchand !" + Colors.RESET);
+        System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
+        System.out.println("1. Rentrer");
+        System.out.println("2. Partir");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        if (choice == 1) {
+            toolsMain.setTimeout(1);
+            merchantsAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        } else if (choice == 2) {
+            toolsMain.setTimeout(1);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            choiceGameProgress(boardClass, user, game, connection, database, level);
+        } else {
+            toolsMain.clearLine();
+            toolsMain.setTimeout(1);
+            System.out.println("Veuillez choisir un choix valide !");
+            boxMerchants(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        }
+    }
+
+    public void merchantsAsk(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Merchants merchants) {
+        int choiceUser;
+        int choice;
+        toolsMain.setTimeout(1);
+        toolsMain.clearLine();
+        System.out.println(Colors.MERCHANTS_BRICY + "Le marchand vous demande : 'Voulez-vous vendre ou achetez des objets ?'" + Colors.RESET);
+        System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
+        System.out.println("1. Vendre");
+        System.out.println("2. Acheter");
+        System.out.println("3. Partir");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        if (choice == 1) {
+            toolsMain.setTimeout(1);
+            merchantsSell(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        } else if (choice == 2) {
+            toolsMain.setTimeout(1);
+            merchantsBuy(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        } else if (choice == 3) {
+            toolsMain.setTimeout(1);
+            forArticle1 = null;
+            forArticle2 = null;
+            forArticle3 = null;
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            choiceGameProgress(boardClass, user, game, connection, database, level);
+        } else {
+            toolsMain.clearLine();
+            toolsMain.setTimeout(1);
+            System.out.println("Veuillez choisir un choix valide !");
+            merchantsAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        }
+    }
+
+    public void merchantsSell(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Merchants merchants) {
+        int choiceUser;
+        int choice;
+        toolsMain.setTimeout(1);
+        toolsMain.clearLine();
+        System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous vendre ?" + Colors.RESET);
+        String[][] weapon = merchants.getWeapon(user);
+        if (weapon != null) {
+            System.out.println("1. " + weapon[0][0] + " - " + weapon[1][0]);
+        }
+        String[][] potion = merchants.getPotion(user);
+        if (potion != null) {
+            System.out.println("2. " + potion[0][0] + " - " + potion[1][0]);
+        }
+        System.out.println("3. Revenir en arriere");
+        System.out.println("Veuillez entrer le numéro de votre choix !");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        if (choice == 1 && weapon != null) {
+            toolsMain.setTimeout(1);
+            merchants.sellWeapon(user, this, connection, database);
+            merchantsSell(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        } else if (choice == 2 && potion != null) {
+            toolsMain.setTimeout(1);
+            merchants.sellPotion(user, this, connection, database);
+            merchantsSell(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        } else if (choice == 3) {
+            toolsMain.setTimeout(1);
+            merchantsAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        } else {
+            toolsMain.clearLine();
+            toolsMain.setTimeout(1);
+            System.out.println("Veuillez choisir un choix valide !");
+            merchantsSell(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        }
+    }
+
+    public void playerSellObjets(String object) {
+        toolsMain.setTimeout(1);
+        toolsMain.clearLine();
+        System.out.println("Vous avez vendu votre " + object + " !");
+        toolsMain.setTimeout(1);
+    }
+
+    public void merchantsBuy(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Merchants merchants) {
+        int choiceUser;
+        int choice;
+        toolsMain.setTimeout(1);
+        toolsMain.clearLine();
+        System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous acheter ?" + Colors.RESET);
+        System.out.println("Vous avez " + user.getCharacterPlayer().getMoney());
+        verificationArticleBuy(merchants, user);
+        System.out.println("1. " + forArticle1[0][0] + " - Prix : " + forArticle1[1][0]);
+        System.out.println("2. " + forArticle2[0][0] + " - Prix : " + forArticle2[1][0]);
+        System.out.println("3. " + forArticle3[0][0] + " - Prix : " + forArticle3[1][0]);
+        System.out.println("4. Revenir en arrière");
+        choiceUser = clavier.nextInt();
+        choice = itIsInt(String.valueOf(choiceUser), false);
+        if (choice == 1) {
+            boolean playerBuy1 = merchants.processPurchase(user, forArticle1);
+            if (playerBuy1) {
+                articleBuyByPlayer(1);
+            }
+            merchantsBuy(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        } else if (choice == 2) {
+            boolean playerBuy2 = merchants.processPurchase(user, forArticle2);
+            articleBuyByPlayer(2);
+            if (playerBuy2) {
+                articleBuyByPlayer(2);
+            }
+            merchantsBuy(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        } else if (choice == 3) {
+            boolean playerBuy3 = merchants.processPurchase(user, forArticle3);
+            articleBuyByPlayer(3);
+            if (playerBuy3) {
+                articleBuyByPlayer(3);
+            }
+            merchantsBuy(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        } else if (choice == 4) {
+            merchantsAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        } else {
+            toolsMain.clearLine();
+            toolsMain.setTimeout(1);
+            System.out.println("Veuillez choisir un choix valide !");
+            merchantsBuy(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+        }
+    }
+
+    public void verificationArticleBuy(Merchants merchants, User user) {
+        if (forArticle1 == null) {
+            forArticle1 = merchants.articleBuy(user);
+        }
+        if (forArticle2 == null) {
+            forArticle2 = merchants.articleBuy(user);
+        }
+        if (forArticle3 == null) {
+            forArticle3 = merchants.articleBuy(user);
+        }
+    }
+
+    public void articleBuyByPlayer(int article) {
+        switch (article) {
+            case 1 -> {
+                forArticle1[0][0] = "BUY";
+                forArticle1[1][0] = "0";
+            }
+            case 2 -> {
+                forArticle2[0][0] = "BUY";
+                forArticle2[1][0] = "0";
+            }
+            case 3 -> {
+                forArticle3[0][0] = "BUY";
+                forArticle3[1][0] = "0";
+            }
+        }
     }
 }

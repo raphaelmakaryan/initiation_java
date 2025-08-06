@@ -30,8 +30,9 @@ public class Board extends Admin {
         board = new int[valueBoard];
         setRandomCellBoard(ennemisCell, rand, enemyValue, "enemy", levelDifficulty);
         setRandomCellBoard(boxCell, rand, boxValue, "box", levelDifficulty);
-        board[caseStart] = 1;
-        board[board.length - 1] = 4;
+        setRandomCellBoard(merchantsCell, rand, merchantsValue, "merchants", levelDifficulty);
+        board[caseStart] = valuePlayer;
+        board[board.length - 1] = valueCaseEnd;
         if (debugBoardCellInt) {
             Tools.displayAArrayint(board);
         }
@@ -108,7 +109,7 @@ public class Board extends Admin {
             calculReturnGame = 63 - difference;
             boardInt[currentCasePlayers] = 0;
             boardClass.setNewCurrentCasePlayers(calculReturnGame);
-            boardInt[calculReturnGame] = 1;
+            boardInt[calculReturnGame] = valuePlayer;
             boardClass.setNewBoard(boardInt);
             System.out.println("Vous avez essayé de sortir du plateau de jeu ! Vous avez été renvoyé à la case " + calculReturnGame + ".");
         }
@@ -126,13 +127,15 @@ public class Board extends Admin {
         for (int i = 0; i < board.length; i++) {
             if (board[i] == 0) {
                 boardStr[i] = Colors.NOTHING_BLUE + "NT" + Colors.RESET;
-            } else if (board[i] == 1) {
+            } else if (board[i] == valuePlayer) {
                 boardStr[i] = Colors.PLAYER_BRIYEL + "YOU" + Colors.RESET;
+            } else if (board[i] == 4) {
+                boardStr[i] = Colors.MERCHANTS_BRICY + "MCH" + Colors.RESET;
             } else if (board[i] == 20 || board[i] == 21 || board[i] == 22 || board[i] == 23 || board[i] == 24) {
                 boardStr[i] = Colors.ENEMY_RED + "ENEMY" + Colors.RESET;
             } else if (board[i] >= 300) {
                 boardStr[i] = Colors.BOX_GREEN + "BOX" + Colors.RESET;
-            } else if (board[i] == 4) {
+            } else if (board[i] == valueCaseEnd) {
                 boardStr[i] = Colors.END_PURPLE + "END" + Colors.RESET;
             }
         }
@@ -140,6 +143,7 @@ public class Board extends Admin {
         System.out.println(Colors.PLAYER_BRIYEL + "'YOU' : Your position on the board" + Colors.RESET);
         System.out.println(Colors.ENEMY_RED + "'ENEMY' : Enemy position on the board" + Colors.RESET);
         System.out.println(Colors.BOX_GREEN + "'BOX' : Box position on the board" + Colors.RESET);
+        System.out.println(Colors.MERCHANTS_BRICY + "'MCH' : Merchants position on the board" + Colors.RESET);
         System.out.println(Colors.END_PURPLE + "'END' : End of the game position" + Colors.RESET);
         System.out.println(Colors.NOTHING_BLUE + "'NT' : Nothing on the board" + Colors.RESET);
         System.out.println("\n");
@@ -166,7 +170,7 @@ public class Board extends Admin {
             newPosition = 0;
         }
         setNewCurrentCasePlayers(newPosition);
-        boardInt[newPosition] = 1;
+        boardInt[newPosition] = valuePlayer;
         setNewBoard(boardInt);
         database.updateBoard(connection, boardInt, user);
         if (displayMessage) {
