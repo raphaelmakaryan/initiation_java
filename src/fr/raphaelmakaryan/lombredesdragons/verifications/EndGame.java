@@ -1,7 +1,11 @@
 package fr.raphaelmakaryan.lombredesdragons.verifications;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.Colors;
+import fr.raphaelmakaryan.lombredesdragons.configurations.Database;
+import fr.raphaelmakaryan.lombredesdragons.game.Game;
 import fr.raphaelmakaryan.lombredesdragons.game.Menu;
+
+import java.sql.Connection;
 
 public class EndGame {
     /**
@@ -10,12 +14,12 @@ public class EndGame {
      * @param type
      * @param menu
      */
-    public static void endGame(String type, Menu menu) {
+    public static void endGame(String type, Menu menu, Game game, Connection connection, Database database) {
         if (type.equals("exit")) {
             System.out.println(Colors.END_PURPLE + "Merci d'avoir joué ! À bientôt !");
             System.exit(0);
         } else if (type.equals("fin")) {
-            menu.endGameCase();
+            menu.endGameCase(game, connection, database);
         } else if (type.equals("dead")) {
             menu.endGameDead();
             System.exit(0);

@@ -119,7 +119,7 @@ public class Menu extends Admin {
             toolsMain.clearLine();
             afterCreationPlayerMenu(user, menu, database, connection, game);
         } else if (choice == 4) {
-            endGame("exit", this);
+            endGame("exit", this, game, connection, database);
         } else if (choice == 5 && debugViewHeroMenu) {
             toolsMain.setTimeout(2);
             displayAdminGetHeros(database, connection);
@@ -189,7 +189,7 @@ public class Menu extends Admin {
             toolsMain.clearLine();
             choiceGameProgress(boardClass, user, game, connection, database, level);
         } else if (choice == 3) {
-            endGame("exit", this);
+            endGame("exit", this, game, connection, database);
         } else {
             toolsMain.clearLine();
             System.out.println("Veuillez choisir un choix valide !");
@@ -200,24 +200,27 @@ public class Menu extends Admin {
     /**
      * End of the game menu if the player reaches the last slot
      */
-    public void endGameCase() {
+    public void endGameCase(Game game, Connection connection, Database database) {
         int choiceUser;
         int choice;
         System.out.println(Colors.END_PURPLE + "Vous avez gagné !" + Colors.RESET);
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. Quitter le jeu");
         System.out.println("2. Recommencer une nouvelle partie");
+        System.out.println("3. Recommencer une nouvelle partie avec le même personnage");
         System.out.println("Veuillez entrer le numéro de votre choix !");
         choiceUser = clavier.nextInt();
         choice = itIsInt(String.valueOf(choiceUser), false);
         toolsMain.clearLine();
         if (choice == 1) {
-            EndGame.endGame("exit", this);
+            EndGame.endGame("exit", this, game, connection, database);
         } else if (choice == 2) {
             try {
                 Main.main(new String[]{"retour"});
             } catch (SQLException e) {
             }
+        } else if (choice == 3) {
+            chooseDifficulty(game, connection, database);
         } else {
             toolsMain.verificationChoiceNotWhile("endGameCase", this, (Object) null);
         }
