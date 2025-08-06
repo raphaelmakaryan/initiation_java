@@ -85,6 +85,7 @@ public class Fight {
         int difference = receiving - attacker;
         int damageDealt = Math.max(0, difference);
         displayAttack(type, attacker);
+        verificationLifeTimeWeapon(user);
         if (damageDealt == 0) {
             deadPerson(type, user, menu, game, boardClass, connection, database, level);
         } else {
@@ -149,7 +150,7 @@ public class Fight {
     public void deadPerson(String type, User user, Menu menu, Game game, Board boardClass, Connection connection, Database database, Level level) {
         if (type.equals("enemy")) {
             database.changeLifePoints(connection, user, 0);
-            EndGame.endGame("dead", menu,game, connection, database);
+            EndGame.endGame("dead", menu, game, connection, database);
         } else {
             System.out.println("L'ennemi est mort !");
             level.addExp(user, menu);
@@ -287,6 +288,16 @@ public class Fight {
             if (nameWeapon == "Thunderclap") {
                 character.setOffensiveEquipment(null);
             }
+        }
+    }
+
+    public void verificationLifeTimeWeapon(User user) {
+        int lifeTimeWeapon = user.getCharacterPlayer().getOffensiveEquipment().getLifetime();
+        if (lifeTimeWeapon != 0) {
+            user.getCharacterPlayer().getOffensiveEquipment().setLifetime(lifeTimeWeapon - 1);
+        } else {
+            user.getCharacterPlayer().setOffensiveEquipment(null);
+            System.out.println("Votre arme est cassée !");
         }
     }
 }
