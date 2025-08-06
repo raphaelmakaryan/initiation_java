@@ -31,6 +31,7 @@ public class Board extends Admin {
         setRandomCellBoard(ennemisCell, rand, enemyValue, "enemy", levelDifficulty);
         setRandomCellBoard(boxCell, rand, boxValue, "box", levelDifficulty);
         setRandomCellBoard(merchantsCell, rand, merchantsValue, "merchants", levelDifficulty);
+        setRandomCellBoard(hostelCell, rand, hostelValue, "hostel", levelDifficulty);
         board[caseStart] = valuePlayer;
         board[board.length - 1] = valueCaseEnd;
         if (debugBoardCellInt) {
@@ -131,6 +132,8 @@ public class Board extends Admin {
                 boardStr[i] = Colors.PLAYER_BRIYEL + "YOU" + Colors.RESET;
             } else if (board[i] == 4) {
                 boardStr[i] = Colors.MERCHANTS_BRICY + "MCH" + Colors.RESET;
+            } else if (board[i] == 5) {
+                boardStr[i] = Colors.HOSTEL_BRIBLU + "HOS" + Colors.RESET;
             } else if (board[i] == 20 || board[i] == 21 || board[i] == 22 || board[i] == 23 || board[i] == 24) {
                 boardStr[i] = Colors.ENEMY_RED + "ENEMY" + Colors.RESET;
             } else if (board[i] >= 300) {
@@ -143,6 +146,7 @@ public class Board extends Admin {
         System.out.println(Colors.PLAYER_BRIYEL + "'YOU' : Your position on the board" + Colors.RESET);
         System.out.println(Colors.ENEMY_RED + "'ENEMY' : Enemy position on the board" + Colors.RESET);
         System.out.println(Colors.BOX_GREEN + "'BOX' : Box position on the board" + Colors.RESET);
+        System.out.println(Colors.HOSTEL_BRIBLU + "'HOS' : Hostel position on the board" + Colors.RESET);
         System.out.println(Colors.MERCHANTS_BRICY + "'MCH' : Merchants position on the board" + Colors.RESET);
         System.out.println(Colors.END_PURPLE + "'END' : End of the game position" + Colors.RESET);
         System.out.println(Colors.NOTHING_BLUE + "'NT' : Nothing on the board" + Colors.RESET);

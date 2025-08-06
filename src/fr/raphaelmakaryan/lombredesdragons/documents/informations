@@ -18,7 +18,8 @@ Listes des cases du jeu :
   322 => "Guerrier : Arc",
   330 => "Coup de tonnerre"
 4 => "Marchand",
-5 => "Fin".
+5 => "Auberge"
+6 => "Fin".
 
 Systeme de niveau :
 
