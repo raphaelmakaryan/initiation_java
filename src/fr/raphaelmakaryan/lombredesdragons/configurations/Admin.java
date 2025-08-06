@@ -5,8 +5,8 @@ public abstract class Admin {
 
     public boolean debugViewHeroMenu = false;
 
-    public boolean debugBoard = false;
-    public int valueDebugBoard = 10;
+    public boolean debugBoard = false  ;
+    public int valueDebugBoard = 0;
     public boolean debugBoardDisplay = false;
     public boolean debugBoardIndexCell = false;
     public boolean debugBoardCellInt = false;

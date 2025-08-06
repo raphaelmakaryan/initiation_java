@@ -149,7 +149,7 @@ public class Fight {
     public void deadPerson(String type, User user, Menu menu, Game game, Board boardClass, Connection connection, Database database, Level level) {
         if (type.equals("enemy")) {
             database.changeLifePoints(connection, user, 0);
-            EndGame.endGame("dead", menu);
+            EndGame.endGame("dead", menu,game, connection, database);
         } else {
             System.out.println("L'ennemi est mort !");
             level.addExp(user, menu);
