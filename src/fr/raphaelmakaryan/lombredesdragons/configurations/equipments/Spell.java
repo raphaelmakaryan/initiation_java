@@ -7,7 +7,7 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.OffensiveEquipment;
  * Spells are a type of offensive equipment that can be used to enhance a character's attack.
  */
 public class Spell extends OffensiveEquipment {
-    public Spell(String name, int levelAttack, int idObject, int valuePrice) {
-        super(name, levelAttack, idObject, valuePrice);
+    public Spell(String name, int levelAttack, int idObject, int valuePrice, int lifetime, int priceRepair) {
+        super(name, levelAttack, idObject, valuePrice, lifetime, priceRepair);
     }
 }

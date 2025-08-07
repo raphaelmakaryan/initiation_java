@@ -5,6 +5,6 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.equipments.Weapon;
 
 public class Invisibility extends Weapon {
     public Invisibility() {
-        super("Invisibility", 5, 12, 20);
+        super("Invisibility", 5, 12, 20, 6, 22);
     }
 }

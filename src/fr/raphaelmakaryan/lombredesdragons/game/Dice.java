@@ -15,7 +15,7 @@ public class Dice extends Admin {
         if (debugDice) {
             return valueDebugDice;
         }
-        return rand.nextInt(1, 6);
+        return rand.nextInt(1, 7);
     }
 
     /**

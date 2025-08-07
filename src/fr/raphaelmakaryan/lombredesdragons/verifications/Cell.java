@@ -32,6 +32,7 @@ public class Cell extends Admin {
         boxCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
         merchantsCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
         hostelCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
+        blacksmithCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
         nothingCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
     }
 
@@ -47,7 +48,7 @@ public class Cell extends Admin {
      * @throws OutOfBoardException
      */
     public void outOfBoard(int caseNumber, Board boardClass, int[] boardInt, Menu menu, User user, Game game, Connection connection, Database database, Level level) throws OutOfBoardException {
-        if (caseNumber >= valueCaseEnd && valueDebugBoard == 0 || caseNumber >= valueDebugBoard && valueDebugBoard != 0) {
+        if (caseNumber >= caseEnd && valueDebugBoard == 0 || caseNumber >= valueDebugBoard && valueDebugBoard != 0) {
             boardClass.outOfBoard(caseNumber, boardClass, boardInt);
             menu.choiceGameProgress(boardClass, user, game, connection, database, level);
             throw new OutOfBoardException("Position hors du plateau !");
@@ -137,6 +138,14 @@ public class Cell extends Admin {
             // Hostel
             Hostel hostel = new Hostel();
             hostel.haveHostel(menu, boardClass, user, game, boardInt, caseNumber, connection, database, level);
+        }
+    }
+
+    public void blacksmithCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) {
+        if (verificationCase == 6) {
+            // Blacksmith
+            Blacksmith blacksmith = new Blacksmith();
+            blacksmith.haveBlacksmith(menu, boardClass, user, game, boardInt, caseNumber, connection, database, level);
         }
     }
 }
