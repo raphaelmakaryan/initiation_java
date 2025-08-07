@@ -30,8 +30,8 @@ public class Board extends Admin {
         board = new int[valueBoard];
         setRandomCellBoard(ennemisCell, rand, enemyValue, "enemy", levelDifficulty);
         setRandomCellBoard(boxCell, rand, boxValue, "box", levelDifficulty);
-        //setRandomCellBoard(merchantsCell, rand, merchantsValue, "merchants", levelDifficulty);
-        //setRandomCellBoard(hostelCell, rand, hostelValue, "hostel", levelDifficulty);
+        setRandomCellBoard(merchantsCell, rand, merchantsValue, "merchants", levelDifficulty);
+        setRandomCellBoard(hostelCell, rand, hostelValue, "hostel", levelDifficulty);
         setRandomCellBoard(blacksmithCell, rand, blacksmithValue, "blacksmith", levelDifficulty);
         board[caseStart] = valuePlayer;
         board[board.length - 1] = valueCaseEnd;
@@ -106,12 +106,11 @@ public class Board extends Admin {
     public void outOfBoard(int positionNow, Board boardClass, int[] boardInt) {
         int calculReturnGame;
         int difference;
-        if (positionNow >= valueCaseEnd) {
-            difference = (positionNow - valueCaseEnd);
-            calculReturnGame = valueCaseEnd - difference;
-            boardInt[currentCasePlayers] = 0;
-            boardClass.setNewCurrentCasePlayers(calculReturnGame);
+        if (positionNow >= caseEnd) {
+            difference = (positionNow - caseEnd);
+            calculReturnGame = caseEnd - difference  ;
             boardInt[calculReturnGame] = valuePlayer;
+            boardClass.setNewCurrentCasePlayers(calculReturnGame);
             boardClass.setNewBoard(boardInt);
             System.out.println("Vous avez essayé de sortir du plateau de jeu ! Vous avez été renvoyé à la case " + calculReturnGame + ".");
         }
