@@ -12,13 +12,14 @@ public abstract class Admin {
     public boolean debugBoardDisplay = false;
     public boolean debugBoardIndexCell = false;
     public boolean debugBoardCellInt = false;
+    public boolean debugBoardSurvival = false;
 
     public boolean debugDice = false;
-    public int valueDebugDice = 10;
+    public int valueDebugDice = 100;
     public boolean debugDiceCriticalLoose = false;
     public boolean debugDiceCriticalSuccess = false;
 
-    public boolean usingDatabase = false;
+    public boolean usingDatabase = true;
 
     public boolean debugEnemiesCell = false;
 

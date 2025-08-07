@@ -135,7 +135,7 @@ public class Menu extends Admin {
             toolsMain.clearLine();
             System.out.println(Colors.CHOICE_YELLOW + "Le mode de jeu ? " + Colors.RESET);
             System.out.println("1. Normal");
-            System.out.println("2. Infinity");
+            System.out.println("2. Survival");
             System.out.println("Veuillez entrer le numéro de votre choix !");
             choiceUser = clavier.nextInt();
             choice = itIsInt(String.valueOf(choiceUser), false);
@@ -143,7 +143,7 @@ public class Menu extends Admin {
             if (choice == 1) {
                 chooseDifficulty(game, connection, database);
             } else if (choice == 2) {
-                game.playerWantPlay(connection, database, game, "infinity");
+                game.playerWantPlay(connection, database, game, "survival");
             } else {
                 toolsMain.clearLine();
                 System.out.println("Veuillez choisir un choix valide !");
@@ -258,6 +258,7 @@ public class Menu extends Admin {
             toolsMain.verificationChoiceNotWhile("endGameCase", this, (Object) null);
         }
     }
+
 
     /**
      * Menu where the player is in a cell of an enemy

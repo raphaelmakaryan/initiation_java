@@ -14,7 +14,8 @@ import java.util.Random;
 public class Board extends Admin {
     private int currentCasePlayers = 0;
     private int[] board;
-    private int caseBoardInfinity = 100;
+    public boolean isSurvival = false;
+    public int caseBoardSurvival = 1000;
     Tools tools = new Tools();
 
     /**
@@ -28,7 +29,7 @@ public class Board extends Admin {
         } else {
             valueBoard = caseEnd;
         }
-        if (levelDifficulty != "infinity") {
+        if (levelDifficulty != "survival") {
             board = new int[valueBoard];
             setRandomCellBoard(ennemisCell, rand, enemyValue, "enemy", levelDifficulty);
             setRandomCellBoard(boxCell, rand, boxValue, "box", levelDifficulty);
@@ -41,9 +42,11 @@ public class Board extends Admin {
                 Tools.displayAArrayint(board);
             }
         } else {
-            board = new int[caseBoardInfinity];
-            setRandomCellBoardInfinity(rand);
+            isSurvival = true;
+            board = new int[caseBoardSurvival];
+            setRandomCellBoardSurvival(rand);
             board[caseStart] = valuePlayer;
+            board[board.length - 1] = valueCaseEnd;
         }
     }
 
@@ -89,6 +92,9 @@ public class Board extends Admin {
         boardInt[currentCasePlayers] = 0;
         setNewCurrentCasePlayers(newPosition);
         setNewBoard(boardInt);
+        if (boardClass.isSurvival) {
+            database.modSurvival(user, connection, newPosition);
+        }
         if (debugBoardDisplay) {
             boardClass.displayBoard();
         }
@@ -110,12 +116,18 @@ public class Board extends Admin {
      * @param boardClass
      * @param boardInt
      */
-    public void outOfBoard(int positionNow, Board boardClass, int[] boardInt) {
+    public void outOfBoard(int positionNow, Board boardClass, int[] boardInt, String type) {
         int calculReturnGame;
         int difference;
-        if (positionNow >= caseEnd) {
-            difference = (positionNow - caseEnd);
-            calculReturnGame = caseEnd - difference;
+        int who;
+        if (type.equals("normal")) {
+            who = caseEnd;
+        } else {
+            who = boardClass.caseBoardSurvival;
+        }
+        if (positionNow >= who) {
+            difference = (positionNow - who);
+            calculReturnGame = who - difference;
             boardInt[calculReturnGame] = valuePlayer;
             boardClass.setNewCurrentCasePlayers(calculReturnGame);
             boardClass.setNewBoard(boardInt);
@@ -219,16 +231,26 @@ public class Board extends Admin {
         }
     }
 
-    public void setRandomCellBoardInfinity(Random random) {
+    /**
+     * Create the random boxes for the survival mod
+     * @param random
+     */
+    public void setRandomCellBoardSurvival(Random random) {
         for (int i = 0; i < board.length; i++) {
             int index = randomChooseCellInfinity(random.nextInt(1, 7), random);
             board[i] = index;
         }
     }
 
+    /**
+     * Recover according to the random value the corresponding IDs for the survival mod
+     * @param value
+     * @param random
+     * @return
+     */
     public int randomChooseCellInfinity(int value, Random random) {
         int valueCell = 0;
-        if (!debugBoardInfinity) {
+        if (!debugBoardSurvival) {
             switch (value) {
                 case 2 -> {
                     int valueEnemy = random.nextInt(0, enemyValue.length);

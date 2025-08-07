@@ -77,6 +77,9 @@ public class Game extends Admin {
         Board board = new Board(difficulty);
         Level level = new Level();
         database.addBoard(connection, board, user);
+        if (board.isSurvival) {
+            database.addPlayerModSurvival(user, connection, 0);
+        }
         startGame(board, user, game, connection, database, level);
     }
 

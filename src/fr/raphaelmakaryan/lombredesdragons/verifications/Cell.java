@@ -30,7 +30,7 @@ public class Cell extends Admin {
     public void verifyCase(int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) throws OutOfBoardException {
         outOfBoard(caseNumber, boardClass, boardInt, menu, user, game, connection, database, level);
         int verificationCase = boardInt[caseNumber];
-        endGame(menu, verificationCase, game, connection, database);
+        endGame(menu, verificationCase, game, connection, database, boardClass);
         enemyCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
         boxCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
         merchantsCell(verificationCase, caseNumber, boardInt, boardClass, menu, user, game, connection, database, level);
@@ -54,11 +54,19 @@ public class Cell extends Admin {
      * @throws OutOfBoardException
      */
     public void outOfBoard(int caseNumber, Board boardClass, int[] boardInt, Menu menu, User user, Game game, Connection connection, Database database, Level level) throws OutOfBoardException {
-        if (caseNumber >= caseEnd && valueDebugBoard == 0 || caseNumber >= valueDebugBoard && valueDebugBoard != 0) {
-            boardClass.outOfBoard(caseNumber, boardClass, boardInt);
+        if (caseNumber >= caseEnd && valueDebugBoard == 0 && !boardClass.isSurvival || caseNumber >= valueDebugBoard && valueDebugBoard != 0 && !boardClass.isSurvival) {
+            boardClass.outOfBoard(caseNumber, boardClass, boardInt, "normal");
             menu.choiceGameProgress(boardClass, user, game, connection, database, level);
             throw new OutOfBoardException("Position hors du plateau !");
         }
+        /*
+        else if (caseNumber >= boardClass.caseBoardSurvival && boardClass.isSurvival) {
+            boardClass.outOfBoard(caseNumber, boardClass, boardInt, "survival");
+            menu.choiceGameProgress(boardClass, user, game, connection, database, level);
+            throw new OutOfBoardException("Position hors du plateau !");
+        }
+
+         */
     }
 
     /**
@@ -70,9 +78,11 @@ public class Cell extends Admin {
      * @param connection
      * @param database
      */
-    public void endGame(Menu menu, int verificationCase, Game game, Connection connection, Database database) {
-        if (verificationCase == valueCaseEnd) {
+    public void endGame(Menu menu, int verificationCase, Game game, Connection connection, Database database, Board board) {
+        if (verificationCase == valueCaseEnd && !board.isSurvival) {
             EndGame.endGame("fin", menu, game, connection, database);
+        } else if (verificationCase >= board.caseBoardSurvival && board.isSurvival) {
+            EndGame.endGame("finSurvival", menu, game, connection, database);
         }
     }
 

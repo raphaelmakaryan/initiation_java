@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : jeu. 31 juil. 2025 à 13:38
+-- Généré le : jeu. 07 août 2025 à 14:40
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -33,13 +33,6 @@ CREATE TABLE `Board` (
   `Board` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `Board`
---
-
-INSERT INTO `Board` (`ID`, `idCharacter`, `Board`) VALUES
-(1, 4, '[1, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 4]');
-
 -- --------------------------------------------------------
 
 --
@@ -56,12 +49,17 @@ CREATE TABLE `Character` (
   `DefensiveEquipment` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Déchargement des données de la table `Character`
+-- Structure de la table `Survival`
 --
 
-INSERT INTO `Character` (`ID`, `Type`, `Name`, `LifePoints`, `Strength`, `OffensiveEquipment`, `DefensiveEquipment`) VALUES
-(4, 'Wizard', 'tototot', 3, 8, NULL, NULL);
+CREATE TABLE `Survival` (
+  `ID` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
+  `position` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Index pour les tables déchargées
@@ -81,6 +79,13 @@ ALTER TABLE `Character`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Index pour la table `Survival`
+--
+ALTER TABLE `Survival`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `idUser` (`idUser`);
+
+--
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
@@ -88,13 +93,19 @@ ALTER TABLE `Character`
 -- AUTO_INCREMENT pour la table `Board`
 --
 ALTER TABLE `Board`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `Character`
 --
 ALTER TABLE `Character`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `Survival`
+--
+ALTER TABLE `Survival`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées
@@ -105,6 +116,12 @@ ALTER TABLE `Character`
 --
 ALTER TABLE `Board`
   ADD CONSTRAINT `Board_ibfk_1` FOREIGN KEY (`idCharacter`) REFERENCES `Character` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `Survival`
+--
+ALTER TABLE `Survival`
+  ADD CONSTRAINT `Survival_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `Character` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
