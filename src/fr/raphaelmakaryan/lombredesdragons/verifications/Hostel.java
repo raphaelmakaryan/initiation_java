@@ -15,10 +15,28 @@ import java.sql.Connection;
 public class Hostel extends Admin {
     Tools tools = new Tools();
 
+    /**
+     * Function when the player stumbled upon the hostel square
+     *
+     * @param menu
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
+     */
     public void haveHostel(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         menu.cellHostel(boardClass, user, game, boardInt, caseNumber, connection, database, level, this);
     }
 
+    /**
+     * Function when the player chooses to stay
+     *
+     * @param user
+     */
     public void playerChoseRest(User user) {
         int healthActual = user.getCharacterPlayer().getLifePoints();
         int healthMax = user.getCharacterPlayer().getMaxHealth();

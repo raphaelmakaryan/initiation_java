@@ -48,6 +48,7 @@ public abstract class DefensiveEquipment {
                 "name='" + name + '\'' +
                 ", levelDefense=" + levelDefense +
                 ", idObject=" + idObject +
+                ", valuePrice=" + valuePrice +
                 '}';
     }
 }

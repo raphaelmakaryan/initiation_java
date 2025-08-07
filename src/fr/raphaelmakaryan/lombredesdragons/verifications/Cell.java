@@ -22,6 +22,9 @@ public class Cell extends Admin {
      * @param menu
      * @param user
      * @param game
+     * @param connection
+     * @param database
+     * @param level
      * @throws OutOfBoardException
      */
     public void verifyCase(int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) throws OutOfBoardException {
@@ -45,6 +48,9 @@ public class Cell extends Admin {
      * @param menu
      * @param user
      * @param game
+     * @param connection
+     * @param database
+     * @param level
      * @throws OutOfBoardException
      */
     public void outOfBoard(int caseNumber, Board boardClass, int[] boardInt, Menu menu, User user, Game game, Connection connection, Database database, Level level) throws OutOfBoardException {
@@ -60,6 +66,9 @@ public class Cell extends Admin {
      *
      * @param menu
      * @param verificationCase
+     * @param game
+     * @param connection
+     * @param database
      */
     public void endGame(Menu menu, int verificationCase, Game game, Connection connection, Database database) {
         if (verificationCase == valueCaseEnd) {
@@ -77,6 +86,9 @@ public class Cell extends Admin {
      * @param menu
      * @param user
      * @param game
+     * @param connection
+     * @param database
+     * @param level
      */
     public void enemyCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) {
         if (verificationCase == 20 || verificationCase == 21 || verificationCase == 22 || verificationCase == 23 || verificationCase == 24) {
@@ -96,6 +108,9 @@ public class Cell extends Admin {
      * @param menu
      * @param user
      * @param game
+     * @param connection
+     * @param database
+     * @param level
      */
     public void boxCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) {
         if (verificationCase >= 300) {
@@ -115,16 +130,33 @@ public class Cell extends Admin {
      * @param menu
      * @param user
      * @param game
+     * @param connection
+     * @param database
+     * @param level
      */
     public void nothingCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) {
         if (verificationCase == 0) {
             // NOTHING
             System.out.println(Colors.NOTHING_BLUE + "Il n'y a rien ici !\n" + Colors.RESET);
-            boardClass.setNewCellPlayer(boardInt, caseNumber, true, connection, database, user, level);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, true, connection, database, user);
             menu.choiceGameProgress(boardClass, user, game, connection, database, level);
         }
     }
 
+    /**
+     * Checking if the player is on an merchant cell
+     *
+     * @param verificationCase
+     * @param caseNumber
+     * @param boardInt
+     * @param boardClass
+     * @param menu
+     * @param user
+     * @param game
+     * @param connection
+     * @param database
+     * @param level
+     */
     public void merchantsCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) {
         if (verificationCase == 4) {
             // Merchants
@@ -133,6 +165,20 @@ public class Cell extends Admin {
         }
     }
 
+    /**
+     * Checking if the player is on an hostel cell
+     *
+     * @param verificationCase
+     * @param caseNumber
+     * @param boardInt
+     * @param boardClass
+     * @param menu
+     * @param user
+     * @param game
+     * @param connection
+     * @param database
+     * @param level
+     */
     public void hostelCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) {
         if (verificationCase == 5) {
             // Hostel
@@ -141,6 +187,20 @@ public class Cell extends Admin {
         }
     }
 
+    /**
+     * Checking if the player is on an blacksmith cell
+     *
+     * @param verificationCase
+     * @param caseNumber
+     * @param boardInt
+     * @param boardClass
+     * @param menu
+     * @param user
+     * @param game
+     * @param connection
+     * @param database
+     * @param level
+     */
     public void blacksmithCell(int verificationCase, int caseNumber, int[] boardInt, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) {
         if (verificationCase == 6) {
             // Blacksmith

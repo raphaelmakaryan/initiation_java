@@ -134,16 +134,20 @@ public abstract class Character extends Admin {
         this.lifeDefault = lifeDefault;
     }
 
-    // Methode pour afficher les informations du personnage
     @Override
     public String toString() {
         return "Character{" +
                 "type='" + type + '\'' +
                 ", name='" + name + '\'' +
+                ", level=" + level +
+                ", exp=" + exp +
                 ", lifePoints=" + lifePoints +
+                ", lifeDefault=" + lifeDefault +
+                ", maxHealth=" + maxHealth +
                 ", attackLevel=" + attackLevel +
-                ", offensiveEquipment='" + offensiveEquipment + '\'' +
-                ", defensiveEquipment='" + defensiveEquipment + '\'' +
+                ", money=" + money +
+                ", offensiveEquipment=" + offensiveEquipment +
+                ", defensiveEquipment=" + defensiveEquipment +
                 '}';
     }
 }

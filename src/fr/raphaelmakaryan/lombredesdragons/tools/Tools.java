@@ -160,7 +160,7 @@ public class Tools {
 
         } catch (Exception e) {
             System.err.println("Erreur lors de l'appel de la fonction " + function + " : " + e.getMessage());
-            e.printStackTrace(); // utile pour le debug
+            e.printStackTrace();
         }
     }
 

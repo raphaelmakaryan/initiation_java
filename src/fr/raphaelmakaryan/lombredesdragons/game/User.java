@@ -34,7 +34,7 @@ public class User {
         } else if (Objects.equals(this.typeChoice.toLowerCase(), "guerrier")) {
             characterPlayer = new Warrior(this.name);
         }
-        database.createHero(connection, user, database);
+        database.createHero(connection, user);
     }
 
     public void setTypeChoice(String typeChoice) {

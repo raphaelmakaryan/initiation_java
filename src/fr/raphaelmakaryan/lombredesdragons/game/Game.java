@@ -61,7 +61,7 @@ public class Game extends Admin {
      * @throws SQLException
      */
     public void afterCreationPlayer(Menu menu, User user, Database database, Connection connection, Game game) throws SQLException {
-        menu.afterCreationPlayerMenu(user, menu, database, connection, game);
+        menu.afterCreationPlayerMenu(user, database, connection, game);
     }
 
     /**
@@ -70,6 +70,7 @@ public class Game extends Admin {
      * @param connection
      * @param database
      * @param game
+     * @param difficulty
      * @throws SQLException
      */
     public void playerWantPlay(Connection connection, Database database, Game game, String difficulty) throws SQLException {
@@ -85,6 +86,9 @@ public class Game extends Admin {
      * @param board
      * @param user
      * @param game
+     * @param connection
+     * @param database
+     * @param level
      */
     public void startGame(Board board, User user, Game game, Connection connection, Database database, Level level) {
         playTurn(board, user, game, connection, database, level);
@@ -96,6 +100,9 @@ public class Game extends Admin {
      * @param board
      * @param user
      * @param game
+     * @param connection
+     * @param database
+     * @param level
      */
     public void playTurn(Board board, User user, Game game, Connection connection, Database database, Level level) {
         Dice dice = new Dice();
