@@ -102,7 +102,7 @@ public class Menu extends Admin {
         choice = itIsInt(String.valueOf(choiceUser), false);
         if (choice == 1) {
             toolsMain.setTimeout(1);
-            chooseDifficulty(game, connection, database);
+            chooseMod(game, connection, database);
         } else if (choice == 2) {
             toolsMain.setTimeout(2);
             displayInformationCharacter(user);
@@ -128,6 +128,31 @@ public class Menu extends Admin {
         }
     }
 
+    public void chooseMod(Game game, Connection connection, Database database) throws SQLException {
+        try {
+            int choiceUser;
+            int choice;
+            toolsMain.clearLine();
+            System.out.println(Colors.CHOICE_YELLOW + "Le mode de jeu ? " + Colors.RESET);
+            System.out.println("1. Normal");
+            System.out.println("2. Infinity");
+            System.out.println("Veuillez entrer le numéro de votre choix !");
+            choiceUser = clavier.nextInt();
+            choice = itIsInt(String.valueOf(choiceUser), false);
+            toolsMain.clearLine();
+            if (choice == 1) {
+                chooseDifficulty(game, connection, database);
+            } else if (choice == 2) {
+                game.playerWantPlay(connection, database, game, "infinity");
+            } else {
+                toolsMain.clearLine();
+                System.out.println("Veuillez choisir un choix valide !");
+                chooseMod(game, connection, database);
+            }
+        } catch (SQLException e) {
+        }
+    }
+
     /**
      * Menu for choosing the difficulty level
      *
@@ -148,7 +173,6 @@ public class Menu extends Admin {
             choiceUser = clavier.nextInt();
             choice = itIsInt(String.valueOf(choiceUser), false);
             toolsMain.clearLine();
-
             if (choice == 1) {
                 game.playerWantPlay(connection, database, game, "easy");
             } else if (choice == 2) {
@@ -684,6 +708,7 @@ public class Menu extends Admin {
 
     /**
      * Menu of the square when the player tmbe on the merchant square
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -723,6 +748,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player entered the merchant’s store
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -769,6 +795,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player wants to sell these items
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -818,6 +845,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player sold their item
+     *
      * @param object
      */
     public void playerSellObjets(String object) {
@@ -829,6 +857,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player wants to buy an object
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -885,6 +914,7 @@ public class Menu extends Admin {
 
     /**
      * Verification if an article is or not already defined
+     *
      * @param merchants
      * @param user
      */
@@ -902,6 +932,7 @@ public class Menu extends Admin {
 
     /**
      * Updates the global variable of an item to prevent the player from being able to repay an item
+     *
      * @param article
      */
     public void articleBuyByPlayer(int article) {
@@ -923,6 +954,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player comes across the cell of a hostel
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -962,6 +994,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player entered the inn
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -1003,6 +1036,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player fell in the forge
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -1042,6 +1076,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player is inside the forge
+     *
      * @param boardClass
      * @param user
      * @param game

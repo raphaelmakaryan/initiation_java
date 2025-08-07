@@ -14,6 +14,7 @@ import java.util.Random;
 public class Board extends Admin {
     private int currentCasePlayers = 0;
     private int[] board;
+    private int caseBoardInfinity = 100;
     Tools tools = new Tools();
 
     /**
@@ -27,16 +28,22 @@ public class Board extends Admin {
         } else {
             valueBoard = caseEnd;
         }
-        board = new int[valueBoard];
-        setRandomCellBoard(ennemisCell, rand, enemyValue, "enemy", levelDifficulty);
-        setRandomCellBoard(boxCell, rand, boxValue, "box", levelDifficulty);
-        setRandomCellBoard(merchantsCell, rand, merchantsValue, "merchants", levelDifficulty);
-        setRandomCellBoard(hostelCell, rand, hostelValue, "hostel", levelDifficulty);
-        setRandomCellBoard(blacksmithCell, rand, blacksmithValue, "blacksmith", levelDifficulty);
-        board[caseStart] = valuePlayer;
-        board[board.length - 1] = valueCaseEnd;
-        if (debugBoardCellInt) {
-            Tools.displayAArrayint(board);
+        if (levelDifficulty != "infinity") {
+            board = new int[valueBoard];
+            setRandomCellBoard(ennemisCell, rand, enemyValue, "enemy", levelDifficulty);
+            setRandomCellBoard(boxCell, rand, boxValue, "box", levelDifficulty);
+            setRandomCellBoard(merchantsCell, rand, merchantsValue, "merchants", levelDifficulty);
+            setRandomCellBoard(hostelCell, rand, hostelValue, "hostel", levelDifficulty);
+            setRandomCellBoard(blacksmithCell, rand, blacksmithValue, "blacksmith", levelDifficulty);
+            board[caseStart] = valuePlayer;
+            board[board.length - 1] = valueCaseEnd;
+            if (debugBoardCellInt) {
+                Tools.displayAArrayint(board);
+            }
+        } else {
+            board = new int[caseBoardInfinity];
+            setRandomCellBoardInfinity(rand);
+            board[caseStart] = valuePlayer;
         }
     }
 
@@ -212,8 +219,42 @@ public class Board extends Admin {
         }
     }
 
+    public void setRandomCellBoardInfinity(Random random) {
+        for (int i = 0; i < board.length; i++) {
+            int index = randomChooseCellInfinity(random.nextInt(1, 7), random);
+            board[i] = index;
+        }
+    }
+
+    public int randomChooseCellInfinity(int value, Random random) {
+        int valueCell = 0;
+        if (!debugBoardInfinity) {
+            switch (value) {
+                case 2 -> {
+                    int valueEnemy = random.nextInt(0, enemyValue.length);
+                    valueCell = enemyValue[valueEnemy];
+                }
+                case 3 -> {
+                    int valueBox = random.nextInt(0, boxValue.length);
+                    valueCell = boxValue[valueBox];
+                }
+                case 4 -> {
+                    valueCell = 4;
+                }
+                case 5 -> {
+                    valueCell = 5;
+                }
+                case 6 -> {
+                    valueCell = 6;
+                }
+            }
+        }
+        return valueCell;
+    }
+
     /**
      * The player chooses their level of difficulty
+     *
      * @param cell
      * @param type
      * @param difficulty
