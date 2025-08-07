@@ -108,7 +108,7 @@ public class Board extends Admin {
         int difference;
         if (positionNow >= caseEnd) {
             difference = (positionNow - caseEnd);
-            calculReturnGame = caseEnd - difference  ;
+            calculReturnGame = caseEnd - difference;
             boardInt[calculReturnGame] = valuePlayer;
             boardClass.setNewCurrentCasePlayers(calculReturnGame);
             boardClass.setNewBoard(boardInt);
@@ -171,8 +171,12 @@ public class Board extends Admin {
      *
      * @param boardInt
      * @param newPosition
+     * @param displayMessage
+     * @param connection
+     * @param database
+     * @param user
      */
-    public void setNewCellPlayer(int[] boardInt, int newPosition, boolean displayMessage, Connection connection, Database database, User user, Level level) {
+    public void setNewCellPlayer(int[] boardInt, int newPosition, boolean displayMessage, Connection connection, Database database, User user) {
         if (newPosition <= 0) {
             newPosition = 0;
         }
@@ -191,6 +195,8 @@ public class Board extends Admin {
      * @param cell
      * @param random
      * @param valueBox
+     * @param type
+     * @param difficulty
      */
     public void setRandomCellBoard(int[] cell, Random random, int[] valueBox, String type, String difficulty) {
         int valueCell = chooseLevelDifficulty(cell, type, difficulty);
@@ -206,6 +212,13 @@ public class Board extends Admin {
         }
     }
 
+    /**
+     * The player chooses their level of difficulty
+     * @param cell
+     * @param type
+     * @param difficulty
+     * @return
+     */
     public int chooseLevelDifficulty(int[] cell, String type, String difficulty) {
         int value = cell.length;
         if (difficulty.equals("easy")) {

@@ -7,9 +7,15 @@ import fr.raphaelmakaryan.lombredesdragons.tools.Tools;
 import java.util.Random;
 
 public class Level extends Admin {
-        Tools tools = new Tools();
+    Tools tools = new Tools();
 
 
+    /**
+     * Adds exp to each victory against an enemy
+     *
+     * @param user
+     * @param menu
+     */
     public void addExp(User user, Menu menu) {
         Random rand = new Random();
         Character character = user.getCharacterPlayer();
@@ -26,6 +32,11 @@ public class Level extends Admin {
     }
 
 
+    /**
+     * Check if the player has unlocked a new one otherwise or not
+     * @param character
+     * @param menu
+     */
     public void haveNewLevel(Character character, Menu menu) {
         int exp = character.getExp();
         int currentLevel = character.getLevel();

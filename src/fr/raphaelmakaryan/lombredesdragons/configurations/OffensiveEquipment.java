@@ -50,10 +50,6 @@ public abstract class OffensiveEquipment extends Admin {
         return valuePrice;
     }
 
-    public void setValuePrice(int valuePrice) {
-        this.valuePrice = valuePrice;
-    }
-
     public int getLifetime() {
         return lifetime;
     }
@@ -76,6 +72,10 @@ public abstract class OffensiveEquipment extends Admin {
                 "name='" + name + '\'' +
                 ", levelAttack=" + levelAttack +
                 ", idObject=" + idObject +
+                ", valuePrice=" + valuePrice +
+                ", lifetime=" + lifetime +
+                ", lifetimeDefault=" + lifetimeDefault +
+                ", priceRepair=" + priceRepair +
                 '}';
     }
 }

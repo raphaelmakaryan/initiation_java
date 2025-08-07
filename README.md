@@ -38,5 +38,12 @@ J'ai décidé de nommer ce jeu car c'est le mix entre `La Terre du Milieu : L'Om
 <br>
 J'ai donc pris le titre du jeu vidéo "`L'Ombre de`" et du jeu de rôle "`Dragons`".
 
+## Recommendation
+Pour jouer à `L'Ombre des Dragons`, il vous faudra le JDK : `Java SE 17 (LTS)` (JDK demandé dans le projet).
+<br>
+Si il y a des choses bizarres ou que vous êtes complètement pété, merci de le signaler.
+<br>
+Avec les nombreux tests et début j'ai une panoplie de variables de plusieurs pour tester chaque nouvelle fonctionnalité, ce qui fait que je peux laisser en oubliant les variables de debug "allumé".
+
 ## Lancer L'Ombre des Dragons
 Dans la racine du dossier  `lombredesdragons`, vous trouverez le fichier `Main.java`, vous avez juste à lancer ce fichier et tout se passera dans le terminal !

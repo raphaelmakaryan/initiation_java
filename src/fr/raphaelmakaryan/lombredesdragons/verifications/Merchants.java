@@ -13,10 +13,29 @@ import java.util.Random;
 public class Merchants extends Admin {
     Tools tools = new Tools();
 
+    /**
+     * Function when the player is on the cashier merchants
+     *
+     * @param menu
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
+     */
     public void haveMerchants(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
-        menu.boxMerchants(boardClass, user, game, boardInt, caseNumber, connection, database, level, this);
+        menu.cellMerchants(boardClass, user, game, boardInt, caseNumber, connection, database, level, this);
     }
 
+    /**
+     * Function to retrieve the name and price of the player’s weapon to sell it
+     *
+     * @param user
+     * @return
+     */
     public String[][] getWeapon(User user) {
         Character character = user.getCharacterPlayer();
         OffensiveEquipment weapon = character.getOffensiveEquipment();
@@ -28,6 +47,12 @@ public class Merchants extends Admin {
         return null;
     }
 
+    /**
+     * Function to retrieve the player’s name and potion price to sell it
+     *
+     * @param user
+     * @return
+     */
     public String[][] getPotion(User user) {
         Character character = user.getCharacterPlayer();
         DefensiveEquipment potion = character.getDefensiveEquipment();
@@ -39,6 +64,14 @@ public class Merchants extends Admin {
         return null;
     }
 
+    /**
+     * Function if the player has chosen to sell a weapon
+     *
+     * @param user
+     * @param menu
+     * @param connection
+     * @param database
+     */
     public void sellWeapon(User user, Menu menu, Connection connection, Database database) {
         Character character = user.getCharacterPlayer();
         OffensiveEquipment weapon = character.getOffensiveEquipment();
@@ -51,6 +84,13 @@ public class Merchants extends Admin {
         menu.playerSellObjets(name);
     }
 
+    /**
+     * Function if the player chose to sell a potion
+     * @param user
+     * @param menu
+     * @param connection
+     * @param database
+     */
     public void sellPotion(User user, Menu menu, Connection connection, Database database) {
         Character character = user.getCharacterPlayer();
         DefensiveEquipment potion = character.getDefensiveEquipment();
@@ -63,12 +103,22 @@ public class Merchants extends Admin {
         menu.playerSellObjets(name);
     }
 
+    /**
+     * Random function to choose items for the player to buy
+     * @param user
+     * @return
+     */
     public String[][] articleBuy(User user) {
         Random rand = new Random();
         int randomArticle = rand.nextInt(0, boxValue.length);
         return whatObject(boxValue[randomArticle]);
     }
 
+    /**
+     * Function to retrieve the information from the random object
+     * @param idObject
+     * @return
+     */
     public String[][] whatObject(int idObject) {
         int objet = idObject - 300;
         String[][] response;
@@ -132,6 +182,12 @@ public class Merchants extends Admin {
         }
     }
 
+    /**
+     * Verification that if the player has really bought
+     * @param user
+     * @param article
+     * @return
+     */
     public boolean processPurchase(User user, String[][] article) {
         Character character = user.getCharacterPlayer();
         int prix = Integer.parseInt(article[1][0]);
@@ -161,6 +217,11 @@ public class Merchants extends Admin {
         }
     }
 
+    /**
+     * Add in the player’s inventory
+     * @param character
+     * @param itemName
+     */
     public void addToInventory(Character character, String itemName) {
         switch (itemName) {
             case "Standard Potion" -> character.setDefensiveEquipment(new StandardPotion());
@@ -175,6 +236,12 @@ public class Merchants extends Admin {
         }
     }
 
+    /**
+     * Check if the player according to their class can take it in their inventory
+     * @param user
+     * @param name
+     * @return
+     */
     public boolean canHaveObject(User user, String name) {
         Character character = user.getCharacterPlayer();
         String typePlayer = character.getType();

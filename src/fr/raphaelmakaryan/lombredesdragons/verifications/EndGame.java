@@ -13,6 +13,9 @@ public class EndGame {
      *
      * @param type
      * @param menu
+     * @param game
+     * @param connection
+     * @param database
      */
     public static void endGame(String type, Menu menu, Game game, Connection connection, Database database) {
         if (type.equals("exit")) {

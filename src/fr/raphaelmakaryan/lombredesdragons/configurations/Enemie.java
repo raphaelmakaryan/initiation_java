@@ -47,8 +47,10 @@ public class Enemie {
     public String toString() {
         return "Enemie{" +
                 "name='" + name + '\'' +
+                ", ID=" + ID +
                 ", lifePoints=" + lifePoints +
                 ", attackLevel=" + attackLevel +
+                ", whoCanAttack='" + whoCanAttack + '\'' +
                 '}';
     }
 }

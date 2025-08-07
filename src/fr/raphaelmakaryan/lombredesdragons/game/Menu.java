@@ -79,13 +79,12 @@ public class Menu extends Admin {
      * Player choice menu after the creation of the player
      *
      * @param user
-     * @param menu
      * @param database
      * @param connection
      * @param game
      * @throws SQLException
      */
-    public void afterCreationPlayerMenu(User user, Menu menu, Database database, Connection connection, Game game) throws SQLException {
+    public void afterCreationPlayerMenu(User user, Database database, Connection connection, Game game) throws SQLException {
         int choiceUser;
         int choice;
         toolsMain.setTimeout(2);
@@ -108,27 +107,34 @@ public class Menu extends Admin {
             toolsMain.setTimeout(2);
             displayInformationCharacter(user);
             toolsMain.clearLine();
-            afterCreationPlayerMenu(user, menu, database, connection, game);
+            afterCreationPlayerMenu(user, database, connection, game);
         } else if (choice == 3) {
             toolsMain.setTimeout(2);
             displayModifyInformationCharacter(user, database, connection);
             toolsMain.clearLine();
-            afterCreationPlayerMenu(user, menu, database, connection, game);
+            afterCreationPlayerMenu(user, database, connection, game);
         } else if (choice == 4) {
             endGame("exit", this, game, connection, database);
         } else if (choice == 5 && debugViewHeroMenu) {
             toolsMain.setTimeout(2);
             displayAdminGetHeros(database, connection);
             toolsMain.clearLine();
-            afterCreationPlayerMenu(user, menu, database, connection, game);
+            afterCreationPlayerMenu(user, database, connection, game);
         } else {
             toolsMain.setTimeout(2);
             toolsMain.clearLine();
             System.out.println("Veuillez choisir un choix valide !");
-            afterCreationPlayerMenu(user, menu, database, connection, game);
+            afterCreationPlayerMenu(user, database, connection, game);
         }
     }
 
+    /**
+     * Menu for choosing the difficulty level
+     *
+     * @param game
+     * @param connection
+     * @param database
+     */
     public void chooseDifficulty(Game game, Connection connection, Database database) {
         try {
             int choiceUser;
@@ -164,6 +170,9 @@ public class Menu extends Admin {
      * @param boardClass
      * @param user
      * @param game
+     * @param connection
+     * @param database
+     * @param level
      */
     public void choiceGameProgress(Board boardClass, User user, Game game, Connection connection, Database database, Level level) {
         int choiceUser;
@@ -195,6 +204,10 @@ public class Menu extends Admin {
 
     /**
      * End of the game menu if the player reaches the last slot
+     *
+     * @param game
+     * @param connection
+     * @param database
      */
     public void endGameCase(Game game, Connection connection, Database database) {
         int choiceUser;
@@ -231,6 +244,9 @@ public class Menu extends Admin {
      * @param game
      * @param boardInt
      * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
      */
     public void enemiesCell(Board boardClass, Menu menu, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         Enemies enemy = new Enemies();
@@ -268,6 +284,9 @@ public class Menu extends Admin {
      * @param game
      * @param boardInt
      * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
      */
     public void boxCell(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         int choiceUser;
@@ -286,7 +305,7 @@ public class Menu extends Admin {
             objects.openBox(boardClass, user, boardInt, caseNumber, this, game, connection, database, level);
         } else if (choice == 2) {
             toolsMain.setTimeout(1);
-            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
             choiceGameProgress(boardClass, user, game, connection, database, level);
         } else {
             toolsMain.clearLine();
@@ -304,6 +323,9 @@ public class Menu extends Admin {
      * @param game
      * @param objects
      * @param allData
+     * @param connection
+     * @param database
+     * @param level
      */
     public void displayObjectOpenBox(Board boardClass, User user, Game game, Objects objects, String[][][] allData, Connection connection, Database database, Level level) {
         int choiceUser;
@@ -336,6 +358,9 @@ public class Menu extends Admin {
      * @param boardClass
      * @param user
      * @param game
+     * @param connection
+     * @param database
+     * @param level
      */
     public void displayCantGetObjectOpenBox(Board boardClass, User user, Game game, Connection connection, Database database, Level level) {
         toolsMain.clearLine();
@@ -366,6 +391,9 @@ public class Menu extends Admin {
      * @param user
      * @param game
      * @param objet
+     * @param connection
+     * @param database
+     * @param level
      */
     public void displayObjectAddToPlayer(Board boardClass, User user, Game game, String objet, Connection connection, Database database, Level level) {
         toolsMain.clearLine();
@@ -382,9 +410,11 @@ public class Menu extends Admin {
      * @param boardClass
      * @param user
      * @param game
-     * @param objet
+     * @param connection
+     * @param database
+     * @param level
      */
-    public void displayObjectCantAddToPlayer(Board boardClass, User user, Game game, String objet, Connection connection, Database database, Level level) {
+    public void displayObjectCantAddToPlayer(Board boardClass, User user, Game game, Connection connection, Database database, Level level) {
         toolsMain.setTimeout(1);
         toolsMain.clearLine();
         System.out.println("Vous ne pouvez pas prendre cet objet, vous avez déjà un objet et/ou qui est supérieur à cet objet.");
@@ -482,6 +512,9 @@ public class Menu extends Admin {
      * @param menu
      * @param boardInt
      * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
      */
     public void displayChoicePlayerAttack(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         int choiceUser;
@@ -528,6 +561,9 @@ public class Menu extends Admin {
      * @param menu
      * @param boardInt
      * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
      */
     public void haveAlreadyMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         toolsMain.setTimeout(1);
@@ -551,6 +587,9 @@ public class Menu extends Admin {
      * @param menu
      * @param boardInt
      * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
      */
     public void haveMaxHealthFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         toolsMain.setTimeout(1);
@@ -576,6 +615,9 @@ public class Menu extends Admin {
      * @param boardInt
      * @param caseNumber
      * @param nbreRegen
+     * @param connection
+     * @param database
+     * @param level
      */
     public void haveRegenerationFight(Board boardClass, User user, Game game, Fight fight, int[][] attackLevel, int lifePoints, Enemie enemie, String type, Menu menu, int[] boardInt, int caseNumber, int nbreRegen, Connection connection, Database database, Level level) {
         toolsMain.setTimeout(1);
@@ -623,13 +665,15 @@ public class Menu extends Admin {
     public void displayEscape(int escape) {
         toolsMain.setTimeout(1);
         System.out.println("Vous avez réussi à fuir l'ennemi !");
-        //System.out.println("Par contre, vous avez lancé le dé pour savoir combien de cases vous devez reculer.");
         System.out.println("Vous reculez de " + Colors.DICE_MAGENTA + escape + Colors.RESET + " cases.");
         System.out.println("Vous pouvez continuer votre chemin.");
         toolsMain.setTimeout(2);
         toolsMain.clearLine();
     }
 
+    /**
+     * Display to the player that the enemy in front of him is not an enemy for that class
+     */
     public void playerCantAttackFight() {
         toolsMain.setTimeout(1);
         System.out.println("Vous ne pouvez pas vous battre contre cet ennemi !");
@@ -638,8 +682,19 @@ public class Menu extends Admin {
         toolsMain.clearLine();
     }
 
-
-    public void boxMerchants(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Merchants merchants) {
+    /**
+     * Menu of the square when the player tmbe on the merchant square
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
+     * @param merchants
+     */
+    public void cellMerchants(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Merchants merchants) {
         int choiceUser;
         int choice;
         toolsMain.setTimeout(1);
@@ -656,16 +711,28 @@ public class Menu extends Admin {
             merchantsAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
         } else if (choice == 2) {
             toolsMain.setTimeout(1);
-            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
             choiceGameProgress(boardClass, user, game, connection, database, level);
         } else {
             toolsMain.clearLine();
             toolsMain.setTimeout(1);
             System.out.println("Veuillez choisir un choix valide !");
-            boxMerchants(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
+            cellMerchants(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
         }
     }
 
+    /**
+     * Menu when the player entered the merchant’s store
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
+     * @param merchants
+     */
     public void merchantsAsk(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Merchants merchants) {
         int choiceUser;
         int choice;
@@ -690,7 +757,7 @@ public class Menu extends Admin {
             forArticle1 = null;
             forArticle2 = null;
             forArticle3 = null;
-            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
             choiceGameProgress(boardClass, user, game, connection, database, level);
         } else {
             toolsMain.clearLine();
@@ -700,6 +767,18 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu when the player wants to sell these items
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
+     * @param merchants
+     */
     public void merchantsSell(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Merchants merchants) {
         int choiceUser;
         int choice;
@@ -737,6 +816,10 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu when the player sold their item
+     * @param object
+     */
     public void playerSellObjets(String object) {
         toolsMain.setTimeout(1);
         toolsMain.clearLine();
@@ -744,6 +827,18 @@ public class Menu extends Admin {
         toolsMain.setTimeout(1);
     }
 
+    /**
+     * Menu when the player wants to buy an object
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
+     * @param merchants
+     */
     public void merchantsBuy(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Merchants merchants) {
         int choiceUser;
         int choice;
@@ -788,6 +883,11 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Verification if an article is or not already defined
+     * @param merchants
+     * @param user
+     */
     public void verificationArticleBuy(Merchants merchants, User user) {
         if (forArticle1 == null) {
             forArticle1 = merchants.articleBuy(user);
@@ -800,6 +900,10 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Updates the global variable of an item to prevent the player from being able to repay an item
+     * @param article
+     */
     public void articleBuyByPlayer(int article) {
         switch (article) {
             case 1 -> {
@@ -817,6 +921,18 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu when the player comes across the cell of a hostel
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
+     * @param hostel
+     */
     public void cellHostel(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Hostel hostel) {
         int choiceUser;
         int choice;
@@ -834,7 +950,7 @@ public class Menu extends Admin {
             innkeeperAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, hostel);
         } else if (choice == 2) {
             toolsMain.setTimeout(1);
-            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
             choiceGameProgress(boardClass, user, game, connection, database, level);
         } else {
             toolsMain.clearLine();
@@ -844,6 +960,18 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu when the player entered the inn
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
+     * @param hostel
+     */
     public void innkeeperAsk(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Hostel hostel) {
         int choiceUser;
         int choice;
@@ -863,7 +991,7 @@ public class Menu extends Admin {
             innkeeperAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, hostel);
         } else if (choice == 2) {
             toolsMain.setTimeout(1);
-            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
             choiceGameProgress(boardClass, user, game, connection, database, level);
         } else {
             toolsMain.clearLine();
@@ -873,6 +1001,18 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu when the player fell in the forge
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
+     * @param blacksmith
+     */
     public void cellBlacksmith(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Blacksmith blacksmith) {
         int choiceUser;
         int choice;
@@ -890,7 +1030,7 @@ public class Menu extends Admin {
             blacksmithAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, blacksmith);
         } else if (choice == 2) {
             toolsMain.setTimeout(1);
-            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
             choiceGameProgress(boardClass, user, game, connection, database, level);
         } else {
             toolsMain.clearLine();
@@ -900,6 +1040,18 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu when the player is inside the forge
+     * @param boardClass
+     * @param user
+     * @param game
+     * @param boardInt
+     * @param caseNumber
+     * @param connection
+     * @param database
+     * @param level
+     * @param blacksmith
+     */
     public void blacksmithAsk(Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level, Blacksmith blacksmith) {
         int choiceUser;
         int choice;
@@ -922,7 +1074,7 @@ public class Menu extends Admin {
             blacksmithAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, blacksmith);
         } else if (choice == 2) {
             toolsMain.setTimeout(1);
-            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user, level);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
             choiceGameProgress(boardClass, user, game, connection, database, level);
         } else {
             toolsMain.clearLine();

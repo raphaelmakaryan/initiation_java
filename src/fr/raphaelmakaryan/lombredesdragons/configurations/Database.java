@@ -66,10 +66,9 @@ public class Database extends Admin {
      *
      * @param connection
      * @param user
-     * @param database
      * @throws SQLException
      */
-    public void createHero(Connection connection, User user, Database database) throws SQLException {
+    public void createHero(Connection connection, User user) throws SQLException {
         if (usingDatabase) {
             String query = "INSERT INTO `Character` (`Type`, `Name`, `LifePoints`, `Strength`, `OffensiveEquipment`, `DefensiveEquipment`) VALUES (?, ?, ?, ?, NULL, NULL)";
             Character character = user.getCharacterPlayer();
@@ -122,7 +121,7 @@ public class Database extends Admin {
      *
      * @param connection
      * @param user
-     * @throws SQLException
+     * @param lifePoints
      */
     public void changeLifePoints(Connection connection, User user, int lifePoints) {
         if (usingDatabase) {
@@ -163,6 +162,12 @@ public class Database extends Admin {
         }
     }
 
+    /**
+     * Update the game board
+     * @param connection
+     * @param boardInt
+     * @param user
+     */
     public void updateBoard(Connection connection, int[] boardInt, User user) {
         if (usingDatabase) {
             int id = user.getIDPlayerDatabase();
@@ -178,6 +183,12 @@ public class Database extends Admin {
         }
     }
 
+    /**
+     * Adds a player’s defense weapon in the database
+     * @param connection
+     * @param user
+     * @param defensiveEquipment
+     */
     public void addDefensiveEquipment(Connection connection, User user, DefensiveEquipment defensiveEquipment) {
         if (usingDatabase) {
             Character character = user.getCharacterPlayer();
@@ -205,6 +216,12 @@ public class Database extends Admin {
         }
     }
 
+    /**
+     * Adds a player’s attack weapon in the database
+     * @param connection
+     * @param user
+     * @param offensiveEquipment
+     */
     public void addOffensiveEquipment(Connection connection, User user, OffensiveEquipment offensiveEquipment) {
         if (usingDatabase) {
             Character character = user.getCharacterPlayer();
