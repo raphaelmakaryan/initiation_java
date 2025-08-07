@@ -16,7 +16,7 @@
 
 
 # À propos du projet
-Ce repo(sitory) est créé dans le but du cours de JAVA au Campus Numérique dans The Alpes.
+Ce repo(sitory) est créé dans le but du cours de JAVA au Campus Numérique in The Alps.
 
 Vous trouverez dans le dossier principal `src\fr\raphaelmakaryan` deux dossiers : 
 - `exercices`,
@@ -39,11 +39,11 @@ J'ai décidé de nommer ce jeu, car c'est le mix entre `La Terre du Milieu : L'O
 J'ai donc pris le titre du jeu vidéo "`L'Ombre de`" et du jeu de rôle "`Dragons`".
 
 ## Recommendation
-Pour jouer à `L'Ombre des Dragons`, il vous faudra le JDK : `Java SE 17 (LTS)` (JDK demandé dans le projet).
+Pour jouer à `L'Ombre des Dragons`, il vous faudra le JDK : [`Java SE 17 (LTS)` (JDK demandé dans le projet)](https://www.oracle.com/java/technologies/downloads/#java17).
 <br>
-S'il y a des choses bizarres ou que vous êtes complètement pété, merci de le signaler.
+S'il y a des choses bizarres ou que vous êtes complètement pété (dans le sens que vous êtes puissant), merci de me le signaler.
 <br>
-Avec les nombreux tests et débug, j'ai une panoplie de variables de plusieurs pour tester chaque nouvelle fonctionnalité, ce qui fait que je peux laisser en oubliant les variables de debug "allumé".
+Avec les nombreux tests et debug, j'ai une panoplie de plusieurs variables  pour tester chaque nouvelle fonctionnalité, ce qui fait que je peux laisser en oubliant les variables de debug "allumé".
 
 ## Lancer L'Ombre des Dragons
 Dans la racine du dossier  `lombredesdragons`, vous trouverez le fichier `Main.java`, vous avez juste à lancer ce fichier et tout se passera dans le terminal !
