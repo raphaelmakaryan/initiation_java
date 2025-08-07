@@ -93,3 +93,6 @@ Durée de vie des armes :
 +--------------+-----------+------+
 | Bow | 6        | 22   |
 +--------------+-----------+------+
+
+Pour crée un diagramme directement sur Intellij :
+CLic droit sur src > tout en bas diagramme > show diagramme

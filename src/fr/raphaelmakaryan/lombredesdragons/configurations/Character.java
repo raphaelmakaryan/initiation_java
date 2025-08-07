@@ -16,7 +16,7 @@ public abstract class Character extends Admin {
     protected DefensiveEquipment defensiveEquipment;
 
     /**
-     * Character Constructordifference
+     * Character Constructor
      *
      * @param name
      * @param lifePoints
