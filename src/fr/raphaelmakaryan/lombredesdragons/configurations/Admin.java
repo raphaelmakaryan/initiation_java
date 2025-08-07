@@ -3,7 +3,7 @@ package fr.raphaelmakaryan.lombredesdragons.configurations;
 public abstract class Admin {
     public int debugLifeHealth = 0;
     public int debugMoney = 30;
-    public int debugLifeTimeWeapon = 1;
+    public int debugLifeTimeWeapon = 0;
 
     public boolean debugViewHeroMenu = false;
 

@@ -292,12 +292,15 @@ public class Fight {
     }
 
     public void verificationLifeTimeWeapon(User user) {
-        int lifeTimeWeapon = user.getCharacterPlayer().getOffensiveEquipment().getLifetime();
-        if (lifeTimeWeapon != 0) {
-            user.getCharacterPlayer().getOffensiveEquipment().setLifetime(lifeTimeWeapon - 1);
-        } else {
-            user.getCharacterPlayer().setOffensiveEquipment(null);
-            System.out.println("Votre arme est cassée !");
+        OffensiveEquipment offensiveEquipment = user.getCharacterPlayer().getOffensiveEquipment();
+        if (offensiveEquipment != null) {
+            int lifeTimeWeapon = offensiveEquipment.getLifetime();
+            if (lifeTimeWeapon != 0) {
+                user.getCharacterPlayer().getOffensiveEquipment().setLifetime(lifeTimeWeapon - 1);
+            } else {
+                user.getCharacterPlayer().setOffensiveEquipment(null);
+                System.out.println("Votre arme est cassée !");
+            }
         }
     }
 }

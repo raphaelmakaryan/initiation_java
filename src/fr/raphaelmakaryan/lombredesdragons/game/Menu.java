@@ -909,7 +909,7 @@ public class Menu extends Admin {
         System.out.println(Colors.MERCHANTS_BRICY + "Le forgeron vous demande : 'Voulez vous réparez votre arme ?'" + Colors.RESET);
         System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
         System.out.println("Vous avez " + user.getCharacterPlayer().getMoney());
-        if (offensiveEquipment != null && offensiveEquipment.getLifetimeDefault() < offensiveEquipment.getLifetimeDefault()) {
+        if (offensiveEquipment != null && offensiveEquipment.getLifetime() < offensiveEquipment.getLifetimeDefault()) {
             System.out.println("1. Réparer " + offensiveEquipment.getName() + " - Durée de vie : " + offensiveEquipment.getLifetime() + "/" + offensiveEquipment.getLifetimeDefault() + " - Prix : " + offensiveEquipment.getPriceRepair());
         }
         System.out.println("2. Partir");
