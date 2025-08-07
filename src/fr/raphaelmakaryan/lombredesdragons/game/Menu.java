@@ -93,9 +93,10 @@ public class Menu extends Admin {
         System.out.println("1. Démarrer une nouvelle partie");
         System.out.println("2. Afficher toutes les infos de votre personnage");
         System.out.println("3. Modifier ses informations");
-        System.out.println("4. Quitter le jeu");
+        System.out.println("4. Voir le top du mod Survival");
+        System.out.println("5. Quitter le jeu");
         if (debugViewHeroMenu) {
-            System.out.println("5. Affichez tout les héros de la base de données");
+            System.out.println("6. Affichez tout les héros de la base de données");
         }
         System.out.println("Veuillez entrer le numéro de votre choix !");
         choiceUser = clavier.nextInt();
@@ -114,8 +115,13 @@ public class Menu extends Admin {
             toolsMain.clearLine();
             afterCreationPlayerMenu(user, database, connection, game);
         } else if (choice == 4) {
+            toolsMain.setTimeout(2);
+            database.displayTopSurvival(connection);
+            toolsMain.clearLine();
+            afterCreationPlayerMenu(user, database, connection, game);
+        } else if (choice == 5) {
             endGame("exit", this, game, connection, database);
-        } else if (choice == 5 && debugViewHeroMenu) {
+        } else if (choice == 6 && debugViewHeroMenu) {
             toolsMain.setTimeout(2);
             displayAdminGetHeros(database, connection);
             toolsMain.clearLine();
@@ -128,6 +134,13 @@ public class Menu extends Admin {
         }
     }
 
+    /**
+     * Menu to display the different mod
+     * @param game
+     * @param connection
+     * @param database
+     * @throws SQLException
+     */
     public void chooseMod(Game game, Connection connection, Database database) throws SQLException {
         try {
             int choiceUser;

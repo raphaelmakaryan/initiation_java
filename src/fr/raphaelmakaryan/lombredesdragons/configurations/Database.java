@@ -258,6 +258,7 @@ public class Database extends Admin {
 
     /**
      * Database update function for the survival mod
+     *
      * @param user
      * @param connection
      * @param position
@@ -276,6 +277,7 @@ public class Database extends Admin {
 
     /**
      * Player addition function for the survival mod
+     *
      * @param user
      * @param connection
      * @param position
@@ -292,4 +294,49 @@ public class Database extends Admin {
             }
         }
     }
+
+    /**
+     * Display the top players in the survival mod
+     *
+     * @param connection
+     */
+    public void displayTopSurvival(Connection connection) {
+        if (usingDatabase) {
+            try {
+                Statement stmt = connection.createStatement();
+                ResultSet resultats = stmt.executeQuery(
+                        "SELECT s.ID, c.Name, s.position " +
+                                "FROM Survival s " +
+                                "JOIN `Character` c ON s.idUser = c.ID " +
+                                "ORDER BY s.position DESC"
+                );
+
+
+                System.out.println("Nom | Position");
+                System.out.println("----+----------");
+
+                boolean hasResults = false;
+
+                while (resultats.next()) {
+                    hasResults = true;
+                    int id = resultats.getInt("ID");
+                    String name = resultats.getString("Name"); // majuscule ici
+                    int position = resultats.getInt("position");
+
+                    System.out.printf("%s | %d%n", name, position);
+                }
+
+                if (!hasResults) {
+                    System.out.println("Aucun résultat trouvé.");
+                }
+
+            } catch (SQLException e) {
+                System.err.println("Erreur SQL : " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Base de données désactivée.");
+        }
+    }
+
 }
