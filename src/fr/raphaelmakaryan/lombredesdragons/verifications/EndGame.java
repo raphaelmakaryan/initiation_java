@@ -21,7 +21,7 @@ public class EndGame {
         if (type.equals("exit")) {
             System.out.println(Colors.END_PURPLE + "Merci d'avoir joué ! À bientôt !");
             System.exit(0);
-        } else if (type.equals("fin")) {
+        } else if (type.equals("fin") || type.equals("finSurvival")) {
             menu.endGameCase(game, connection, database);
         } else if (type.equals("dead")) {
             menu.endGameDead();

@@ -149,7 +149,7 @@ public class Database extends Admin {
      * @throws SQLException
      */
     public void addBoard(Connection connection, Board boardClass, User user) throws SQLException {
-        if (usingDatabase) {
+        if (usingDatabase && !boardClass.isSurvival) {
             String query = "INSERT INTO `Board` (`IDCharacter`, `Board`) VALUES (?, ?)";
             try (PreparedStatement pstmt = connection.prepareStatement(query)) {
                 pstmt.setInt(1, user.getIDPlayerDatabase());
@@ -164,6 +164,7 @@ public class Database extends Admin {
 
     /**
      * Update the game board
+     *
      * @param connection
      * @param boardInt
      * @param user
@@ -185,6 +186,7 @@ public class Database extends Admin {
 
     /**
      * Adds a player’s defense weapon in the database
+     *
      * @param connection
      * @param user
      * @param defensiveEquipment
@@ -218,6 +220,7 @@ public class Database extends Admin {
 
     /**
      * Adds a player’s attack weapon in the database
+     *
      * @param connection
      * @param user
      * @param offensiveEquipment
@@ -252,4 +255,88 @@ public class Database extends Admin {
             }
         }
     }
+
+    /**
+     * Database update function for the survival mod
+     *
+     * @param user
+     * @param connection
+     * @param position
+     */
+    public void modSurvival(User user, Connection connection, int position) {
+        if (usingDatabase) {
+            String query = "UPDATE `Survival` SET `position` = ? WHERE idUser = ?";
+            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+                pstmt.setInt(1, position);
+                pstmt.setInt(2, user.getIDPlayerDatabase());
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+            }
+        }
+    }
+
+    /**
+     * Player addition function for the survival mod
+     *
+     * @param user
+     * @param connection
+     * @param position
+     */
+    public void addPlayerModSurvival(User user, Connection connection, int position) {
+        if (usingDatabase) {
+            String query = "INSERT INTO `Survival`(`idUser`, `position`) VALUES (?, ?)";
+            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+                pstmt.setInt(1, user.getIDPlayerDatabase());
+                pstmt.setInt(2, position);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println("Une anomalie est survenue lors de l'insertion de votre joueur dans la base de données.");
+            }
+        }
+    }
+
+    /**
+     * Display the top players in the survival mod
+     *
+     * @param connection
+     */
+    public void displayTopSurvival(Connection connection) {
+        if (usingDatabase) {
+            try {
+                Statement stmt = connection.createStatement();
+                ResultSet resultats = stmt.executeQuery(
+                        "SELECT s.ID, c.Name, s.position " +
+                                "FROM Survival s " +
+                                "JOIN `Character` c ON s.idUser = c.ID " +
+                                "ORDER BY s.position DESC"
+                );
+
+
+                System.out.println("Nom | Position");
+                System.out.println("----+----------");
+
+                boolean hasResults = false;
+
+                while (resultats.next()) {
+                    hasResults = true;
+                    int id = resultats.getInt("ID");
+                    String name = resultats.getString("Name"); // majuscule ici
+                    int position = resultats.getInt("position");
+
+                    System.out.printf("%s | %d%n", name, position);
+                }
+
+                if (!hasResults) {
+                    System.out.println("Aucun résultat trouvé.");
+                }
+
+            } catch (SQLException e) {
+                System.err.println("Erreur SQL : " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Base de données désactivée.");
+        }
+    }
+
 }

@@ -93,16 +93,17 @@ public class Menu extends Admin {
         System.out.println("1. Démarrer une nouvelle partie");
         System.out.println("2. Afficher toutes les infos de votre personnage");
         System.out.println("3. Modifier ses informations");
-        System.out.println("4. Quitter le jeu");
+        System.out.println("4. Voir le top du mod Survival");
+        System.out.println("5. Quitter le jeu");
         if (debugViewHeroMenu) {
-            System.out.println("5. Affichez tout les héros de la base de données");
+            System.out.println("6. Affichez tout les héros de la base de données");
         }
         System.out.println("Veuillez entrer le numéro de votre choix !");
         choiceUser = clavier.nextInt();
         choice = itIsInt(String.valueOf(choiceUser), false);
         if (choice == 1) {
             toolsMain.setTimeout(1);
-            chooseDifficulty(game, connection, database);
+            chooseMod(game, connection, database);
         } else if (choice == 2) {
             toolsMain.setTimeout(2);
             displayInformationCharacter(user);
@@ -114,8 +115,13 @@ public class Menu extends Admin {
             toolsMain.clearLine();
             afterCreationPlayerMenu(user, database, connection, game);
         } else if (choice == 4) {
+            toolsMain.setTimeout(2);
+            database.displayTopSurvival(connection);
+            toolsMain.clearLine();
+            afterCreationPlayerMenu(user, database, connection, game);
+        } else if (choice == 5) {
             endGame("exit", this, game, connection, database);
-        } else if (choice == 5 && debugViewHeroMenu) {
+        } else if (choice == 6 && debugViewHeroMenu) {
             toolsMain.setTimeout(2);
             displayAdminGetHeros(database, connection);
             toolsMain.clearLine();
@@ -125,6 +131,38 @@ public class Menu extends Admin {
             toolsMain.clearLine();
             System.out.println("Veuillez choisir un choix valide !");
             afterCreationPlayerMenu(user, database, connection, game);
+        }
+    }
+
+    /**
+     * Menu to display the different mod
+     * @param game
+     * @param connection
+     * @param database
+     * @throws SQLException
+     */
+    public void chooseMod(Game game, Connection connection, Database database) throws SQLException {
+        try {
+            int choiceUser;
+            int choice;
+            toolsMain.clearLine();
+            System.out.println(Colors.CHOICE_YELLOW + "Le mode de jeu ? " + Colors.RESET);
+            System.out.println("1. Normal");
+            System.out.println("2. Survival");
+            System.out.println("Veuillez entrer le numéro de votre choix !");
+            choiceUser = clavier.nextInt();
+            choice = itIsInt(String.valueOf(choiceUser), false);
+            toolsMain.clearLine();
+            if (choice == 1) {
+                chooseDifficulty(game, connection, database);
+            } else if (choice == 2) {
+                game.playerWantPlay(connection, database, game, "survival");
+            } else {
+                toolsMain.clearLine();
+                System.out.println("Veuillez choisir un choix valide !");
+                chooseMod(game, connection, database);
+            }
+        } catch (SQLException e) {
         }
     }
 
@@ -148,7 +186,6 @@ public class Menu extends Admin {
             choiceUser = clavier.nextInt();
             choice = itIsInt(String.valueOf(choiceUser), false);
             toolsMain.clearLine();
-
             if (choice == 1) {
                 game.playerWantPlay(connection, database, game, "easy");
             } else if (choice == 2) {
@@ -234,6 +271,7 @@ public class Menu extends Admin {
             toolsMain.verificationChoiceNotWhile("endGameCase", this, (Object) null);
         }
     }
+
 
     /**
      * Menu where the player is in a cell of an enemy
@@ -684,6 +722,7 @@ public class Menu extends Admin {
 
     /**
      * Menu of the square when the player tmbe on the merchant square
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -723,6 +762,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player entered the merchant’s store
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -769,6 +809,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player wants to sell these items
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -818,6 +859,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player sold their item
+     *
      * @param object
      */
     public void playerSellObjets(String object) {
@@ -829,6 +871,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player wants to buy an object
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -885,6 +928,7 @@ public class Menu extends Admin {
 
     /**
      * Verification if an article is or not already defined
+     *
      * @param merchants
      * @param user
      */
@@ -902,6 +946,7 @@ public class Menu extends Admin {
 
     /**
      * Updates the global variable of an item to prevent the player from being able to repay an item
+     *
      * @param article
      */
     public void articleBuyByPlayer(int article) {
@@ -923,6 +968,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player comes across the cell of a hostel
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -962,6 +1008,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player entered the inn
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -1003,6 +1050,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player fell in the forge
+     *
      * @param boardClass
      * @param user
      * @param game
@@ -1042,6 +1090,7 @@ public class Menu extends Admin {
 
     /**
      * Menu when the player is inside the forge
+     *
      * @param boardClass
      * @param user
      * @param game
