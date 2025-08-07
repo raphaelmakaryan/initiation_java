@@ -1,15 +1,17 @@
 package fr.raphaelmakaryan.lombredesdragons.game;
 
 import fr.raphaelmakaryan.lombredesdragons.configurations.Admin;
+import fr.raphaelmakaryan.lombredesdragons.configurations.Dices;
 
 import java.util.Random;
 
-public class Dice extends Admin {
+public class Dice extends Admin implements Dices {
     /**
      * Dice 6 faces
      *
      * @return
      */
+    @Override
     public int dice6() {
         Random rand = new Random();
         if (debugDice) {
@@ -24,6 +26,7 @@ public class Dice extends Admin {
      * @param attacking
      * @return
      */
+    @Override
     public int[][] dice20(int attacking) {
         Random rand = new Random();
         int value = rand.nextInt(1, 20);
