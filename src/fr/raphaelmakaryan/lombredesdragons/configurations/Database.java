@@ -30,13 +30,12 @@ public class Database extends Admin {
     /**
      * Find all the database heroes for the admin
      *
-     * @param connection
      * @throws SQLException
      */
-    public void getHeroes(Connection connection) throws SQLException {
+    public void getHeroes() throws SQLException {
         if (usingDatabase) {
             try {
-                Statement stmt = connection.createStatement();
+                Statement stmt = connectDatabase().createStatement();
                 ResultSet resultats = stmt.executeQuery("SELECT * FROM `Character`");
                 ResultSetMetaData rsmd = resultats.getMetaData();
                 int nbCols = rsmd.getColumnCount();
@@ -64,15 +63,14 @@ public class Database extends Admin {
     /**
      * Create a hero in the database
      *
-     * @param connection
      * @param user
      * @throws SQLException
      */
-    public void createHero(Connection connection, User user) throws SQLException {
+    public void createHero(User user) throws SQLException {
         if (usingDatabase) {
             String query = "INSERT INTO `Character` (`Type`, `Name`, `LifePoints`, `Strength`, `OffensiveEquipment`, `DefensiveEquipment`) VALUES (?, ?, ?, ?, NULL, NULL)";
             Character character = user.getCharacterPlayer();
-            try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement pstmt = connectDatabase().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 pstmt.setString(1, character.type);
                 pstmt.setString(2, character.name);
                 pstmt.setInt(3, character.lifePoints);
@@ -95,16 +93,15 @@ public class Database extends Admin {
     /**
      * Edit a hero in the database
      *
-     * @param connection
      * @param oldName
      * @param newName
      * @param user
      * @throws SQLException
      */
-    public void editHero(Connection connection, String oldName, String newName, User user) {
+    public void editHero(String oldName, String newName, User user) {
         if (usingDatabase) {
             String query = "UPDATE `Character` SET `Name` = ? WHERE ID = ? AND `Name` = ?";
-            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            try (PreparedStatement pstmt = connectDatabase().prepareStatement(query)) {
                 pstmt.setString(1, newName);
                 pstmt.setInt(2, user.getIDPlayerDatabase());
                 pstmt.setString(3, oldName);
@@ -119,16 +116,15 @@ public class Database extends Admin {
     /**
      * Edit a life a hero in the database
      *
-     * @param connection
      * @param user
      * @param lifePoints
      */
-    public void changeLifePoints(Connection connection, User user, int lifePoints) {
+    public void changeLifePoints(User user, int lifePoints) {
         if (usingDatabase) {
             Character character = user.getCharacterPlayer();
             int ID = user.getIDPlayerDatabase();
             String query = "UPDATE `Character` SET `lifePoints` = ? WHERE `name` = ? AND ID = ?";
-            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            try (PreparedStatement pstmt = connectDatabase().prepareStatement(query)) {
                 pstmt.setInt(1, lifePoints);
                 pstmt.setString(2, character.getName());
                 pstmt.setInt(3, ID);
@@ -143,15 +139,14 @@ public class Database extends Admin {
     /**
      * Add a baord in the database
      *
-     * @param connection
      * @param boardClass
      * @param user
      * @throws SQLException
      */
-    public void addBoard(Connection connection, Board boardClass, User user) throws SQLException {
+    public void addBoard(Board boardClass, User user) throws SQLException {
         if (usingDatabase && !boardClass.isSurvival) {
             String query = "INSERT INTO `Board` (`IDCharacter`, `Board`) VALUES (?, ?)";
-            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            try (PreparedStatement pstmt = connectDatabase().prepareStatement(query)) {
                 pstmt.setInt(1, user.getIDPlayerDatabase());
                 pstmt.setString(2, Arrays.toString(boardClass.getBoard()));
                 pstmt.executeUpdate();
@@ -165,15 +160,14 @@ public class Database extends Admin {
     /**
      * Update the game board
      *
-     * @param connection
      * @param boardInt
      * @param user
      */
-    public void updateBoard(Connection connection, int[] boardInt, User user) {
+    public void updateBoard(int[] boardInt, User user) {
         if (usingDatabase) {
             int id = user.getIDPlayerDatabase();
             String query = "UPDATE `Board` SET `Board`=? WHERE `idCharacter`= ?";
-            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            try (PreparedStatement pstmt = connectDatabase().prepareStatement(query)) {
                 pstmt.setString(1, Arrays.toString(boardInt));
                 pstmt.setInt(2, id);
                 pstmt.executeUpdate();
@@ -187,17 +181,16 @@ public class Database extends Admin {
     /**
      * Adds a player’s defense weapon in the database
      *
-     * @param connection
      * @param user
      * @param defensiveEquipment
      */
-    public void addDefensiveEquipment(Connection connection, User user, DefensiveEquipment defensiveEquipment) {
+    public void addDefensiveEquipment(User user, DefensiveEquipment defensiveEquipment) {
         if (usingDatabase) {
             Character character = user.getCharacterPlayer();
             if (defensiveEquipment != null) {
                 int ID = defensiveEquipment.getIdObject();
                 String query = "UPDATE `Character` SET `DefensiveEquipment` = ? WHERE `name` = ? AND ID = ?";
-                try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+                try (PreparedStatement pstmt = connectDatabase().prepareStatement(query)) {
                     pstmt.setInt(1, ID);
                     pstmt.setString(2, character.getName());
                     pstmt.setInt(3, user.getIDPlayerDatabase());
@@ -207,7 +200,7 @@ public class Database extends Admin {
                 }
             }
             String query = "UPDATE `Character` SET `DefensiveEquipment` = ? WHERE `name` = ? AND ID = ?";
-            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            try (PreparedStatement pstmt = connectDatabase().prepareStatement(query)) {
                 pstmt.setNull(1, 0);
                 pstmt.setString(2, character.getName());
                 pstmt.setInt(3, user.getIDPlayerDatabase());
@@ -221,11 +214,10 @@ public class Database extends Admin {
     /**
      * Adds a player’s attack weapon in the database
      *
-     * @param connection
      * @param user
      * @param offensiveEquipment
      */
-    public void addOffensiveEquipment(Connection connection, User user, OffensiveEquipment offensiveEquipment) {
+    public void addOffensiveEquipment(User user, OffensiveEquipment offensiveEquipment) {
         if (usingDatabase) {
             Character character = user.getCharacterPlayer();
             if (offensiveEquipment != null) {
@@ -234,7 +226,7 @@ public class Database extends Admin {
                 int attackObject = offensiveEquipment.getLevelAttack();
                 int newAttackPlayer = attackPlayer + attackObject;
                 String query = "UPDATE `Character` SET `OffensiveEquipment` = ?, `Strength` = ? WHERE `name` = ? AND ID = ?";
-                try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+                try (PreparedStatement pstmt = connectDatabase().prepareStatement(query)) {
                     pstmt.setInt(1, ID);
                     pstmt.setInt(2, newAttackPlayer);
                     pstmt.setString(3, character.getName());
@@ -245,7 +237,7 @@ public class Database extends Admin {
                 }
             }
             String query = "UPDATE `Character` SET `OffensiveEquipment` = ? WHERE `name` = ? AND ID = ?";
-            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            try (PreparedStatement pstmt = connectDatabase().prepareStatement(query)) {
                 pstmt.setNull(1, 0);
                 pstmt.setString(3, character.getName());
                 pstmt.setInt(4, user.getIDPlayerDatabase());
@@ -260,13 +252,12 @@ public class Database extends Admin {
      * Database update function for the survival mod
      *
      * @param user
-     * @param connection
      * @param position
      */
-    public void modSurvival(User user, Connection connection, int position) {
+    public void modSurvival(User user, int position) {
         if (usingDatabase) {
             String query = "UPDATE `Survival` SET `position` = ? WHERE idUser = ?";
-            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            try (PreparedStatement pstmt = connectDatabase().prepareStatement(query)) {
                 pstmt.setInt(1, position);
                 pstmt.setInt(2, user.getIDPlayerDatabase());
                 pstmt.executeUpdate();
@@ -279,13 +270,12 @@ public class Database extends Admin {
      * Player addition function for the survival mod
      *
      * @param user
-     * @param connection
      * @param position
      */
-    public void addPlayerModSurvival(User user, Connection connection, int position) {
+    public void addPlayerModSurvival(User user, int position) {
         if (usingDatabase) {
             String query = "INSERT INTO `Survival`(`idUser`, `position`) VALUES (?, ?)";
-            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            try (PreparedStatement pstmt = connectDatabase().prepareStatement(query)) {
                 pstmt.setInt(1, user.getIDPlayerDatabase());
                 pstmt.setInt(2, position);
                 pstmt.executeUpdate();
@@ -298,12 +288,11 @@ public class Database extends Admin {
     /**
      * Display the top players in the survival mod
      *
-     * @param connection
      */
-    public void displayTopSurvival(Connection connection) {
+    public void displayTopSurvival() {
         if (usingDatabase) {
             try {
-                Statement stmt = connection.createStatement();
+                Statement stmt = connectDatabase().createStatement();
                 ResultSet resultats = stmt.executeQuery(
                         "SELECT s.ID, c.Name, s.position " +
                                 "FROM Survival s " +
@@ -338,5 +327,4 @@ public class Database extends Admin {
             System.out.println("Base de données désactivée.");
         }
     }
-
 }

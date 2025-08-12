@@ -21,12 +21,11 @@ public class Enemies extends Admin {
      * @param game
      * @param boardInt
      * @param caseNumber
-     * @param connection
      * @param database
      * @param level
      */
-    public void haveEnemies(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
-        menu.enemiesCell(boardClass, menu, user, game, boardInt, caseNumber, connection, database, level);
+    public void haveEnemies(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Database database, Level level) {
+        menu.enemiesCell(boardClass, menu, user, game, boardInt, caseNumber, database, level);
     }
 
     /**
@@ -38,15 +37,14 @@ public class Enemies extends Admin {
      * @param game
      * @param boardInt
      * @param caseNumber
-     * @param connection
      * @param database
      * @param level
      */
-    public void chooseFight(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
+    public void chooseFight(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Database database, Level level) {
         Fight fight = new Fight();
         createEnemy(boardClass);
         menu.displayEnemyFight(this.enemiesPlayer);
-        fight.progressesFight(menu, boardClass, this.enemiesPlayer, user, game, boardInt, caseNumber, connection, database, level);
+        fight.progressesFight(menu, boardClass, this.enemiesPlayer, user, game, boardInt, caseNumber, database, level);
     }
 
     /**

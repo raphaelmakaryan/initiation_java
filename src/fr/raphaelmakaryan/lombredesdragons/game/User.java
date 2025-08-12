@@ -28,13 +28,13 @@ public class User {
         return this.characterPlayer;
     }
 
-    public void createCharacter(User user, Connection connection, Database database) throws SQLException {
+    public void createCharacter(User user, Database database) throws SQLException {
         if (Objects.equals(this.typeChoice.toLowerCase(), "magicien")) {
             characterPlayer = new Wizard(this.name);
         } else if (Objects.equals(this.typeChoice.toLowerCase(), "guerrier")) {
             characterPlayer = new Warrior(this.name);
         }
-        database.createHero(connection, user);
+        database.createHero(user);
     }
 
     public void setTypeChoice(String typeChoice) {

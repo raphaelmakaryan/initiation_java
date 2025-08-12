@@ -25,11 +25,10 @@ public class Objects extends Admin {
      * @param caseNumber
      * @param menu
      * @param game
-     * @param connection
      * @param database
      * @param level
      */
-    public void openBox(Board boardClass, User user, int[] boardInt, int caseNumber, Menu menu, Game game, Connection connection, Database database, Level level) {
+    public void openBox(Board boardClass, User user, int[] boardInt, int caseNumber, Menu menu, Game game, Database database, Level level) {
         Character character = user.getCharacterPlayer();
         int cellPlayer = boardClass.getBoard()[caseNumber];
         String[][][] whatType = whatObject(cellPlayer);
@@ -37,12 +36,12 @@ public class Objects extends Admin {
         boolean canHave = verificationIfCanUse(whatType, character);
         tools.setTimeout(1);
         if (canHave) {
-            boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
-            displayToPlayer(menu, whatType, boardClass, user, game, connection, database, level);
+            boardClass.setNewCellPlayer(boardInt, caseNumber, false, database, user);
+            displayToPlayer(menu, whatType, boardClass, user, game, database, level);
         }
         tools.setTimeout(1);
-        boardClass.setNewCellPlayer(boardInt, caseNumber, false, connection, database, user);
-        menu.displayCantGetObjectOpenBox(boardClass, user, game, connection, database, level);
+        boardClass.setNewCellPlayer(boardInt, caseNumber, false, database, user);
+        menu.displayCantGetObjectOpenBox(boardClass, user, game, database, level);
     }
 
     /**
@@ -107,12 +106,11 @@ public class Objects extends Admin {
      * @param boardClass
      * @param user
      * @param game
-     * @param connection
      * @param database
      * @param level
      */
-    public void displayToPlayer(Menu menu, String[][][] allData, Board boardClass, User user, Game game, Connection connection, Database database, Level level) {
-        menu.displayObjectOpenBox(boardClass, user, game, this, allData, connection, database, level);
+    public void displayToPlayer(Menu menu, String[][][] allData, Board boardClass, User user, Game game, Database database, Level level) {
+        menu.displayObjectOpenBox(boardClass, user, game, this, allData, database, level);
     }
 
     /**
@@ -185,18 +183,17 @@ public class Objects extends Admin {
      * @param menu
      * @param boardClass
      * @param game
-     * @param connection
      * @param database
      * @param level
      */
-    public void verificationGiveObjectToPlayer(User user, String[][][] object, Menu menu, Board boardClass, Game game, Connection connection, Database database, Level level) {
+    public void verificationGiveObjectToPlayer(User user, String[][][] object, Menu menu, Board boardClass, Game game, Database database, Level level) {
         Character character = user.getCharacterPlayer();
         boolean playerHaveAlready = haveAlreadyAObject(user, object);
         if (!playerHaveAlready) {
-            addObjectToPlayer(object, character, connection, database, user);
-            menu.displayObjectAddToPlayer(boardClass, user, game, object[0][0][0], connection, database, level);
+            addObjectToPlayer(object, character, database, user);
+            menu.displayObjectAddToPlayer(boardClass, user, game, object[0][0][0], database, level);
         }
-        menu.displayObjectCantAddToPlayer(boardClass, user, game, connection, database, level);
+        menu.displayObjectCantAddToPlayer(boardClass, user, game, database, level);
     }
 
     /**
@@ -204,21 +201,20 @@ public class Objects extends Admin {
      *
      * @param object
      * @param character
-     * @param connection
      * @param database
      * @param user
      */
-    public void addObjectToPlayer(String[][][] object, Character character, Connection connection, Database database, User user) {
+    public void addObjectToPlayer(String[][][] object, Character character, Database database, User user) {
         if (object[2][0][0].equals("DefensiveEquipment")) {
             character.setDefensiveEquipment(this.isPotion);
-            database.addDefensiveEquipment(connection, user, this.isPotion);
+            database.addDefensiveEquipment(user, this.isPotion);
         } else if (object[2][0][0].equals("OffensiveEquipment")) {
             if (this.isSpell != null) {
                 character.setOffensiveEquipment(this.isSpell);
-                database.addOffensiveEquipment(connection, user, this.isSpell);
+                database.addOffensiveEquipment(user, this.isSpell);
             } else if (this.isWeapon != null) {
                 character.setOffensiveEquipment(this.isWeapon);
-                database.addOffensiveEquipment(connection, user, this.isWeapon);
+                database.addOffensiveEquipment(user, this.isWeapon);
             }
         }
     }

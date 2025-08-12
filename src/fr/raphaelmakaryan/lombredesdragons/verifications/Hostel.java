@@ -24,12 +24,11 @@ public class Hostel extends Admin {
      * @param game
      * @param boardInt
      * @param caseNumber
-     * @param connection
      * @param database
      * @param level
      */
-    public void haveHostel(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
-        menu.cellHostel(boardClass, user, game, boardInt, caseNumber, connection, database, level, this);
+    public void haveHostel(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Database database, Level level) {
+        menu.cellHostel(boardClass, user, game, boardInt, caseNumber, database, level, this);
     }
 
     /**
