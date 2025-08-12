@@ -19,7 +19,7 @@ public abstract class Admin {
     public boolean debugDiceCriticalLoose = false;
     public boolean debugDiceCriticalSuccess = false;
 
-    public boolean usingDatabase = true;
+    public boolean usingDatabase = false;
 
     public boolean debugEnemiesCell = false;
 
