@@ -136,6 +136,7 @@ public class Menu extends Admin {
 
     /**
      * Menu to display the different mod
+     *
      * @param game
      * @param connection
      * @param database
@@ -521,7 +522,7 @@ public class Menu extends Admin {
      */
     public void displayFightCritical(int[][] attackLevel, String type) {
         toolsMain.setTimeout(1);
-        if (type == "player") {
+        if (type.equals("player")) {
             if (attackLevel[0][1] == 1) {
                 System.out.println("Vous avez fait un " + Colors.DICE_MAGENTA + "échec critique" + Colors.RESET + " !");
             } else if (attackLevel[0][1] == 20) {

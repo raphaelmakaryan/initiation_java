@@ -5,6 +5,7 @@ import fr.raphaelmakaryan.lombredesdragons.configurations.Character;
 import fr.raphaelmakaryan.lombredesdragons.verifications.EndGame;
 
 import java.sql.Connection;
+import java.util.Objects;
 
 public class Fight {
 
@@ -123,7 +124,7 @@ public class Fight {
      */
     public void modifyLifePoints(String type, Enemie enemie, int difference, User user, Menu menu, Game game, Board boardClass, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
         Character character = user.getCharacterPlayer();
-        if (type == "player") {
+        if (type.equals("player")) {
             enemie.setLifePoints(difference);
         } else {
             character.setLifePoints(difference);
@@ -203,10 +204,10 @@ public class Fight {
      */
     public int verificationHaveOffensive(int attackBase, Character character, Enemie enemie) {
         OffensiveEquipment offensivePlayer = character.getOffensiveEquipment();
-        String enemiRival = enemie.getName();
+        String enemyRival = enemie.getName();
         if (offensivePlayer != null) {
             String weapon = offensivePlayer.getName();
-            int valueSpecialWeapon = haveWeaponSpecial(weapon, enemiRival, attackBase);
+            int valueSpecialWeapon = haveWeaponSpecial(weapon, enemyRival, attackBase);
             if (valueSpecialWeapon == 0) {
                 int valueAttackObject = offensivePlayer.getLevelAttack();
                 return attackBase + valueAttackObject;
@@ -283,6 +284,7 @@ public class Fight {
 
     /**
      * Check if the player can attack the enemy in front of him
+     *
      * @param user
      * @param enemie
      * @return
@@ -296,23 +298,24 @@ public class Fight {
 
     /**
      * Check if the player has a special weapon as well as according to the enemy the degat changes
+     *
      * @param name
      * @param enemie
      * @param attackDefault
      * @return
      */
     public int haveWeaponSpecial(String name, String enemie, int attackDefault) {
-        if (name == "Bow") {
-            if (enemie == "Dragon") {
+        if (name.equals("Bow")) {
+            if (enemie.equals("Dragon")) {
                 return 6;
             }
             return 4;
-        } else if (name == "Invisibility") {
-            if (enemie == "Evil spirits") {
+        } else if (name.equals("Invisibility")) {
+            if (enemie.equals("Evil spirits")) {
                 return 8;
             }
             return 5;
-        } else if (name == "Thunderclap") {
+        } else if (name.equals("Thunderclap")) {
             return attackDefault * 2;
         } else {
             return 0;
@@ -321,13 +324,14 @@ public class Fight {
 
     /**
      * Check if the player has the thunderclap
+     *
      * @param character
      */
     public void verificationHaveThunderclap(Character character) {
         OffensiveEquipment weapon = character.getOffensiveEquipment();
         if (weapon != null) {
             String nameWeapon = weapon.getName();
-            if (nameWeapon == "Thunderclap") {
+            if (nameWeapon.equals("Thunderclap")) {
                 character.setOffensiveEquipment(null);
             }
         }
@@ -335,6 +339,7 @@ public class Fight {
 
     /**
      * Check if the player has a weapon soon broken to reduce his life by removing it
+     *
      * @param user
      */
     public void verificationLifeTimeWeapon(User user) {
