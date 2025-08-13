@@ -12,27 +12,6 @@ import java.util.TimerTask;
 public class Tools {
 
     /**
-     * Verification if the value is an int
-     *
-     * @param s
-     * @param fatal
-     * @return
-     */
-    public static int itIsInt(String s, boolean fatal) {
-        try {
-            return Integer.parseInt(s);
-        } catch (Exception e) {
-            if (fatal) {
-                System.err.print("La valeur que vous avez défini n'est pas un INT/Integer/Nombre ! Fin du processus.");
-                System.exit(1);
-            } else {
-                System.err.print("La valeur que vous avez défini n'est pas un INT/Integer/Nombre ! Veuillez réessayer.");
-            }
-        }
-        return 0;
-    }
-
-    /**
      * Verification if the value is an string
      *
      * @param s
@@ -100,27 +79,6 @@ public class Tools {
     }
 
     /**
-     * Choice verification loop for menus.
-     *
-     * @param condition
-     * @param type
-     * @param menu
-     * @param function
-     */
-    public void verificationChoiceWhile(boolean condition, boolean type, Menu menu, String function) {
-        while (condition != type) {
-            clearLine();
-            System.out.println("Veuillez choisir un choix valide !");
-            try {
-                java.lang.reflect.Method method = menu.getClass().getMethod(function);
-                method.invoke(menu);
-            } catch (Exception e) {
-                System.err.println("Erreur lors de l'appel de la fonction " + function + " : " + e.getMessage());
-            }
-        }
-    }
-
-    /**
      * No loop but verification of choices for menus with arguments
      *
      * @param function
@@ -140,36 +98,6 @@ public class Tools {
             }
         } catch (Exception e) {
             System.err.println("Erreur lors de l'appel de la fonction " + function + " : " + e.getMessage());
-        }
-    }
-
-    /**
-     * No loop but verification of choices for menus with arguments V2
-     *
-     * @param function
-     * @param menu
-     * @param args
-     */
-    public void verificationChoiceNotWhilev2(String function, Menu menu, Object... args) {
-        try {
-            clearLine();
-            System.out.println("Veuillez choisir un choix valide !");
-
-            Class<?>[] paramTypes = Arrays.stream(args).map(arg -> {
-                if (arg instanceof Integer) return int.class;
-                else if (arg instanceof Boolean) return boolean.class;
-                else if (arg instanceof Double) return double.class;
-                else if (arg instanceof Float) return float.class;
-                else if (arg instanceof Long) return long.class;
-                else return arg.getClass();
-            }).toArray(Class[]::new);
-
-            Method method = menu.getClass().getMethod(function, paramTypes);
-            method.invoke(menu, args);
-
-        } catch (Exception e) {
-            System.err.println("Erreur lors de l'appel de la fonction " + function + " : " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
