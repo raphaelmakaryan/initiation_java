@@ -5,6 +5,7 @@ import fr.raphaelmakaryan.lombredesdragons.game.Menu;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,6 +13,7 @@ public class Tools {
 
     /**
      * Verification if the value is an int
+     *
      * @param s
      * @param fatal
      * @return
@@ -32,6 +34,7 @@ public class Tools {
 
     /**
      * Verification if the value is an string
+     *
      * @param s
      * @param fatal
      * @return
@@ -53,6 +56,7 @@ public class Tools {
 
     /**
      * Verification if the value to be given is indeed an existing type
+     *
      * @param s
      * @return
      */
@@ -70,6 +74,7 @@ public class Tools {
 
     /**
      * Maintenance command
+     *
      * @param type
      */
     public void maintenance(String type) {
@@ -80,6 +85,7 @@ public class Tools {
 
     /**
      * Displays an array of integers as a string
+     *
      * @param array
      */
     public static void displayAArrayint(int[] array) {
@@ -95,6 +101,7 @@ public class Tools {
 
     /**
      * Choice verification loop for menus.
+     *
      * @param condition
      * @param type
      * @param menu
@@ -115,6 +122,7 @@ public class Tools {
 
     /**
      * No loop but verification of choices for menus with arguments
+     *
      * @param function
      * @param menu
      * @param args
@@ -137,6 +145,7 @@ public class Tools {
 
     /**
      * No loop but verification of choices for menus with arguments V2
+     *
      * @param function
      * @param menu
      * @param args
@@ -166,6 +175,7 @@ public class Tools {
 
     /**
      * Waiting function
+     *
      * @param timeout
      */
     public void setTimeout(int timeout) {
@@ -173,6 +183,32 @@ public class Tools {
             Thread.sleep(timeout * 1000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+        }
+    }
+
+    /**
+     * Checking the scanner to bring out an int
+     * @param scanner
+     * @param message
+     * @param min
+     * @param max
+     * @return
+     */
+    public static int askInt(Scanner scanner, String message, int min, int max) {
+        int number;
+        while (true) {
+            System.out.println(message);
+            String input = scanner.nextLine().trim(); // lire toute la ligne
+            try {
+                number = Integer.parseInt(input);
+                if (number >= min && number <= max) {
+                    return number; // ok
+                } else {
+                    System.out.println("Veuillez entrer un nombre entre " + min + " et " + max + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrée invalide, veuillez entrer un nombre.");
+            }
         }
     }
 }

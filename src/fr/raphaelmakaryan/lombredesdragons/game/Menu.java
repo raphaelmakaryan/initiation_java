@@ -98,9 +98,8 @@ public class Menu extends Admin {
         if (debugViewHeroMenu) {
             System.out.println("6. Affichez tout les héros de la base de données");
         }
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, debugViewHeroMenu ? 6 : 5);
+        choice = choiceUser;
         if (choice == 1) {
             toolsMain.setTimeout(1);
             chooseMod(game, connection, database);
@@ -149,9 +148,8 @@ public class Menu extends Admin {
             System.out.println(Colors.CHOICE_YELLOW + "Le mode de jeu ? " + Colors.RESET);
             System.out.println("1. Normal");
             System.out.println("2. Survival");
-            System.out.println("Veuillez entrer le numéro de votre choix !");
-            choiceUser = clavier.nextInt();
-            choice = itIsInt(String.valueOf(choiceUser), false);
+            choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 2);
+            choice = choiceUser;
             toolsMain.clearLine();
             if (choice == 1) {
                 chooseDifficulty(game, connection, database);
@@ -182,9 +180,8 @@ public class Menu extends Admin {
             System.out.println("1. Facile");
             System.out.println("2. Moyen");
             System.out.println("3. Difficile");
-            System.out.println("Veuillez entrer le numéro de votre choix !");
-            choiceUser = clavier.nextInt();
-            choice = itIsInt(String.valueOf(choiceUser), false);
+            choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 3);
+            choice = choiceUser;
             toolsMain.clearLine();
             if (choice == 1) {
                 game.playerWantPlay(connection, database, game, "easy");
@@ -219,11 +216,9 @@ public class Menu extends Admin {
         System.out.println("1. Lancer le dé");
         System.out.println("2. Voir ma position actuelle");
         System.out.println("3. Quitter le jeu");
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 3);
+        choice = choiceUser;
         toolsMain.clearLine();
-
         if (choice == 1) {
             game.playTurn(boardClass, user, game, connection, database, level);
         } else if (choice == 2) {
@@ -254,9 +249,8 @@ public class Menu extends Admin {
         System.out.println("1. Quitter le jeu");
         System.out.println("2. Recommencer une nouvelle partie");
         System.out.println("3. Recommencer une nouvelle partie avec le même personnage");
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 3);
+        choice = choiceUser;
         toolsMain.clearLine();
         if (choice == 1) {
             EndGame.endGame("exit", this, game, connection, database);
@@ -297,9 +291,8 @@ public class Menu extends Admin {
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. Se battre contre l'ennemi");
         System.out.println("2. Fuir l'ennemi");
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 2);
+        choice = choiceUser;
         if (choice == 1) {
             toolsMain.setTimeout(1);
             enemy.chooseFight(menu, boardClass, user, game, boardInt, caseNumber, connection, database, level);
@@ -335,9 +328,8 @@ public class Menu extends Admin {
         System.out.println("Que voulez-vous faire maintenant ?");
         System.out.println("1. L'ouvrir");
         System.out.println("2. Laisser la boîte");
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 2);
+        choice = choiceUser;
         if (choice == 1) {
             toolsMain.setTimeout(1);
             objects.openBox(boardClass, user, boardInt, caseNumber, this, game, connection, database, level);
@@ -373,9 +365,8 @@ public class Menu extends Admin {
         System.out.println("Vous pouvez le prendre ! Que voulez-vous faire maintenant ?");
         System.out.println("1. Le prendre");
         System.out.println("2. Le laisser");
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 2);
+        choice = choiceUser;
         if (choice == 1) {
             toolsMain.setTimeout(1);
             objects.verificationGiveObjectToPlayer(user, allData, this, boardClass, game, connection, database, level);
@@ -521,7 +512,7 @@ public class Menu extends Admin {
      */
     public void displayFightCritical(int[][] attackLevel, String type) {
         toolsMain.setTimeout(1);
-        if (type == "player") {
+        if (type.equals("player")) {
             if (attackLevel[0][1] == 1) {
                 System.out.println("Vous avez fait un " + Colors.DICE_MAGENTA + "échec critique" + Colors.RESET + " !");
             } else if (attackLevel[0][1] == 20) {
@@ -565,9 +556,8 @@ public class Menu extends Admin {
         if (havePotion) {
             System.out.println("3. Utiliser une potion");
         }
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1,  havePotion ? 3 : 2);
+        choice = choiceUser;
         if (choice == 1) {
             displayFightCritical(attackLevel, "player");
             displayFightPlayerAttack();
@@ -742,9 +732,8 @@ public class Menu extends Admin {
         System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
         System.out.println("1. Rentrer");
         System.out.println("2. Partir");
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 2);
+        choice = choiceUser;
         if (choice == 1) {
             toolsMain.setTimeout(1);
             merchantsAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
@@ -783,9 +772,8 @@ public class Menu extends Admin {
         System.out.println("1. Vendre");
         System.out.println("2. Acheter");
         System.out.println("3. Partir");
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 3);
+        choice = choiceUser;
         if (choice == 1) {
             toolsMain.setTimeout(1);
             merchantsSell(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
@@ -835,9 +823,8 @@ public class Menu extends Admin {
             System.out.println("2. " + potion[0][0] + " - " + potion[1][0]);
         }
         System.out.println("3. Revenir en arriere");
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 3);
+        choice = choiceUser;
         if (choice == 1 && weapon != null) {
             toolsMain.setTimeout(1);
             merchants.sellWeapon(user, this, connection, database);
@@ -894,8 +881,8 @@ public class Menu extends Admin {
         System.out.println("2. " + forArticle2[0][0] + " - Prix : " + forArticle2[1][0]);
         System.out.println("3. " + forArticle3[0][0] + " - Prix : " + forArticle3[1][0]);
         System.out.println("4. Revenir en arrière");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 4);
+        choice = choiceUser;
         if (choice == 1) {
             boolean playerBuy1 = merchants.processPurchase(user, forArticle1);
             if (playerBuy1) {
@@ -986,9 +973,8 @@ public class Menu extends Admin {
         System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
         System.out.println("1. Rentrer");
         System.out.println("2. Partir");
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 2);
+        choice = choiceUser;
         if (choice == 1) {
             toolsMain.setTimeout(1);
             innkeeperAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, hostel);
@@ -1027,9 +1013,8 @@ public class Menu extends Admin {
         System.out.println("Vous avez " + user.getCharacterPlayer().getMoney());
         System.out.println("1. Se reposer (restaure toute la vie)");
         System.out.println("2. Partir");
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 2);
+        choice = choiceUser;
         if (choice == 1) {
             toolsMain.setTimeout(1);
             hostel.playerChoseRest(user);
@@ -1068,9 +1053,8 @@ public class Menu extends Admin {
         System.out.println(Colors.CHOICE_YELLOW + "Que voulez-vous faire maintenant ?" + Colors.RESET);
         System.out.println("1. Rentrer");
         System.out.println("2. Partir");
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 2);
+        choice = choiceUser;
         if (choice == 1) {
             toolsMain.setTimeout(1);
             blacksmithAsk(boardClass, user, game, boardInt, caseNumber, connection, database, level, blacksmith);
@@ -1112,9 +1096,8 @@ public class Menu extends Admin {
             System.out.println("1. Réparer " + offensiveEquipment.getName() + " - Durée de vie : " + offensiveEquipment.getLifetime() + "/" + offensiveEquipment.getLifetimeDefault() + " - Prix : " + offensiveEquipment.getPriceRepair());
         }
         System.out.println("2. Partir");
-        System.out.println("Veuillez entrer le numéro de votre choix !");
-        choiceUser = clavier.nextInt();
-        choice = itIsInt(String.valueOf(choiceUser), false);
+        choiceUser = askInt(clavier, "Veuillez entrer le numéro de votre choix !", 1, 2);
+        choice = choiceUser;
         if (choice == 1 && offensiveEquipment != null) {
             toolsMain.setTimeout(1);
             blacksmith.playerChoseRepair(user, offensiveEquipment);
