@@ -904,14 +904,12 @@ public class Menu extends Admin {
             merchantsBuy(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
         } else if (choice == 2) {
             boolean playerBuy2 = merchants.processPurchase(user, forArticle2);
-            articleBuyByPlayer(2);
             if (playerBuy2) {
                 articleBuyByPlayer(2);
             }
             merchantsBuy(boardClass, user, game, boardInt, caseNumber, connection, database, level, merchants);
         } else if (choice == 3) {
             boolean playerBuy3 = merchants.processPurchase(user, forArticle3);
-            articleBuyByPlayer(3);
             if (playerBuy3) {
                 articleBuyByPlayer(3);
             }
