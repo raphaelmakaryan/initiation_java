@@ -82,7 +82,7 @@ public class Board extends Admin {
      * @param boardClass
      * @param menu
      */
-    public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game, Connection connection, Database database, Level level) {
+    public void movePlayer(int steps, Board boardClass, Menu menu, User user, Game game, Database database, Level level) {
         Cell cellInstance = new Cell();
         int oldPosition = currentCasePlayers;
         tools.setTimeout(1);
@@ -93,7 +93,7 @@ public class Board extends Admin {
         setNewCurrentCasePlayers(newPosition);
         setNewBoard(boardInt);
         if (boardClass.isSurvival) {
-            database.modSurvival(user, connection, newPosition);
+            database.modSurvival(user, newPosition);
         }
         if (debugBoardDisplay) {
             boardClass.displayBoard();
@@ -104,7 +104,7 @@ public class Board extends Admin {
             System.out.println("Le joueur est actuellement à l'index de la case " + (indexDebug) + " | La case a comme valeur : " + valueDebug + " | Il étais a la case : " + oldPosition + " pour un dé de " + steps);
         }
         try {
-            cellInstance.verifyCase(newPosition, boardInt, boardClass, menu, user, game, connection, database, level);
+            cellInstance.verifyCase(newPosition, boardInt, boardClass, menu, user, game, database, level);
         } catch (OutOfBoardException ignored) {
         }
     }
@@ -191,18 +191,17 @@ public class Board extends Admin {
      * @param boardInt
      * @param newPosition
      * @param displayMessage
-     * @param connection
      * @param database
      * @param user
      */
-    public void setNewCellPlayer(int[] boardInt, int newPosition, boolean displayMessage, Connection connection, Database database, User user) {
+    public void setNewCellPlayer(int[] boardInt, int newPosition, boolean displayMessage, Database database, User user) {
         if (newPosition <= 0) {
             newPosition = 0;
         }
         setNewCurrentCasePlayers(newPosition);
         boardInt[newPosition] = valuePlayer;
         setNewBoard(boardInt);
-        database.updateBoard(connection, boardInt, user);
+        database.updateBoard(boardInt, user);
         if (displayMessage) {
             System.out.println("Vous êtes maintenant à la case " + Colors.CELL_BRIGHTMAGENTA + newPosition + Colors.RESET + ".");
         }

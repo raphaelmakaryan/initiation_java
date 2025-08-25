@@ -14,15 +14,14 @@ public class EndGame {
      * @param type
      * @param menu
      * @param game
-     * @param connection
      * @param database
      */
-    public static void endGame(String type, Menu menu, Game game, Connection connection, Database database) {
+    public static void endGame(String type, Menu menu, Game game, Database database) {
         if (type.equals("exit")) {
             System.out.println(Colors.END_PURPLE + "Merci d'avoir joué ! À bientôt !");
             System.exit(0);
         } else if (type.equals("fin") || type.equals("finSurvival")) {
-            menu.endGameCase(game, connection, database);
+            menu.endGameCase(game, database);
         } else if (type.equals("dead")) {
             menu.endGameDead();
             System.exit(0);

@@ -23,12 +23,11 @@ public class Blacksmith {
      * @param game
      * @param boardInt
      * @param caseNumber
-     * @param connection
      * @param database
      * @param level
      */
-    public void haveBlacksmith(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
-        menu.cellBlacksmith(boardClass, user, game, boardInt, caseNumber, connection, database, level, this);
+    public void haveBlacksmith(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber,Database database, Level level) {
+        menu.cellBlacksmith(boardClass, user, game, boardInt, caseNumber, database, level, this);
     }
 
     /**

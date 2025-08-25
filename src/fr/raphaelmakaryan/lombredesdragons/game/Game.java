@@ -20,11 +20,10 @@ public class Game extends Admin {
      */
     public void preStart(Game game) throws SQLException {
         Database database = new Database();
-        Connection connection = database.connectDatabase();
         System.out.printf(Colors.RUNGAME_CYAN + " Lancement du jeu : L'Ombre des Dragons !\n" + Colors.RESET);
         start(menuGame, user);
-        creationPlayer(menuGame, user, connection, database);
-        afterCreationPlayer(menuGame, user, database, connection, game);
+        creationPlayer(menuGame, user, database);
+        afterCreationPlayer(menuGame, user, database, game);
     }
 
     /**
@@ -42,12 +41,11 @@ public class Game extends Admin {
      *
      * @param menu
      * @param user
-     * @param connection
      * @param database
      * @throws SQLException
      */
-    public void creationPlayer(Menu menu, User user, Connection connection, Database database) throws SQLException {
-        menu.creationPlayerMenu(user, connection, database);
+    public void creationPlayer(Menu menu, User user, Database database) throws SQLException {
+        menu.creationPlayerMenu(user, database);
     }
 
     /**
@@ -56,31 +54,29 @@ public class Game extends Admin {
      * @param menu
      * @param user
      * @param database
-     * @param connection
      * @param game
      * @throws SQLException
      */
-    public void afterCreationPlayer(Menu menu, User user, Database database, Connection connection, Game game) throws SQLException {
-        menu.afterCreationPlayerMenu(user, database, connection, game);
+    public void afterCreationPlayer(Menu menu, User user, Database database, Game game) throws SQLException {
+        menu.afterCreationPlayerMenu(user, database, game);
     }
 
     /**
      * Actual launch of the game after the player has decided to start the adventure
      *
-     * @param connection
      * @param database
      * @param game
      * @param difficulty
      * @throws SQLException
      */
-    public void playerWantPlay(Connection connection, Database database, Game game, String difficulty) throws SQLException {
+    public void playerWantPlay(Database database, Game game, String difficulty) throws SQLException {
         Board board = new Board(difficulty);
         Level level = new Level();
-        database.addBoard(connection, board, user);
+        database.addBoard(board, user);
         if (board.isSurvival) {
-            database.addPlayerModSurvival(user, connection, 0);
+            database.addPlayerModSurvival(user, 0);
         }
-        startGame(board, user, game, connection, database, level);
+        startGame(board, user, game, database, level);
     }
 
     /**
@@ -89,12 +85,11 @@ public class Game extends Admin {
      * @param board
      * @param user
      * @param game
-     * @param connection
      * @param database
      * @param level
      */
-    public void startGame(Board board, User user, Game game, Connection connection, Database database, Level level) {
-        playTurn(board, user, game, connection, database, level);
+    public void startGame(Board board, User user, Game game, Database database, Level level) {
+        playTurn(board, user, game, database, level);
     }
 
     /**
@@ -103,13 +98,12 @@ public class Game extends Admin {
      * @param board
      * @param user
      * @param game
-     * @param connection
      * @param database
      * @param level
      */
-    public void playTurn(Board board, User user, Game game, Connection connection, Database database, Level level) {
+    public void playTurn(Board board, User user, Game game, Database database, Level level) {
         Dice dice = new Dice();
         int diceValue = dice.dice6();
-        board.movePlayer(diceValue, board, menuGame, user, game, connection, database, level);
+        board.movePlayer(diceValue, board, menuGame, user, game, database, level);
     }
 }

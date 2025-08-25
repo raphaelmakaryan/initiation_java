@@ -22,12 +22,11 @@ public class Merchants extends Admin {
      * @param game
      * @param boardInt
      * @param caseNumber
-     * @param connection
      * @param database
      * @param level
      */
-    public void haveMerchants(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Connection connection, Database database, Level level) {
-        menu.cellMerchants(boardClass, user, game, boardInt, caseNumber, connection, database, level, this);
+    public void haveMerchants(Menu menu, Board boardClass, User user, Game game, int[] boardInt, int caseNumber, Database database, Level level) {
+        menu.cellMerchants(boardClass, user, game, boardInt, caseNumber, database, level, this);
     }
 
     /**
@@ -69,10 +68,9 @@ public class Merchants extends Admin {
      *
      * @param user
      * @param menu
-     * @param connection
      * @param database
      */
-    public void sellWeapon(User user, Menu menu, Connection connection, Database database) {
+    public void sellWeapon(User user, Menu menu, Database database) {
         Character character = user.getCharacterPlayer();
         OffensiveEquipment weapon = character.getOffensiveEquipment();
         String name = weapon.getName();
@@ -80,7 +78,7 @@ public class Merchants extends Admin {
         int money = character.getMoney();
         character.setMoney(money + price);
         character.setOffensiveEquipment(null);
-        database.addOffensiveEquipment(connection, user, null);
+        database.addOffensiveEquipment(user, null);
         menu.playerSellObjets(name);
     }
 
@@ -88,10 +86,9 @@ public class Merchants extends Admin {
      * Function if the player chose to sell a potion
      * @param user
      * @param menu
-     * @param connection
      * @param database
      */
-    public void sellPotion(User user, Menu menu, Connection connection, Database database) {
+    public void sellPotion(User user, Menu menu, Database database) {
         Character character = user.getCharacterPlayer();
         DefensiveEquipment potion = character.getDefensiveEquipment();
         String name = potion.getName();
@@ -99,7 +96,7 @@ public class Merchants extends Admin {
         int money = character.getMoney();
         character.setMoney(money + price);
         character.setDefensiveEquipment(null);
-        database.addDefensiveEquipment(connection, user, null);
+        database.addDefensiveEquipment(user, null);
         menu.playerSellObjets(name);
     }
 
